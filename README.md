@@ -7,7 +7,7 @@ Basic Django app starter template.
 
  1. Go to docker.com and download docker to your local machine.
  2. Open terminal and CD to your local git directory.
- 3. Run 'docker-compose -f docker-compose-deploy.yml up --build'
+ 3. Run 'docker-compose up' to run docker image.
  4. Open brownser and go to http://127.0.0.1:8080 to test.
 
 ## Notes

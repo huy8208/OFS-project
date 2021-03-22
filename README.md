@@ -12,3 +12,7 @@ Basic Django app starter template.
 
 ## Notes
 - We don't need to rebuild container everytime we make changes to code. You only need to refresh the webpage.
+
+## References
+- https://github.com/LondonAppDeveloper/demo-django-docker-nginx-prod
+- https://www.youtube.com/watch?v=nh1ynJGJuT8

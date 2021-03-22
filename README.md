@@ -11,7 +11,7 @@ Basic Django app starter template.
  4. Open brownser and go to http://127.0.0.1:8000 to test.
 
 ## Notes
-- We don't need to rebuild container everytime we make changes to code. You only need to refresh the webpage.
+- We don't need to rebuild container everytime we make changes. You only need to refresh the webpage.
 
 ## References
 - https://github.com/LondonAppDeveloper/demo-django-docker-nginx-prod

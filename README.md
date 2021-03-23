@@ -1,12 +1,18 @@
-# Simple Django Hello World Starter Template
+# OFS Starter template.
 
-A basic Django 3.0 starter project.
+Basic Django app starter template. 
 
 
-## Usage
+## How to build and run OFS using docker
 
- 1. Using Python 3.8, run `python -m venv env` to create a virtual environment
- 2. Run `pip install -r requirements.txt` to install dependencies
- 3. Run `cd app/` to change to `app/`
- 3. Run `python manage.py runserver` to start development server
- 4. Navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000) to test
+ 1. Go to docker.com and download docker to your local machine.
+ 2. Open terminal and CD to your local git directory.
+ 3. Run 'docker-compose up' to run docker image.
+ 4. Open brownser and go to http://127.0.0.1:8000 to test.
+
+## Notes
+- We don't need to rebuild container everytime we make changes. You only need to refresh the webpage.
+
+## References
+- https://github.com/LondonAppDeveloper/demo-django-docker-nginx-prod
+- https://www.youtube.com/watch?v=nh1ynJGJuT8

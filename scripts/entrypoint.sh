@@ -1,14 +1,18 @@
 #!/bin/sh
 
-#Stop if run into any errors
+#Stop if runs into any errors
 set -e
 
 #Collect static files
 echo "Collect static files."
 python manage.py collectstatic --noinput
 
-# Apply database migrations
-echo "Apply database migrations."
+#Generate SQL commands for preinstalled apps
+echo "Apply makemigrations."
+python manage.py makemigrations
+
+#Execute SQL commands.
+echo "Execute database migrations."
 python manage.py migrate
 
 # Start server

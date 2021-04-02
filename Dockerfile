@@ -7,9 +7,9 @@ RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers
 RUN pip install -r /requirements.txt
 RUN apk del .tmp
 
-RUN mkdir /app
-COPY ./app /app
-WORKDIR /app
+RUN mkdir /project_root
+COPY ./project_root /project_root
+WORKDIR /project_root
 COPY ./scripts /scripts
 
 RUN chmod +x /scripts/*

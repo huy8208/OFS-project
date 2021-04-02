@@ -7,8 +7,8 @@ services:
     volumes:
       - static_data:/vol/web
     environment:
-      - SECRET_KEY=samplesecretkey8888
-      - ALLOWED_HOSTS=127.0.0.1,34.105.118.4
+      - SECRET_KEY=sampleofskey8888
+      - ALLOWED_HOSTS=34.105.118.4,localhost
 
   proxy:
     build:

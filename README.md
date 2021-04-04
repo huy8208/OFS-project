@@ -15,6 +15,16 @@ Basic Django app starter template.
 - Every time we make changes to database. We have to perform makemigrations and migrate for our project to work properly. Execute these 2 commands:
     docker-compose run app python manage.py makemigrations
     docker-compose run app python manage.py migrate
+
+## Instructions
+- How to create and link website to our web_app:
+    1. Add your html file to web_app/templates/ 
+    2. Go to web_app and open views.py. Create a function similar to index def.
+    3. Go to project_setting -> open urls.py -> adding your path (can be anything you like but I suggest make it the same with your html file name). For example:
+        path('testing/',views.<YOUR FUNCTION>) <- remember to put your view function here.
+    4. Done -> Go to localhost/<NAME OF YOUR URL> to view your html file.
+
+- How to save data to sqlite3 database.   
 ## References
 - https://github.com/LondonAppDeveloper/demo-django-docker-nginx-prod
 - https://www.youtube.com/watch?v=nh1ynJGJuT8

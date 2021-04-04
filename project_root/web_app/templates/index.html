@@ -30,6 +30,15 @@
         <div class="loader"></div>
     </div>
 
+    <h1>Testing form</h1>
+    <hr>
+    <form action="." method="POST">
+        {% csrf_token %}
+        <label for="username">Your name: </label>
+        <input id="username" type="text" name="COCONUT">
+        <input type="submit" value="Send Data">
+    </form>
+
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">

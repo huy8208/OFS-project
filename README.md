@@ -21,7 +21,7 @@ Basic Django app starter template.
     1. Add your html file to web_app/templates/ 
     2. Go to web_app and open views.py. Create a function similar to index def.
     3. Go to project_setting -> open urls.py -> adding your path (can be anything you like but I suggest make it the same with your html file name). For example:
-        path('testing/',views.YOUR FUNCTION) <- remember to put your view function here.
+        path('YOUR HTML FILE NAME/',views.YOUR FUNCTION) <- remember to put your view function here.
     4. Done -> Go to localhost/NAME OF YOUR URL to view your html file.
 
 - How to save data to sqlite3 database.   

@@ -1,17 +1,13 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product,Customer
 
 def index(request):
     """Placeholder index view"""
     return render(request, 'index.html')
 
-def testing(request):
-    print('output here: ')
-    print(request.POST['COCONUT'])
-    product1 = Product()
-    product1.productName = request.POST['COCONUT']
-    print('printing product1: ',product1)
-    product1.save()
-
-
-    return render(request,'testing.html')
+def getCustomerInfo(request):
+    print(request.POST)
+    customer1 = Customer()
+    customer1.firstName = request.POST['COCONUT']
+    customer1.save()
+    return render(request, 'testing.html')

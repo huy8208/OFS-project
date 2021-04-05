@@ -24,7 +24,11 @@ Basic Django app starter template.
         path('YOUR HTML FILE NAME/',views.YOUR FUNCTION) <- remember to put your view function here.
     4. Done -> Go to localhost/NAME OF YOUR URL to view your html file.
 
-- How to save data to sqlite3 database.   
+- How to save data to sqlite3 database:
+    1. Create your new class in models.py
+    2. Import to views.py
+    3. Create your new class object and use object.save() to save to db.sqlite3
+    
 ## References
 - https://github.com/LondonAppDeveloper/demo-django-docker-nginx-prod
 - https://www.youtube.com/watch?v=nh1ynJGJuT8

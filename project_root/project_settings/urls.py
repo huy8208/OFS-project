@@ -21,5 +21,14 @@ from web_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('testing/',views.getCustomerInfo)
+    path('testing/',views.getCustomerInfo),
+    # This is for the Departments tab on the left
+    path('Meat_Seafood/', views.Meat_Seafood, name = "Meat_Seafood"),
+    path('Fruits_Vegetables/', views.Fruits_Vegetables, name = "Fruits_Vegetables"),
+    path('Pantry/', views.Pantry, name = "Pantry"),
+    path('Beverages/', views.Beverages, name = "Beverages"),
+    path('Dairy_Eggs/', views.Dairy_Eggs, name = "Dairy_Eggs"),
+    path('Frozen_Foods/', views.Frozen_Foods, name = "Frozen_Foods")
 ]
+
+

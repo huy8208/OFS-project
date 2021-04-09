@@ -609,7 +609,11 @@ ol {
 	position: absolute;
 	right: 18px;
 	top: 9px;
+<<<<<<< HEAD
 	content: "2";
+=======
+	content: "6";
+>>>>>>> aae31c3333c3f7cdfe88a39e1014cc705b64ed77
 	font-family: "ElegantIcons";
 	font-size: 18px;
 	color: #ffffff;

@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="At OFS, we make it easy to buy organic food online. We have lots of healthy foods to choose from for breakfast, lunch, dinner, or snack time. Shop now!">
-    <meta name="keywords" content="Organi, foods, green, healthy, OFS. Hello Duc! Hello 133">
+    <meta name="keywords" content="Organi, foods, green, healthy, OFS.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
@@ -122,6 +122,8 @@
                             </div>
                             <div class="header__top__right__auth">
                                 <a href="{% url 'login' %}"><i class="fa fa-user"></i> Login</a>
+                                <span">Hello, {{request.user}}</span>
+                                <span><a href="{% url 'logout' %}">Logout</a></span>
                             </div>
                         </div>
                     </div>

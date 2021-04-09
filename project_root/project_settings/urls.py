@@ -15,20 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
 from web_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
-    path('testing/',views.getCustomerInfo),
+    path('', views.index,name = "homepage"),
     # This is for the Departments tab on the left
     path('Meat_Seafood/', views.Meat_Seafood, name = "Meat_Seafood"),
     path('Fruits_Vegetables/', views.Fruits_Vegetables, name = "Fruits_Vegetables"),
     path('Pantry/', views.Pantry, name = "Pantry"),
     path('Beverages/', views.Beverages, name = "Beverages"),
     path('Dairy_Eggs/', views.Dairy_Eggs, name = "Dairy_Eggs"),
-    path('Frozen_Foods/', views.Frozen_Foods, name = "Frozen_Foods")
+    path('Frozen_Foods/', views.Frozen_Foods, name = "Frozen_Foods"),
+    # User registration and login
+    path('login/',views.login_page,name = "login"),
+    path('register/',views.registration_page,name = "register"),
+    path('logout/',views.logoutUser,name = "logout")
 ]
 
 

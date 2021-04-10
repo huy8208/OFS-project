@@ -27,11 +27,11 @@ Basic Django app starter template.
 - How to save data to sqlite3 database:
     1. Create your new class in models.py
     2. Import to views.py
-    3. Run these two commands to stage and create your models.
-        docker-compose run app python manage.py makemigrations web_app
-        docker-compose run app python manage.py migrate
-    3. Create an object of created class and use object.save() to save to db.sqlite3
-    4. Download sqlite browser https://sqlitebrowser.org/dl/ .Use it to open db.sqlite3 and view data.
+    3. Run these two commands to stage and create your models:
+        #### docker-compose run app python manage.py makemigrations web_app
+        #### docker-compose run app python manage.py migrate
+    4. Create an object of created class and use object.save() to save to db.sqlite3
+    5. Download sqlite browser https://sqlitebrowser.org/dl/ .Use it to open db.sqlite3 and view data.
     
 ## References
 - https://github.com/LondonAppDeveloper/demo-django-docker-nginx-prod

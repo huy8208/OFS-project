@@ -8,7 +8,7 @@ from django.contrib import messages  # To add message whether login/registration
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
-# @login_required()
+# @login_required(login_url='login') User this when create payment/checkout
 def index(request):
     """Placeholder index view"""
     return render(request, 'index.html')
@@ -56,7 +56,6 @@ def registration_page(request):
                 return redirect('login')         
         context = {'registration_form':form}
         return render(request, 'accounts/register.html',context)
-
 
 
 def login_page(request):

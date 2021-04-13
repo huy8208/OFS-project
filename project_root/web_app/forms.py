@@ -1,11 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User  
 from django import forms
+from .models import Customer
 
+class CreateCustomerRegistrationForm(UserCreationForm):
+    email = forms.EmailField(max_length=100)
 
-
-
-class CreateUserForm(UserCreationForm):
     class Meta:
-        model = User
-        fields = ['email','username','password1','password2']
+        model = Customer  #Tell form to use Customer model
+        fields = ("email","username","password1","password2")

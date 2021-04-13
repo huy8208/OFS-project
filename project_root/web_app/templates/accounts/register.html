@@ -82,25 +82,25 @@
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
-							{{default_form.username}}
+							{{registration_form.username}}
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
 							</div>
-							{{default_form.email}}
+							{{registration_form.email}}
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-							{{default_form.password1}}
+							{{registration_form.password1}}
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-							{{default_form.password2}}
+							{{registration_form.password2}}
 						</div>
 
 				   		<div class="d-flex justify-content-center mt-3 login_container">
@@ -108,7 +108,7 @@
 				   		</div>
 					</form>
 				</div>
-				{{default_form.errors}}
+				{{registration_form.errors}}
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
 						Already have an account? <a href="{% url 'login' %}" class="ml-2">Login</a>

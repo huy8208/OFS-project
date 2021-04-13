@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 
 #Create your views here
 # from .models import Product,Customer
-from .forms import CreateUserForm    # Django's built-in user form
+from .forms import CreateCustomerRegistrationForm    # Django's built-in user form
 from django.contrib import messages  # To add message whether login/registration sucesses or fails.
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -46,15 +46,15 @@ def registration_page(request):
     if request.user.is_authenticated:
         return redirect('homepage')
     else:
-        form = CreateUserForm()
+        form = CreateCustomerRegistrationForm()
         if request.method == 'POST':
-            form = CreateUserForm(request.POST) # Pass in user's information from registration.login
+            form = CreateCustomerRegistrationForm(request.POST) # Pass in user's information from registration.login
             if form.is_valid():
                 form.save()  # Create new user in admin/
-                user = form.cleaned_data.get('username')
-                messages.success(request,'Account was created for ' + user)
+                user_email = form.cleaned_data.get('email')
+                messages.success(request,'Account was created for ' + user_email)
                 return redirect('login')         
-        context = {'default_form':form}
+        context = {'registration_form':form}
         return render(request, 'accounts/register.html',context)
 
 

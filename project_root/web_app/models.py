@@ -22,6 +22,7 @@ class CustomerManager(BaseUserManager):
             password=password,
             username=username,
         )
+        user.is_customer = False
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
@@ -35,6 +36,7 @@ class Customer(AbstractBaseUser):
     last_login = models.DateTimeField(auto_now=True)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_customer = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
@@ -85,7 +87,7 @@ class Order(models.Model):
         ('Out for delivery','Out for delivery'),
         ('Delivered','Delivered'),
     )
-    
+
     customer = models.ForeignKey(Customer, null=True, on_delete= models.SET_NULL)
     product = models.ForeignKey(Product, null=True, on_delete= models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True,null=True)

@@ -78,3 +78,9 @@ def login_page(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
+def SearchPage(request):
+    srh = request.GET['query']
+    products = product.objects.filter(name__icontains=srh)
+    params = {'products': products, 'search':srh}
+    return render(request, 'SearchPage.html', params)

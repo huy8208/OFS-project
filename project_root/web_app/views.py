@@ -84,3 +84,11 @@ def SearchPage(request):
     products = product.objects.filter(name__icontains=srh)
     params = {'products': products, 'search':srh}
     return render(request, 'SearchPage.html', params)
+
+def cart_page(request):
+    context = {}
+    return render(request, 'cart.html', context)
+
+def checkout_page(request):
+    context = {}
+    return render(request, 'checkout.html', context)

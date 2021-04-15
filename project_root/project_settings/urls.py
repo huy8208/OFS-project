@@ -32,7 +32,6 @@ urlpatterns = [
     path('register/',views.registration_page,name = "register"),
     path('logout/',views.logoutUser,name = "logout")
     # Search Pages
-    #path('search/', views.SearchPage, name='search_result'),
 
 ]
 

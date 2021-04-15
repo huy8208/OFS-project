@@ -192,12 +192,16 @@
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
-                            <form action= "#" method = "get">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input name = "query" input type="text" placeholder="What do you need?">
+                            <datalist id = "products">
+                                <option value = "Carrots">
+                                <option value = "Apples">
+                                <option value = "Oranges">
+                                <option value = "Banana">
+                                <option value = "Tomato">
+                            </datalist>
+                            <form action= "#">
+
+                                <input type="text" list = "products" placeholder="What do you need?">
                                 <button type="submit" class="site-btn" name = "button">SEARCH</button>
                             </form>
                         </div>

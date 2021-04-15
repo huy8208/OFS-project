@@ -13,6 +13,12 @@ class CustomerAdmin(UserAdmin):
     list_filter = ()
     fieldsets = ()
 
+class productAdmin(UserAdmin):
+    list_display = ('price')
+    filter_horizontal = ()
+    list_filter = ()
+    fieldsets = ()
+
 admin.site.register(Customer,CustomerAdmin)
 admin.site.register(Product)
 admin.site.register(Order)

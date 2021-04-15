@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 
 #Create your views here
-# from .models import Product,Customer
+from .models import Product,Customer
 from .forms import CreateCustomerRegistrationForm    # Django's built-in user form
 from django.contrib import messages  # To add message whether login/registration sucesses or fails.
 from django.contrib.auth import authenticate,login,logout
@@ -80,7 +80,7 @@ def logoutUser(request):
     return redirect('login')
 
 def SearchPage(request):
-    srh = request.GET['query']
-    products = product.objects.filter(name__icontains=srh)
-    params = {'products': products, 'search':srh}
+    searchquery = request.GET['query']
+    products = Product.objects.filter(name__icontains=searchquery)
+    params = {'products': products, 'search':searchquery}
     return render(request, 'SearchPage.html', params)

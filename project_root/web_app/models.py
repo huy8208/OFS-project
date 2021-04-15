@@ -9,7 +9,7 @@ class CustomerManager(BaseUserManager):
             raise ValueError('Email cannot be empty!')
         if not username:
             raise ValueError('Username cannot be empty!')
-        
+
         user = self.model(email=self.normalize_email(email),username=username)
         user.set_password(password)
         user.save(using=self.db)
@@ -68,7 +68,7 @@ class Product(models.Model):
     CATEGORY = (
         ('Vegetable','Vegetable'),
         ('Fruit','Fruit'),
-        ('Meat','Meat'),
+        ('Meat','Meat'),('Pantry','Pantry'),('Dairy','Dairy')
     )
 
     name = models.CharField(max_length=200,null=True)

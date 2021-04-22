@@ -8,7 +8,7 @@ from django.contrib import messages  # To add message whether login/registration
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
-# @login_required(login_url='login') User this when create payment/checkout
+# @login_required(login_url='login') Use this when create payment/checkout
 def index(request):
     """Placeholder index view"""
     return render(request, 'index.html')
@@ -63,14 +63,14 @@ def login_page(request):
         return redirect('homepage')
     else:
         if request.method == 'POST':
-            username = request.POST.get('username')
+            email = request.POST.get('email')
             password = request.POST.get('password')
-            user = authenticate(request,username=username,password=password)
+            user = authenticate(request,username=email,password=password)
             if user is not None: 
                 login(request,user)
                 return redirect('homepage')
             else:
-                messages.info(request,'Username or password is incorrect!')
+                messages.info(request,'Email or password is incorrect!')
         context = {}
         return render(request, 'accounts/login.html', context)
 

@@ -35,7 +35,9 @@ urlpatterns = [
     #path('search/', views.SearchPage, name='search_result'),
     # Cart and Checkout
     , path('cart/', views.cart_page, name = "cart")
-    , path('checkout/', views.checkout_page, name = "checkout")
+    , path('checkout/', views.checkout_page, name = "checkout"),
+    # individual Product Pages
+    path('RibeyePP/', views.RibeyePP, name = "RibeyePP")
 
 ]
 

@@ -42,7 +42,7 @@ def Frozen_Foods(request):
     
 def RibeyePP(request):
     """Placeholder Ribeye Product Page view"""
-    return render(request, 'RibeyePP.html')
+    return render(request, 'ProductPages/RibeyePP.html')
 
 
 def registration_page(request):

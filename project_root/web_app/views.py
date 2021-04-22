@@ -78,8 +78,72 @@ def EggWhites(request):
     return render(request, 'ProductPages/EggWhites.html')
 
 def AmericanCheese(request):
-    """Placeholder American Cheese Product Page view""" 
+    """Placeholder Egg Whites Product Page view""" 
     return render(request, 'ProductPages/AmericanCheese.html')
+
+def Banana(request):
+    """Placeholder Banana Product Page view""" 
+    return render(request, 'ProductPages/Banana.html')
+
+def Watermelon(request):
+    """Placeholder Watermelon Product Page view""" 
+    return render(request, 'ProductPages/Watermelon.html')
+
+def Mango(request):
+    """Placeholder Mango Product Page view""" 
+    return render(request, 'ProductPages/Mango.html')
+
+def Apple(request):
+    """Placeholder apple Product Page view""" 
+    return render(request, 'ProductPages/Apple.html')
+
+def Guava(request):
+    """Placeholder guava Product Page view""" 
+    return render(request, 'ProductPages/Guava.html')
+
+def Grapes(request):
+    """Placeholder grapes Product Page view""" 
+    return render(request, 'ProductPages/Grapes.html')
+
+def Orange(request):
+    """Placeholder orange Product Page view""" 
+    return render(request, 'ProductPages/Orange.html')
+
+def Lemon(request):
+    """Placeholder lemon Product Page view""" 
+    return render(request, 'ProductPages/Lemon.html')
+
+def Broccoli(request):
+    """Placeholder broccoli Product Page view""" 
+    return render(request, 'ProductPages/Broccoli.html')
+
+def Lettuce(request):
+    """Placeholder Lettuce Product Page view""" 
+    return render(request, 'ProductPages/Lettuce.html')
+
+def Carrots(request):
+    """Placeholder carrots Product Page view""" 
+    return render(request, 'ProductPages/Carrots.html')
+
+def Potato(request):
+    """Placeholder potato Product Page view""" 
+    return render(request, 'ProductPages/Potato.html')
+
+def Cucumber(request):
+    """Placeholder cucumber Product Page view""" 
+    return render(request, 'ProductPages/Cucumber.html')
+
+def Tomato(request):
+    """Placeholder tomato Product Page view""" 
+    return render(request, 'ProductPages/Tomato.html')
+
+def Garlic(request):
+    """Placeholder garlic Product Page view""" 
+    return render(request, 'ProductPages/Garlic.html')
+
+def Onion(request):
+    """Placeholder onion Product Page view""" 
+    return render(request, 'ProductPages/Onion.html')
     
 def registration_page(request):
     """ This function does 3 tasks:

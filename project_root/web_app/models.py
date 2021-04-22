@@ -70,7 +70,7 @@ class Product(models.Model):
         ('Fruit','Fruit'),
         ('Meat','Meat'),('Pantry','Pantry'),('Dairy','Dairy')
     )
-    image = models.ImageField(null=True,blank=True,upload_to='yoyoyo/')
+    # image = models.ImageField(null=True,blank=True,upload_to='yoyoyo/')
     name = models.CharField(max_length=200,null=True)
     price = models.FloatField()
     category = models.CharField(max_length=200,null=True,choices=CATEGORY)

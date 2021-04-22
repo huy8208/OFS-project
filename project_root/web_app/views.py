@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 
-
 #Create your views here
 from .models import Product,Customer
 from .forms import CreateCustomerRegistrationForm    # Django's built-in user form
@@ -8,7 +7,11 @@ from django.contrib import messages  # To add message whether login/registration
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
-# @login_required(login_url='login') Use this when create payment/checkout
+# json stuff (checkout)
+from django.http import JsonResponse 
+import json
+
+# @login_required(login_url='login') User this when create payment/checkout
 def index(request):
     """Placeholder index view"""
     return render(request, 'index.html')
@@ -96,3 +99,6 @@ def checkout_page(request):
     products = Product.objects.filter(name__icontains=searchquery)
     params = {'products': products, 'search':searchquery}
     return render(request, 'SearchPage.html', params)
+
+def processOrder(request):
+    return JsonResponse("Payment complete!", safe = False)

@@ -101,12 +101,13 @@ class Order(models.Model):
 #     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
 #     quantity = models.IntegerField(default = 0, null = True, blank = True)
 #     date_created = models.DateTimeField(auto_now_add=True,null=True)
+    
 
 # class ShippingAddress(models.Model):
 #     # Store shipping address of customer
 #     customer = models.ForeignKey(Customer, null=True, on_delete= models.SET_NULL)
 #     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
-#     address = models.ForeignKey(Order, on_delete = models.SET_NULL, blank = True, null = True)
+#     address = models.CharField(max_length = 200, null = True)
 #     city = models.CharField(max_length = 200, null = True)
 #     state = models.CharField(max_length = 200, null = True)
 #     zipcode = models.CharField(max_length = 200, null = True)

@@ -70,14 +70,14 @@ def login_page(request):
         return redirect('homepage')
     else:
         if request.method == 'POST':
-            username = request.POST.get('username')
+            email = request.POST.get('email')
             password = request.POST.get('password')
-            user = authenticate(request,username=username,password=password)
+            user = authenticate(request,username=email,password=password)
             if user is not None: 
                 login(request,user)
                 return redirect('homepage')
             else:
-                messages.info(request,'Username or password is incorrect!')
+                messages.info(request,'Email or password is incorrect!')
         context = {}
         return render(request, 'accounts/login.html', context)
 
@@ -106,3 +106,6 @@ def checkout_page(request):
 
 def processOrder(request):
     return JsonResponse("Payment complete!", safe = False)
+
+def base_product_template(request):
+    return render(request, 'ProductPages/base_product_template.html')

@@ -123,8 +123,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/static/'
-MEDIA_URL = '/static/media/'
+STATIC_URL = '/static/static/' #The URL of which the static files in STATIC_ROOT directory are served(by Apache or nginx..etc)
+MEDIA_URL = '/static/media/'   #For example: http://static.example.com
 
-STATIC_ROOT = '/vol/web/static'
-MEDIA_ROOT = '/vol/web/media'
+STATIC_ROOT = '/vol/web/static'  #The absolute path to the directory where collectstatic will collect static files for deployment.
+MEDIA_ROOT = '/vol/web/media' 

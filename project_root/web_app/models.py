@@ -70,7 +70,7 @@ class Product(models.Model):
         ('Fruit','Fruit'),
         ('Meat','Meat'),('Pantry','Pantry'),('Dairy','Dairy')
     )
-
+    # image = models.ImageField(null=True,blank=True,upload_to='yoyoyo/')
     name = models.CharField(max_length=200,null=True)
     price = models.FloatField()
     category = models.CharField(max_length=200,null=True,choices=CATEGORY)
@@ -82,6 +82,8 @@ class Product(models.Model):
         return self.name
 
 class Order(models.Model):
+    """The model order has many-to-one relationship with model customer and product.
+    One customer can have many orders. One product can have many orders."""
     STATUS = (
         ('Pending','Pending'),
         ('Out for delivery','Out for delivery'),
@@ -93,7 +95,7 @@ class Order(models.Model):
     date_created = models.DateTimeField(auto_now_add=True,null=True)
     status = models.CharField(max_length=200,null=True, choices=STATUS)
 
-# class OrderItem(models.Model):
+# class OrderedItems(models.Model):
 #     # Items in a cart
 #     product = models.ForeignKey(Product, null=True, on_delete= models.SET_NULL)
 #     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)

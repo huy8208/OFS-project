@@ -49,7 +49,38 @@ def NewyorkPP(request):
     """Placeholder Newyork Product Page view"""
     return render(request, 'ProductPages/NewyorkPP.html')
 
+def CheddarCheese(request):
+    """Placeholder Cheddar Cheese Product Page view""" 
+    return render(request, 'ProductPages/CheddarCheese.html')
 
+def LowFatMilk(request):
+    """Placeholder Low Fat Milk Product Page view""" 
+    return render(request, 'ProductPages/LowFatMilk.html')
+
+def WholeMilk(request):
+    """Placeholder Whole Milk Product Page view""" 
+    return render(request, 'ProductPages/WholeMilk.html')
+
+def CreamCheese(request):
+    """Placeholder Cream Cheese Product Page view""" 
+    return render(request, 'ProductPages/CreamCheese.html')
+
+def PlainYogurt(request):
+    """Placeholder Plain Yogurt Product Page view""" 
+    return render(request, 'ProductPages/PlainYogurt.html')
+
+def DozenEggs(request):
+    """Placeholder Dozen Eggs Product Page view""" 
+    return render(request, 'ProductPages/DozenEggs.html')
+
+def EggWhites(request):
+    """Placeholder Egg Whites Product Page view""" 
+    return render(request, 'ProductPages/EggWhites.html')
+
+def AmericanCheese(request):
+    """Placeholder American Cheese Product Page view""" 
+    return render(request, 'ProductPages/AmericanCheese.html')
+    
 def registration_page(request):
     """ This function does 3 tasks:
         1. Display register.html path.

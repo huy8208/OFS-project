@@ -40,6 +40,20 @@ urlpatterns = [
     path('RibeyePP/', views.RibeyePP, name = "RibeyePP"),
     path('Newyork/', views.NewyorkPP, name = "NewyorkPP"),
     path('product_page_template/', views.base_product_template, name = "productBaseTemplate"),
+    path('Cheddar/', views.CheddarCheese, name = "CheddarCheese"),
+    path('LowFatMilk/', views.LowFatMilk, name = "LowFatMilk"),
+    path('WholeMilk/', views.WholeMilk, name = "WholeMilk"),
+    path('CreamCheese/', views.CreamCheese, name = "CreamCheese"),
+    path('PlainYogurt/', views.PlainYogurt, name = "PlainYogurt"),
+    path('DozenEggs/', views.DozenEggs, name = "DozenEggs"),
+    path('EggWhites/', views.EggWhites, name = "EggWhites"),
+    path('AmericanCheese/', views.AmericanCheese, name = "AmericanCheese"),
+
+
+
+
+
+
 
 ]
 

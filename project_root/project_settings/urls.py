@@ -37,8 +37,8 @@ urlpatterns = [
     , path('cart/', views.cart_page, name = "cart")
     , path('checkout/', views.checkout_page, name = "checkout"),
     # individual Product Pages
-    path('RibeyePP/', views.RibeyePP, name = "RibeyePP")
-
+    path('RibeyePP/', views.RibeyePP, name = "RibeyePP"),
+    path('product_page_template/', views.base_product_template, name = "productBaseTemplate"),
 ]
 
 

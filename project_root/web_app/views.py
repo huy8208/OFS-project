@@ -106,3 +106,6 @@ def checkout_page(request):
 
 def processOrder(request):
     return JsonResponse("Payment complete!", safe = False)
+
+def base_product_template(request):
+    return render(request, 'ProductPages/base_product_template.html')

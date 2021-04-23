@@ -48,7 +48,23 @@ urlpatterns = [
     path('DozenEggs/', views.DozenEggs, name = "DozenEggs"),
     path('EggWhites/', views.EggWhites, name = "EggWhites"),
     path('AmericanCheese/', views.AmericanCheese, name = "AmericanCheese"),
-
+    path('Mango/', views.Mango, name = "Mango"), 
+    path('Watermelon/', views.Watermelon, name = "Watermelon"),
+    path('Banana/', views.Banana, name = "Banana"),
+    path('Apple/', views.Apple, name = "Apple"),
+    path('Guava/', views.Guava, name = "Guava"),
+    path('Grapes/', views.Grapes, name = "Grapes"),
+    path('Orange/', views.Orange, name = "Orange"),
+    path('Lemon/', views.Lemon, name = "Lemon"),
+    path('Broccoli/', views.Broccoli, name = "Broccoli"),
+    path('Lettuce/', views.Lettuce, name = "Lettuce"),
+    path('Carrots/', views.Carrots, name = "Carrots"),
+    path('Potato/', views.Potato, name = "Potato"),
+    path('Cucumber/', views.Cucumber, name = "Cucumber"),
+    path('Tomato/', views.Tomato, name = "Tomato"),
+    path('Garlic/', views.Garlic, name = "Garlic"),
+    path('Onion/', views.Onion, name = "Onion"),
+    
 
 
 

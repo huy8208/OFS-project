@@ -13,14 +13,14 @@ class CustomerAdmin(UserAdmin):
     list_filter = ()
     fieldsets = ()
 
-class productAdmin(UserAdmin):
-    list_display = ('price')
+class productAdmin(admin.ModelAdmin):
+    list_display = ('name','price','category','description','date_created')
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()
 
 admin.site.register(Customer,CustomerAdmin)
-admin.site.register(Product)
+admin.site.register(Product,productAdmin)
 admin.site.register(Order)
 admin.site.register(Tag)
 # admin.site.register(OrderItem)

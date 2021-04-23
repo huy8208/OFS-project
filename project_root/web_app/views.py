@@ -39,10 +39,15 @@ def Dairy_Eggs(request):
 def Frozen_Foods(request):
     """Placeholder Frozen_Foods view"""
     return render(request, 'Frozen_Foods.html')
-    
+
+# Product Info Stuff
 def RibeyePP(request):
     """Placeholder Ribeye Product Page view"""
     return render(request, 'ProductPages/RibeyePP.html')
+
+def NewyorkPP(request):
+    """Placeholder Newyork Product Page view"""
+    return render(request, 'ProductPages/NewyorkPP.html')
 
 
 def registration_page(request):

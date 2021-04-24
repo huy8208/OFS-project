@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 #Create your views here
-from .models import Product,Customer
+from .models import *
 from .forms import CreateCustomerRegistrationForm    # Django's built-in user form
 from django.contrib import messages  # To add message whether login/registration sucesses or fails.
 from django.contrib.auth import authenticate,login,logout
@@ -193,7 +193,15 @@ def SearchPage(request):
     return render(request, 'SearchPage.html', params)
 
 def cart_page(request):
-    context = {}
+    if request.user.is_authenticated:
+        customer = request.user
+        order = Order.objects.get()
+        order,created = Order.objects.get_or_create(customer=customer,complete=False) #Create or get order if it exists,only get order that is not complete
+        items = OrderedItem.objects.all() #Get all ordered items object that an authenticated user has placed from our db.
+    else: #If user is not authenticated/login
+        items = [] #create an empty list of items.
+
+    context = {'items':items}
     return render(request, 'cart.html', context)
 
 def checkout_page(request):

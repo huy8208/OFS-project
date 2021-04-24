@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 # Create your models here.
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import User
 
 class CustomerManager(BaseUserManager):
     def create_user(self,email,username,password=None):
@@ -90,28 +91,53 @@ class Order(models.Model):
         ('Delivered','Delivered'),
     )
 
-    customer = models.ForeignKey(Customer, null=True, on_delete= models.SET_NULL)
-    product = models.ManyToManyField(Product)
-    date_created = models.DateTimeField(auto_now_add=True,null=True)
+    customer = models.ForeignKey(Customer,blank=True,null=True, on_delete= models.SET_NULL)
+    date_ordered = models.DateTimeField(auto_now_add=True,null=True)
+    # date_created = models.DateTimeField(auto_now_add=True,null=True)
+    complete = models.BooleanField(default=False,null=True,blank=False)
+    transaction_id = models.CharField(max_length=200,null=True)
+    # product = models.ManyToManyField(Product) #May need to be removed
     status = models.CharField(max_length=200,null=True, choices=STATUS)
 
-# class OrderedItems(models.Model):
-#     # Items in a cart
-#     product = models.ForeignKey(Product, null=True, on_delete= models.SET_NULL)
-#     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
-#     quantity = models.IntegerField(default = 0, null = True, blank = True)
-#     date_created = models.DateTimeField(auto_now_add=True,null=True)
+    def __str__(self):
+        return str(self.id)
+
+    # @property
+    # def get_cart_items(self):
+    #     orderitems = self.orderitem_set.all()
+    #     total = sum([item.quantity for item in orderitems])
+    #     return total 
+
+    # @property
+    # def shipping(self):
+    #     shipping = False
+    #     orderitems = self.orderitem_set.all()
+    #     for i in orderitems:
+    #         if i.product.digital == False:
+    #             shipping = True
+    #     return shipping
+
+class OrderedItem(models.Model):
+    """An order Item is one item with an order. For example, a shopping cart may consist of many items but is all part of one order.
+     Therfore the OrderItem model will be a child of the PRODUCT model AND the ORDER Model."""
+    class Meta:
+        verbose_name = "Ordered Item"
+
+    product = models.ForeignKey(Product, on_delete= models.SET_NULL, blank = True, null = True)
+    order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
+    quantity = models.IntegerField(default = 0, null = True, blank = True)
+    date_added = models.DateTimeField(auto_now_add=True)
     
 
-# class ShippingAddress(models.Model):
-#     # Store shipping address of customer
-#     customer = models.ForeignKey(Customer, null=True, on_delete= models.SET_NULL)
-#     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
-#     address = models.CharField(max_length = 200, null = True)
-#     city = models.CharField(max_length = 200, null = True)
-#     state = models.CharField(max_length = 200, null = True)
-#     zipcode = models.CharField(max_length = 200, null = True)
-#     date_created = models.DateTimeField(auto_now_add=True,null=True)
+class ShippingAddress(models.Model):
+    # Store shipping address of customer
+    customer = models.ForeignKey(Customer, on_delete= models.SET_NULL, blank = True, null = True)
+    order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
+    address = models.CharField(max_length = 200, null = True)
+    city = models.CharField(max_length = 200, null = True)
+    state = models.CharField(max_length = 200, null = True)
+    zipcode = models.CharField(max_length = 200, null = True)
+    data_added = models.DateTimeField(auto_now_add=True,null=True)
 
-#     def __str__(self):
-#         return self.address
+    def __str__(self):
+        return self.address

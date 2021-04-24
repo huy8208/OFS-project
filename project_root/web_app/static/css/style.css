@@ -1675,8 +1675,10 @@ ol {
 	cursor: pointer;
 }
 
+/* Added by Huy, remove display: none to re-enable product pictures slider in every product pages.*/
 .product__details__pic__slider.owl-carousel .owl-item img {
 	width: auto;
+	display: none;
 }
 
 .product__details__text h3 {

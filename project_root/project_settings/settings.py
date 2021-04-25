@@ -129,5 +129,4 @@ STATIC_ROOT = '/vol/web/static'  #The absolute path to the directory where colle
 
 MEDIA_URL = '/static/media/'   #For example: http://static.example.com
 # MEDIA_ROOT = '/vol/web/media' 
-
 MEDIA_ROOT = os.path.join(BASE_DIR,'/vol/web/media')

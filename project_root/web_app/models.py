@@ -126,18 +126,12 @@ class OrderedItem(models.Model):
     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
     quantity = models.IntegerField(default = 0, null = True, blank = True)
     date_added = models.DateTimeField(auto_now_add=True)
-<<<<<<< HEAD
        
     @property
     def get_total(self):
         """Calculate and return total price for each product in cart."""
         total = self.product.price * self.quantity
         return total
-=======
-
-    
-    
->>>>>>> fdcf2329e4d77daa6bbb72bb160dc504e39977ba
 
 class ShippingAddress(models.Model):
     # Store shipping address of customer

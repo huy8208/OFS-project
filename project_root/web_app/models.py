@@ -71,13 +71,13 @@ class Product(models.Model):
         ('Fruit','Fruit'),
         ('Meat','Meat'),('Pantry','Pantry'),('Dairy','Dairy'),('Frozen Foods', 'Frozen Foods')
     )
-    # image = models.ImageField(null=True,blank=True,upload_to='yoyoyo/')
     name = models.CharField(max_length=200,null=True)
     price = models.FloatField()
     category = models.CharField(max_length=200,null=True,choices=CATEGORY)
     description = models.CharField(max_length=200,null=True)
     date_created = models.DateTimeField(auto_now_add=True,null=True)
     tags = models.ManyToManyField(Tag)
+    image = models.ImageField(null=True,blank=True,upload_to='yoyoyo/')
 
     def __str__(self):
         return self.name

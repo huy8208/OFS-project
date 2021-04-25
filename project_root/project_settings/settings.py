@@ -128,4 +128,6 @@ STATIC_URL = '/static/static/' #The URL of which the static files in STATIC_ROOT
 STATIC_ROOT = '/vol/web/static'  #The absolute path to the directory where collectstatic will collect static files for deployment.
 
 MEDIA_URL = '/static/media/'   #For example: http://static.example.com
-MEDIA_ROOT = '/vol/web/media' 
+# MEDIA_ROOT = '/vol/web/media' 
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'/vol/web/media')

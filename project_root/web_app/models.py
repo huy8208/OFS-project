@@ -77,7 +77,7 @@ class Product(models.Model):
     description = models.CharField(max_length=200,null=True)
     date_created = models.DateTimeField(auto_now_add=True,null=True)
     tags = models.ManyToManyField(Tag)
-    image = models.ImageField(null=True,blank=True,upload_to='yoyoyo/')
+    image = models.ImageField(null=True,blank=True,upload_to='uploaded_images/')
 
     def __str__(self):
         return self.name

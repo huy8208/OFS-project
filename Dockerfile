@@ -22,6 +22,8 @@ RUN mkdir -p /vol/web/static
 RUN adduser -D user
 RUN chown -R user:user /vol
 RUN chmod -R 755 /vol/web
+#Temporary solution!Give 777 permission to /project_root/dbsqlite3 so nginx can access it.
+RUN chmod 777 /project_root/db.sqlite3
 USER user
 
 CMD ["entrypoint.sh"]

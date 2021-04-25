@@ -207,12 +207,23 @@ def cart_page(request):
     return render(request, 'cart.html', context)
 
 def checkout_page(request):
-    context = {}
+    # context = {}
+    # return render(request, 'checkout.html', context)
+    # searchquery = request.GET['query']
+    # products = Product.objects.filter(name__icontains=searchquery)
+    # params = {'products': products, 'search':searchquery}
+    # return render(request, 'SearchPage.html', params)
+    if request.user.is_authenticated:
+        customer = request.user
+        #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
+        order,created = Order.objects.get_or_create(customer=customer,complete=False) 
+        items = OrderedItem.objects.all() #Get all ordered items object that an authenticated user has placed from our db.
+    else: #If user is not authenticated/login
+        items = [] #create an empty list of items.
+        order = {'get_cart_total':0,'get_cart_items':0}
+
+    context = {'items':items,'order':order}
     return render(request, 'checkout.html', context)
-    searchquery = request.GET['query']
-    products = Product.objects.filter(name__icontains=searchquery)
-    params = {'products': products, 'search':searchquery}
-    return render(request, 'SearchPage.html', params)
 
 def processOrder(request):
     return JsonResponse("Payment complete!", safe = False)

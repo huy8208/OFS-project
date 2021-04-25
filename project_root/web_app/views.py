@@ -196,7 +196,7 @@ def cart_page(request):
     if request.user.is_authenticated:
         customer = request.user
         order = Order.objects.get()
-        order,created = Order.objects.get_or_create(customer=customer,complete=False) #Create or get order if it exists,only get order that is not complete
+        order,created = Order.objects.get_or_create(customer=customer,complete=False) #Create or get order if it exists,only get order that is not complete/Order that is open.
         items = OrderedItem.objects.all() #Get all ordered items object that an authenticated user has placed from our db.
     else: #If user is not authenticated/login
         items = [] #create an empty list of items.

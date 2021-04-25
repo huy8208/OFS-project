@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-#Switch from default user to use custom user.
+#Switch from default user to custom user.
 AUTH_USER_MODEL = 'web_app.Customer'
 
 WSGI_APPLICATION = 'project_settings.wsgi.application'

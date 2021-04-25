@@ -241,7 +241,6 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Shoping Cart Section Begin -->
-    {% for item in items %}
     <section class="shoping-cart spad">
         <div class="container">
             <div class="row">
@@ -258,6 +257,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for item in items %}
                                 <tr>
                                     <td class="shoping__cart__item">
                                         <img src="img/cart/cart-1.jpg" alt="">
@@ -281,6 +281,7 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -318,7 +319,6 @@
             </div>
         </div>
     </section>
-    {% endfor %}
     <!-- Shoping Cart Section End -->
 
     <!-- Footer Section Begin -->

@@ -145,6 +145,39 @@ def Garlic(request):
 def Onion(request):
     """Placeholder onion Product Page view""" 
     return render(request, 'ProductPages/Onion.html')
+
+def SourdoughBread(request):
+    """Placeholder onion Product Page view""" 
+    return render(request, 'ProductPages/SourdoughBread.html')
+
+def PeanutButter(request):
+    """Placeholder onion Product Page view""" 
+    return render(request, 'ProductPages/PeanutButter.html')
+
+def Pickles(request):
+    """Placeholder onion Product Page view""" 
+    return render(request, 'ProductPages/Pickles.html')
+
+def Sugar(request):
+    """Placeholder onion Product Page view""" 
+    return render(request, 'ProductPages/Sugar.html')
+
+def Cheerios(request):
+    """Placeholder onion Product Page view""" 
+    return render(request, 'ProductPages/Cheerios.html')
+
+def BrownRice(request):
+    """Placeholder onion Product Page view""" 
+    return render(request, 'ProductPages/BrownRice.html')
+
+def CannedBeans(request):
+    """Placeholder onion Product Page view""" 
+    return render(request, 'ProductPages/CannedBeans.html')
+
+def Oreos(request):
+    """Placeholder onion Product Page view""" 
+    return render(request, 'ProductPages/Oreos.html')
+
     
 def registration_page(request):
     """ This function does 3 tasks:

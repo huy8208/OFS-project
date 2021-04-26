@@ -644,6 +644,7 @@ ol {
 	border: 1px solid #ebebeb;
 	position: relative;
 	float: left;
+	
 }
 
 .hero__search__form form .hero__search__categories {
@@ -655,6 +656,7 @@ ol {
 	padding-left: 18px;
 	padding-top: 11px;
 	position: relative;
+	
 }
 
 .hero__search__form form .hero__search__categories:after {
@@ -680,7 +682,8 @@ ol {
 	height: 48px;
 	font-size: 16px;
 	color: #b2b2b2;
-	padding-left: 20px;
+    padding-left: 20px;
+	padding-right: 0px;  
 }
 
 .hero__search__form form input::placeholder {

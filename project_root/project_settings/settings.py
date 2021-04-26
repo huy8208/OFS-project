@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web_app',
+    'fontawesome-free',
 ]
 
 MIDDLEWARE = [
@@ -70,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-#Switch from default user to use custom user.
+#Switch from default user to custom user.
 AUTH_USER_MODEL = 'web_app.Customer'
 
 WSGI_APPLICATION = 'project_settings.wsgi.application'
@@ -124,7 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/static/' #The URL of which the static files in STATIC_ROOT directory are served(by Apache or nginx..etc)
-MEDIA_URL = '/static/media/'   #For example: http://static.example.com
-
 STATIC_ROOT = '/vol/web/static'  #The absolute path to the directory where collectstatic will collect static files for deployment.
-MEDIA_ROOT = '/vol/web/media' 
+
+MEDIA_URL = '/static/media/'   #For example: http://static.example.com
+# MEDIA_ROOT = '/vol/web/media' 
+MEDIA_ROOT = os.path.join(BASE_DIR,'/vol/web/media')

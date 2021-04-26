@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from web_app import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,7 +42,38 @@ urlpatterns = [
     path('RibeyePP/', views.RibeyePP, name = "RibeyePP"),
     path('Newyork/', views.NewyorkPP, name = "NewyorkPP"),
     path('product_page_template/', views.base_product_template, name = "productBaseTemplate"),
+    path('Cheddar/', views.CheddarCheese, name = "CheddarCheese"),
+    path('LowFatMilk/', views.LowFatMilk, name = "LowFatMilk"),
+    path('WholeMilk/', views.WholeMilk, name = "WholeMilk"),
+    path('CreamCheese/', views.CreamCheese, name = "CreamCheese"),
+    path('PlainYogurt/', views.PlainYogurt, name = "PlainYogurt"),
+    path('DozenEggs/', views.DozenEggs, name = "DozenEggs"),
+    path('EggWhites/', views.EggWhites, name = "EggWhites"),
+    path('AmericanCheese/', views.AmericanCheese, name = "AmericanCheese"),
+    path('Mango/', views.Mango, name = "Mango"), 
+    path('Watermelon/', views.Watermelon, name = "Watermelon"),
+    path('Banana/', views.Banana, name = "Banana"),
+    path('Apple/', views.Apple, name = "Apple"),
+    path('Guava/', views.Guava, name = "Guava"),
+    path('Grapes/', views.Grapes, name = "Grapes"),
+    path('Orange/', views.Orange, name = "Orange"),
+    path('Lemon/', views.Lemon, name = "Lemon"),
+    path('Broccoli/', views.Broccoli, name = "Broccoli"),
+    path('Lettuce/', views.Lettuce, name = "Lettuce"),
+    path('Carrots/', views.Carrots, name = "Carrots"),
+    path('Potato/', views.Potato, name = "Potato"),
+    path('Cucumber/', views.Cucumber, name = "Cucumber"),
+    path('Tomato/', views.Tomato, name = "Tomato"),
+    path('Garlic/', views.Garlic, name = "Garlic"),
+    path('Onion/', views.Onion, name = "Onion"),
+    
+
+
+
+
+
 
 ]
 
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

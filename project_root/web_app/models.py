@@ -82,6 +82,16 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def imageURL(self):
+        """Check to see if there is an image of product, if it does, return that image, 
+        else -> return none to prevent bug."""
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
 class Order(models.Model):
     """The model order has many-to-one relationship with model customer and product.
     One customer can have many orders. One product can have many orders."""

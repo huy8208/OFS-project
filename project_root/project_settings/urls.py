@@ -66,7 +66,14 @@ urlpatterns = [
     path('Tomato/', views.Tomato, name = "Tomato"),
     path('Garlic/', views.Garlic, name = "Garlic"),
     path('Onion/', views.Onion, name = "Onion"),
-    
+    path('SourdoughBread/', views.SourdoughBread, name = "SourdoughBread"),
+    path('PeanutButter/', views.PeanutButter, name = "PeanutButter"),
+    path('Pickles/', views.Pickles, name = "Pickles"),
+    path('Sugar/', views.Sugar, name = "Sugar"),
+    path('Cheerios/', views.Cheerios, name = "Cheerios"),
+    path('BrownRice/', views.BrownRice, name = "BrownRice"),
+    path('CannedBeans/', views.CannedBeans, name = "CannedBeans"),
+    path('Oreos/', views.Oreos, name = "Oreos"),
 
 
 

@@ -94,8 +94,9 @@ def Mango(request):
     return render(request, 'ProductPages/Mango.html')
 
 def Apple(request):
-    """Placeholder apple Product Page view""" 
-    return render(request, 'ProductPages/Apple.html')
+    """Placeholder apple Product Page view"""
+    context = {'allProducts':Product.objects.first()}
+    return render(request, 'ProductPages/Apple.html',context)
 
 def Guava(request):
     """Placeholder guava Product Page view""" 
@@ -229,4 +230,5 @@ def processOrder(request):
     return JsonResponse("Payment complete!", safe = False)
 
 def base_product_template(request):
-    return render(request, 'ProductPages/base_product_template.html')
+    context = {'allProducts':Product.objects.first()}
+    return render(request, 'ProductPages/base_product_template.html',context)

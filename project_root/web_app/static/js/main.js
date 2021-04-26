@@ -6,7 +6,6 @@
     Version: 1.0
     Created: Colorlib
 ---------------------------------------------------------  */
-console.log('HELLO Huy')
 'use strict';
 
 (function ($) {
@@ -233,3 +232,4 @@ for(var i=0; i < updateBtns.length;i++){
         console.log('product_id:',productId,'action:',action)
     })
 }
+

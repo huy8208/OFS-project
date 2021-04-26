@@ -6,7 +6,7 @@
     Version: 1.0
     Created: Colorlib
 ---------------------------------------------------------  */
-
+console.log('HELLO Huy')
 'use strict';
 
 (function ($) {
@@ -222,3 +222,14 @@
     });
 
 })(jQuery);
+
+// Added by Huy
+var updateBtns = document.getElementsByClassName('update-cart')
+
+for(var i=0; i < updateBtns.length;i++){
+    updateBtns[i].addEventListener('click',function(){
+        var productId = this.dataset.product
+        var action = this.dataset.action
+        console.log('product_id:',productId,'action:',action)
+    })
+}

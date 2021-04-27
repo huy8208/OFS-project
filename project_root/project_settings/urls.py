@@ -41,6 +41,12 @@ urlpatterns = [
     # individual Product Pages
     path('RibeyePP/', views.RibeyePP, name = "RibeyePP"),
     path('Newyork/', views.NewyorkPP, name = "NewyorkPP"),
+    path('ChickenthighsPP/', views.ChickenthighsPP, name = "ChickenthighsPP"),
+    path('Chickenbreasts/', views.Chickenbreasts, name = "Chickenbreasts"),
+    path('Porkchops/', views.Porkchops, name = "Porkchops"),
+    path('Bacon/', views.Bacon, name = "Bacon"),
+    path('Shrimps/', views.Shrimps, name = "Shrimps"),
+    path('Clam/', views.Clam, name = "Clam"),
     path('product_page_template/', views.base_product_template, name = "productBaseTemplate"),
     path('Cheddar/', views.CheddarCheese, name = "CheddarCheese"),
     path('LowFatMilk/', views.LowFatMilk, name = "LowFatMilk"),
@@ -50,7 +56,7 @@ urlpatterns = [
     path('DozenEggs/', views.DozenEggs, name = "DozenEggs"),
     path('EggWhites/', views.EggWhites, name = "EggWhites"),
     path('AmericanCheese/', views.AmericanCheese, name = "AmericanCheese"),
-    path('Mango/', views.Mango, name = "Mango"), 
+    path('Mango/', views.Mango, name = "Mango"),
     path('Watermelon/', views.Watermelon, name = "Watermelon"),
     path('Banana/', views.Banana, name = "Banana"),
     path('Apple/', views.Apple, name = "Apple"),
@@ -83,4 +89,3 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
-

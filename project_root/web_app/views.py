@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
 # json stuff (checkout)
-from django.http import JsonResponse 
+from django.http import JsonResponse
 import json
 
 # @login_required(login_url='login') User this when create payment/checkout
@@ -49,48 +49,72 @@ def NewyorkPP(request):
     """Placeholder Newyork Product Page view"""
     return render(request, 'ProductPages/NewyorkPP.html')
 
+def ChickenthighsPP(request):
+    """Placeholder ChickenthighsPP Product Page view"""
+    return render(request, 'ProductPages/ChickenthighsPP.html')
+
+def Chickenbreasts(request):
+    """Placeholder Chickenbreasts Product Page view"""
+    return render(request, 'ProductPages/Chickenbreasts.html')
+
+def Porkchops(request):
+    """Placeholder Porkshops Product Page view"""
+    return render(request, 'ProductPages/Porkchops.html')
+
+def Bacon(request):
+    """Placeholder Bacon Product Page view"""
+    return render(request, 'ProductPages/Bacon.html')
+
+def Shrimps(request):
+    """Placeholder Shrimps Product Page view"""
+    return render(request, 'ProductPages/Shrimps.html')
+
+def Clam(request):
+    """Placeholder Clam Product Page view"""
+    return render(request, 'ProductPages/Clam.html')
+
 def CheddarCheese(request):
-    """Placeholder Cheddar Cheese Product Page view""" 
+    """Placeholder Cheddar Cheese Product Page view"""
     return render(request, 'ProductPages/CheddarCheese.html')
 
 def LowFatMilk(request):
-    """Placeholder Low Fat Milk Product Page view""" 
+    """Placeholder Low Fat Milk Product Page view"""
     return render(request, 'ProductPages/LowFatMilk.html')
 
 def WholeMilk(request):
-    """Placeholder Whole Milk Product Page view""" 
+    """Placeholder Whole Milk Product Page view"""
     return render(request, 'ProductPages/WholeMilk.html')
 
 def CreamCheese(request):
-    """Placeholder Cream Cheese Product Page view""" 
+    """Placeholder Cream Cheese Product Page view"""
     return render(request, 'ProductPages/CreamCheese.html')
 
 def PlainYogurt(request):
-    """Placeholder Plain Yogurt Product Page view""" 
+    """Placeholder Plain Yogurt Product Page view"""
     return render(request, 'ProductPages/PlainYogurt.html')
 
 def DozenEggs(request):
-    """Placeholder Dozen Eggs Product Page view""" 
+    """Placeholder Dozen Eggs Product Page view"""
     return render(request, 'ProductPages/DozenEggs.html')
 
 def EggWhites(request):
-    """Placeholder Egg Whites Product Page view""" 
+    """Placeholder Egg Whites Product Page view"""
     return render(request, 'ProductPages/EggWhites.html')
 
 def AmericanCheese(request):
-    """Placeholder Egg Whites Product Page view""" 
+    """Placeholder Egg Whites Product Page view"""
     return render(request, 'ProductPages/AmericanCheese.html')
 
 def Banana(request):
-    """Placeholder Banana Product Page view""" 
+    """Placeholder Banana Product Page view"""
     return render(request, 'ProductPages/Banana.html')
 
 def Watermelon(request):
-    """Placeholder Watermelon Product Page view""" 
+    """Placeholder Watermelon Product Page view"""
     return render(request, 'ProductPages/Watermelon.html')
 
 def Mango(request):
-    """Placeholder Mango Product Page view""" 
+    """Placeholder Mango Product Page view"""
     return render(request, 'ProductPages/Mango.html')
 
 def Apple(request):
@@ -99,86 +123,86 @@ def Apple(request):
     return render(request, 'ProductPages/Apple.html',context)
 
 def Guava(request):
-    """Placeholder guava Product Page view""" 
+    """Placeholder guava Product Page view"""
     return render(request, 'ProductPages/Guava.html')
 
 def Grapes(request):
-    """Placeholder grapes Product Page view""" 
+    """Placeholder grapes Product Page view"""
     return render(request, 'ProductPages/Grapes.html')
 
 def Orange(request):
-    """Placeholder orange Product Page view""" 
+    """Placeholder orange Product Page view"""
     return render(request, 'ProductPages/Orange.html')
 
 def Lemon(request):
-    """Placeholder lemon Product Page view""" 
+    """Placeholder lemon Product Page view"""
     return render(request, 'ProductPages/Lemon.html')
 
 def Broccoli(request):
-    """Placeholder broccoli Product Page view""" 
+    """Placeholder broccoli Product Page view"""
     return render(request, 'ProductPages/Broccoli.html')
 
 def Lettuce(request):
-    """Placeholder Lettuce Product Page view""" 
+    """Placeholder Lettuce Product Page view"""
     return render(request, 'ProductPages/Lettuce.html')
 
 def Carrots(request):
-    """Placeholder carrots Product Page view""" 
+    """Placeholder carrots Product Page view"""
     return render(request, 'ProductPages/Carrots.html')
 
 def Potato(request):
-    """Placeholder potato Product Page view""" 
+    """Placeholder potato Product Page view"""
     return render(request, 'ProductPages/Potato.html')
 
 def Cucumber(request):
-    """Placeholder cucumber Product Page view""" 
+    """Placeholder cucumber Product Page view"""
     return render(request, 'ProductPages/Cucumber.html')
 
 def Tomato(request):
-    """Placeholder tomato Product Page view""" 
+    """Placeholder tomato Product Page view"""
     return render(request, 'ProductPages/Tomato.html')
 
 def Garlic(request):
-    """Placeholder garlic Product Page view""" 
+    """Placeholder garlic Product Page view"""
     return render(request, 'ProductPages/Garlic.html')
 
 def Onion(request):
-    """Placeholder onion Product Page view""" 
+    """Placeholder onion Product Page view"""
     return render(request, 'ProductPages/Onion.html')
 
 def SourdoughBread(request):
-    """Placeholder onion Product Page view""" 
+    """Placeholder onion Product Page view"""
     return render(request, 'ProductPages/SourdoughBread.html')
 
 def PeanutButter(request):
-    """Placeholder onion Product Page view""" 
+    """Placeholder onion Product Page view"""
     return render(request, 'ProductPages/PeanutButter.html')
 
 def Pickles(request):
-    """Placeholder onion Product Page view""" 
+    """Placeholder onion Product Page view"""
     return render(request, 'ProductPages/Pickles.html')
 
 def Sugar(request):
-    """Placeholder onion Product Page view""" 
+    """Placeholder onion Product Page view"""
     return render(request, 'ProductPages/Sugar.html')
 
 def Cheerios(request):
-    """Placeholder onion Product Page view""" 
+    """Placeholder onion Product Page view"""
     return render(request, 'ProductPages/Cheerios.html')
 
 def BrownRice(request):
-    """Placeholder onion Product Page view""" 
+    """Placeholder onion Product Page view"""
     return render(request, 'ProductPages/BrownRice.html')
 
 def CannedBeans(request):
-    """Placeholder onion Product Page view""" 
+    """Placeholder onion Product Page view"""
     return render(request, 'ProductPages/CannedBeans.html')
 
 def Oreos(request):
-    """Placeholder onion Product Page view""" 
+    """Placeholder onion Product Page view"""
     return render(request, 'ProductPages/Oreos.html')
 
-    
+
 def registration_page(request):
     """ This function does 3 tasks:
         1. Display register.html path.
@@ -194,7 +218,7 @@ def registration_page(request):
                 form.save()  # Create new user in admin/
                 user_email = form.cleaned_data.get('email')
                 messages.success(request,'Account was created for ' + user_email)
-                return redirect('login')         
+                return redirect('login')
         context = {'registration_form':form}
         return render(request, 'accounts/register.html',context)
 
@@ -207,7 +231,7 @@ def login_page(request):
             email = request.POST.get('email')
             password = request.POST.get('password')
             user = authenticate(request,username=email,password=password)
-            if user is not None: 
+            if user is not None:
                 login(request,user)
                 return redirect('homepage')
             else:
@@ -231,7 +255,7 @@ def cart_page(request):
     if request.user.is_authenticated:
         customer = request.user
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
-        order,created = Order.objects.get_or_create(customer=customer,complete=False) 
+        order,created = Order.objects.get_or_create(customer=customer,complete=False)
         items = OrderedItem.objects.all() #Get all ordered items object that an authenticated user has placed from our db.
     else: #If user is not authenticated/login
         items = [] #create an empty list of items.
@@ -250,7 +274,7 @@ def checkout_page(request):
     if request.user.is_authenticated:
         customer = request.user
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
-        order,created = Order.objects.get_or_create(customer=customer,complete=False) 
+        order,created = Order.objects.get_or_create(customer=customer,complete=False)
         items = OrderedItem.objects.all() #Get all ordered items object that an authenticated user has placed from our db.
     else: #If user is not authenticated/login
         items = [] #create an empty list of items.

@@ -80,8 +80,8 @@ urlpatterns = [
     path('BrownRice/', views.BrownRice, name = "BrownRice"),
     path('CannedBeans/', views.CannedBeans, name = "CannedBeans"),
     path('Oreos/', views.Oreos, name = "Oreos"),
-
-
+    #Dynamic product pages
+    path('product/<str:pk>',views.dynamic_product_pages)
 
 
 

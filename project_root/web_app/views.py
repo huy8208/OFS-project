@@ -289,3 +289,7 @@ def processOrder(request):
 def base_product_template(request):
     context = {'allProducts':Product.objects.first()}
     return render(request, 'ProductPages/base_product_template.html',context)
+
+def dynamic_product_pages(request,pk):
+    product = Product.objects.get(id=pk)
+    return render(request,'product.html',context={'product':product})

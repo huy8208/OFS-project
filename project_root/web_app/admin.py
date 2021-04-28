@@ -15,6 +15,7 @@ class CustomerAdmin(UserAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id','name','price','category','description','date_created','image')
+    ordering = ('id',)
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()

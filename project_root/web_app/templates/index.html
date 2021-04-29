@@ -27,6 +27,8 @@
     <script src="{% static 'js/all.min.js' %}"></script>
     <!-- Our own css file, always put at the end of head -->
     <link rel="stylesheet" href="{% static 'css/style.css'%} " type="text/css">
+    <!-- Get user and pass it to main.js to make add-to-cart functionality.-->
+    <script>var username = '{{request.user}}'</script>
 </head>
 
 <body>
@@ -126,13 +128,13 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="{% static 'img/OFS-logo.jpg'%}" alt="" style="width:50%;height:50%;"></a>
+                        <a href="{% url 'homepage' %}"><img src="{% static 'img/OFS-logo.jpg'%}" alt="" style="width:50%;height:50%;"></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="{% url 'homepage' %}">Home</a></li>
                             <li class="active"><a href="#">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
@@ -298,7 +300,7 @@
                         <div class="featured__item__text">
                         <h6><a href="{% url 'product_detail' product.id %}">{{product.name}}</a></h6>
                             <h5>${{product.price|floatformat:2}}</h5>
-                        <button type="button" data-product={{product.id}} data-action="add" class="btn btn-primary btn-sm btn-rounded update-cart">ADD TO CART</button>
+                        <button type="button" data-product={{product.id}} data-action="add" class="btn btn-outline-primary btn-sm btn-rounded update-cart">ADD TO CART</button>
                         </div>
                     </div>
                 </div>

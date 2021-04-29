@@ -296,7 +296,7 @@
                         <div class="featured__item__pic set-bg" data-setbg="{{product.imageURL}}">
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href=#>{{product.name}}</a></h6>
+                        <h6><a href="{% url 'product_detail' product.id %}">{{product.name}}</a></h6>
                             <h5>${{product.price|floatformat:2}}</h5>
                         </div>
                     </div>

@@ -298,6 +298,7 @@
                         <div class="featured__item__text">
                         <h6><a href="{% url 'product_detail' product.id %}">{{product.name}}</a></h6>
                             <h5>${{product.price|floatformat:2}}</h5>
+                        <button type="button" data-product={{product.id}} data-action="add" class="btn btn-primary btn-sm btn-rounded update-cart">ADD TO CART</button>
                         </div>
                     </div>
                 </div>

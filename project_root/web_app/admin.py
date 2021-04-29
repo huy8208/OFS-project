@@ -14,7 +14,7 @@ class CustomerAdmin(UserAdmin):
     fieldsets = ()
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id','name','price','category','description','date_created','image')
+    list_display = ('id','name','price','category','description','date_created','image','amount')
     ordering = ('id',)
     filter_horizontal = ()
     list_filter = ()

@@ -136,8 +136,13 @@
                     <div class="featured__item__text">
                         <h6><a href="{% url 'product_detail' product.id %}">{{product.name}}</a></h6>
                         <h5>${{product.price|floatformat:2}}</h5>
-                        <button type="button" data-product={{product.id}} data-action="add"
+                        {% if product.amount <= 0 %}
+                            <button type="button" data-product={{product.id}} data-action="add"
+                            class="btn btn-outline-primary btn-sm btn-rounded update-cart">OUT OF STOCK YOO</button>
+                        {% else %}    
+                            <button type="button" data-product={{product.id}} data-action="add"
                             class="btn btn-outline-primary btn-sm btn-rounded update-cart">ADD TO CART</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -79,7 +79,7 @@ class Product(models.Model):
     date_created = models.DateTimeField(auto_now_add=True,null=True)
     tags = models.ManyToManyField(Tag)
     image = models.ImageField(null=True,blank=True,upload_to='uploaded_images/')
-
+    amount = models.IntegerField(default = 0, null = True, blank = True)
     def __str__(self):
         return self.name
 
@@ -137,7 +137,7 @@ class OrderedItem(models.Model):
     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
     quantity = models.IntegerField(default = 0, null = True, blank = True)
     date_added = models.DateTimeField(auto_now_add=True)
-       
+
     @property
     def get_total(self):
         """Calculate and return total price for each product in cart."""

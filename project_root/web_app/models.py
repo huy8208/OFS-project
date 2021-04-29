@@ -69,7 +69,7 @@ class Product(models.Model):
     CATEGORY = (
         ('Vegetable','Vegetable'),
         ('Fruit','Fruit'),
-        ('Meat','Meat'),('Pantry','Pantry'),('Dairy','Dairy'),('Frozen Foods', 'Frozen Foods')
+        ('Meat','Meat'),('Pantry','Pantry'),('Dairy','Dairy'),('Frozen Foods', 'Frozen Foods'),('Beverages','Beverages')
     )
     name = models.CharField(max_length=200,null=True)
     price = models.FloatField()

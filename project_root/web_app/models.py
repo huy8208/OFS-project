@@ -79,7 +79,7 @@ class Product(models.Model):
     date_created = models.DateTimeField(auto_now_add=True,null=True)
     tags = models.ManyToManyField(Tag)
     image = models.ImageField(null=True,blank=True,upload_to='uploaded_images/')
-    amount = models.IntegerField(default = 0, null = True, blank = True)
+    amount_in_stock = models.IntegerField(default = 0, null = True, blank = True)
     def __str__(self):
         return self.name
 

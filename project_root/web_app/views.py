@@ -294,3 +294,6 @@ def base_product_template(request):
 def product_detail(request,pk):
     product = Product.objects.get(id=pk)
     return render(request,'Product_detail.html',context={'product':product})
+
+def updateItem(request):
+    return JsonResponse('Item was added',safe = False)

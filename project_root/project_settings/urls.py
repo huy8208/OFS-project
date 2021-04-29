@@ -32,12 +32,13 @@ urlpatterns = [
     # User registration and login
     path('login/',views.login_page,name = "login"),
     path('register/',views.registration_page,name = "register"),
-    path('logout/',views.logoutUser,name = "logout")
+    path('logout/',views.logoutUser,name = "logout"),
     # Search Pages
     #path('search/', views.SearchPage, name='search_result'),
     # Cart and Checkout
-    , path('cart/', views.cart_page, name = "cart")
-    , path('checkout/', views.checkout_page, name = "checkout"),
+    path('cart/', views.cart_page, name = "cart"),
+    path('checkout/', views.checkout_page, name = "checkout"),
+    path('update_item/', views.updateItem, name = "update_item"),
     # individual Product Pages
     path('RibeyePP/', views.RibeyePP, name = "RibeyePP"),
     path('Newyork/', views.NewyorkPP, name = "NewyorkPP"),

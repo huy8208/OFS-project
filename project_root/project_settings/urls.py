@@ -82,9 +82,9 @@ urlpatterns = [
     path('CannedBeans/', views.CannedBeans, name = "CannedBeans"),
     path('Oreos/', views.Oreos, name = "Oreos"),
     #Dynamic product pages
-    path('product_detail/<str:pk>',views.product_detail,name='product_detail')
-
-
+    path('product_detail/<str:pk>',views.product_detail,name='product_detail'),
+    #Base template
+    path('base_template/', views.base_template, name = "base_template"),
 
 
 ]

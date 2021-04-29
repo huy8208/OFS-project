@@ -266,12 +266,6 @@ def cart_page(request):
     return render(request, 'cart.html', context)
 
 def checkout_page(request):
-    # context = {}
-    # return render(request, 'checkout.html', context)
-    # searchquery = request.GET['query']
-    # products = Product.objects.filter(name__icontains=searchquery)
-    # params = {'products': products, 'search':searchquery}
-    # return render(request, 'SearchPage.html', params)
     if request.user.is_authenticated:
         customer = request.user
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
@@ -317,3 +311,6 @@ def updateItem(request):
         orderItem.delete()
     
     return JsonResponse('Item was added',safe = False)
+
+def base_template(request):
+    return render(request,'base_template.html',context={})

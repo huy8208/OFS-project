@@ -14,7 +14,8 @@ import json
 # @login_required(login_url='login') User this when create payment/checkout
 def index(request):
     """Placeholder index view"""
-    return render(request, 'index.html')
+    randomProductsList = Product.objects.order_by('?')
+    return render(request, 'index.html',context={'randomProductsList':randomProductsList})
 
 def Meat_Seafood(request):
     """Placeholder Meat_Seafood view"""

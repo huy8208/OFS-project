@@ -290,6 +290,7 @@ def product_detail(request,pk):
     return render(request,'Product_detail.html',context={'product':product})
 
 def updateItem(request):
+    """Update user's orderedItem in db"""
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']

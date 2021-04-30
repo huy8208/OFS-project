@@ -184,14 +184,14 @@
                                 <td class="shoping__cart__quantity">
                                     <div class="div">
                                         <div class="row justify-content-center align-self-center">
-                                            <i type="button" data-product={{ordereditem.product.id}} data-action="add" class="btn btn-light fa fa-plus fa-4x update-cart"></i>
-                                            <span>{{ordereditem.quantity}}</span>
-                                            <i type="button" data-product={{ordereditem.product.id}} data-action="remove" class="btn btn-light fa fa-minus fa-4x update-cart"></i>
+                                            <button type="button" data-product={{ordereditem.product.id}} data-action="add" class="btn btn-light btn-sm update-cart mr-2"><i class="fa fa-plus fa-sm" ></i></button>
+                                            <span class="font-weight-bold">{{ordereditem.quantity}}</span>
+                                            <button type="button" data-product={{ordereditem.product.id}} data-action="remove" class="btn btn-light btn-sm update-cart ml-2"><i class="fa fa-minus fa-sm" ></i></button>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="shoping__cart__total">
-                                    ${{ordereditem.get_total}}
+                                    ${{ordereditem.get_total|floatformat:2}}
                                 </td>
                                 <td class="shoping__cart__item__close">
                                     <span class="icon_close"></span>

@@ -7,7 +7,7 @@ from django.contrib import messages  # To add message whether login/registration
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
-# json stuff (checkout)
+
 from django.http import JsonResponse
 import json
 
@@ -104,7 +104,7 @@ def cart_page(request):
     
 
     context = {'items':items,'order':order}
-    return render(request, 'cart.html', context)
+    return render(request, 'payment/cart.html', context)
 
 def checkout_page(request):
     if request.user.is_authenticated:
@@ -117,7 +117,7 @@ def checkout_page(request):
         order = {'get_cart_total':0,'get_cart_items':0}
 
     context = {'items':items,'order':order}
-    return render(request, 'checkout.html', context)
+    return render(request, 'payment/checkout.html', context)
 
 def processOrder(request):
     return JsonResponse("Payment complete!", safe = False)

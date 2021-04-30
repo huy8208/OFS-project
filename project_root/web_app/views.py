@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 #Create your views here
 from .models import *
-from .forms import CreateCustomerRegistrationForm    # Django's built-in user form
+from .forms import CreateCustomerRegistrationForm  # Django's built-in user form
 from django.contrib import messages  # To add message whether login/registration sucesses or fails.
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required

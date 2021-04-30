@@ -5,7 +5,21 @@
 <!-- <div id="preloder">
         <div class="loader"></div>
     </div> -->
-
+<script>
+        function makeDropDownSelectForm(amount_in_stock) {
+        var selectBox = document.getElementById('drop-down-formselect-with-maxQuantity');
+        // loop through years
+        for (var i = 0; i <= 5; i++) {
+            // create option element
+            var option = document.createElement('option');
+            // add value and text name
+            option.value = i;
+            option.innerHTML = i;
+            // add the option element to the selectbox
+            selectBox.appendChild(option);
+        }
+    }
+</script>
 <!-- Humberger Begin -->
 <div class="humberger__menu__overlay"></div>
 <div class="humberger__menu__wrapper">
@@ -165,9 +179,12 @@
                                     {{ordereditem.product.price|floatformat:2}}
                                 </td>
                                 <td class="shoping__cart__quantity">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value={{ordereditem.quantity}}>
+                                    <div class="div">
+                                        <div class="row justify-content-center align-self-center">
+                                            <select class="form-select" id="drop-down-formselect-with-maxQuantity" arial-label="Quantity">
+                                                <option selected>{{ordereditem.quantity}}</option>
+                                                <script>makeDropDownSelectForm(5)</script>
+                                            </select>
                                         </div>
                                     </div>
                                 </td>

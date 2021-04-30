@@ -184,14 +184,9 @@
                                 <td class="shoping__cart__quantity">
                                     <div class="div">
                                         <div class="row justify-content-center align-self-center">
-                                            <select class="form-select" id="drop-down-formselect-with-maxQuantity" arial-label="Quantity">
-                                                <option selected>{{ordereditem.quantity}}</option>
-                                                {% for i in ordereditem.product.amount_in_stock|range %}
-                                                    <option>{{i}}</option>
-                                                {% endfor %}
-                                                <!-- <script>makeDropDownSelectForm(5)</script> -->
-                                            </select>
-                                            <!-- <span>{{amountInStock.price}}</span> -->
+                                            <i type="button" data-product={{ordereditem.product.id}} data-action="add" class="btn btn-light fa fa-plus fa-4x update-cart"></i>
+                                            <span>{{ordereditem.quantity}}</span>
+                                            <i type="button" data-product={{ordereditem.product.id}} data-action="remove" class="btn btn-light fa fa-minus fa-4x update-cart"></i>
                                         </div>
                                     </div>
                                 </td>

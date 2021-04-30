@@ -261,6 +261,8 @@ def cart_page(request):
     else: #If user is not authenticated/login
         items = [] #create an empty list of items.
         order = {'get_cart_total':0,'get_cart_items':0}
+    # yes = OrderedItem.objects.select_related()
+    
 
     context = {'items':items,'order':order}
     return render(request, 'cart.html', context)

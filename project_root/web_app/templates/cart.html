@@ -1,5 +1,6 @@
 {% extends 'base_template.html'%}
 {% load static %}
+{% load range %}
 {% block body %}
 <!-- Page Preloder -->
 <!-- <div id="preloder">
@@ -183,8 +184,12 @@
                                         <div class="row justify-content-center align-self-center">
                                             <select class="form-select" id="drop-down-formselect-with-maxQuantity" arial-label="Quantity">
                                                 <option selected>{{ordereditem.quantity}}</option>
-                                                <script>makeDropDownSelectForm(5)</script>
+                                                {% for i in ordereditem.product.amount_in_stock|range %}
+                                                    <option>{{i}}</option>
+                                                {% endfor %}
+                                                <!-- <script>makeDropDownSelectForm(5)</script> -->
                                             </select>
+                                            <!-- <span>{{amountInStock.price}}</span> -->
                                         </div>
                                     </div>
                                 </td>

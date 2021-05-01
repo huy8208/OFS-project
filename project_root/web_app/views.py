@@ -109,7 +109,7 @@ def cart_page(request):
     # yes = OrderedItem.objects.select_related()
     
 
-    context = {'items':items,'order':order}
+    context = {'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY}
     return render(request, 'payment/cart.html', context)
 
 def checkout_page(request):
@@ -122,7 +122,7 @@ def checkout_page(request):
         items = [] #create an empty list of items.
         order = {'get_cart_total':0,'get_cart_items':0}
 
-    context = {'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY}
+    context = {'items':items,'order':order}
     return render(request, 'payment/checkout.html', context)
 
 def processOrder(request):
@@ -145,6 +145,9 @@ def updateItem(request):
     product = Product.objects.get(id=productId)
     order,created = Order.objects.get_or_create(customer=customer,complete=False)
     orderItem,created = OrderedItem.objects.get_or_create(order=order,product=product)
+
+    """If orderItem is exceeded amount_in_stock => stop here"""
+
 
     if action == 'add':
         orderItem.quantity += 1
@@ -193,7 +196,18 @@ class CreateCheckoutSessionView(View):
                             'images': ['https://i.imgur.com/EHyR2nP.png'],
                         },
                     },
-                    'quantity': 1,
+                    'quantity': 3,
+                },
+                {
+                    'price_data': {
+                        'currency': 'usd',
+                        'unit_amount': 3000,
+                        'product_data': {
+                            'name': 'yesman',
+                            'images': ['https://i.imgur.com/EHyR2nP.png'],
+                        },
+                    },
+                    'quantity': 3,
                 },
             ],
             mode='payment',

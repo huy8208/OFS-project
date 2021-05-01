@@ -152,7 +152,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="shoping__product">Products</th>
+                                <th>Images</th>
+                                <th>Products</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
@@ -162,15 +163,14 @@
                         <tbody>
                             {% for ordereditem in items %}
                             <tr>
-                                <td class="">
+                                <td class="img-fluid">
                                     <img src="{{ordereditem.product.imageURL}}" alt="">
                                 </td>
-                                <td class="shoping__cart__item">
-                                    <img src="img/cart/cart-1.jpg" alt="">
+                                <td class="shoping__cart__item" style="text-align:center">
                                     <h5>{{ordereditem.product.name}}</h5>
                                 </td>
                                 <td class="shoping__cart__price">
-                                    {{ordereditem.product.price|floatformat:2}}
+                                    ${{ordereditem.product.price|floatformat:2}}
                                 </td>
                                 <td class="shoping__cart__quantity">
                                     <div class="div">
@@ -188,7 +188,6 @@
                                     <span class="icon_close"></span>
                                 </td>
                             </tr>
-                            <tr>
                                 {% endfor %}
                         </tbody>
                     </table>

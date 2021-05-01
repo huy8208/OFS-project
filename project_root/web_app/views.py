@@ -10,6 +10,12 @@ from django.contrib.auth.decorators import login_required
 
 from django.http import JsonResponse
 import json
+#Stripe
+from django.views import View
+import stripe
+from project_settings import settings
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # @login_required(login_url='login') User this when create payment/checkout
 def index(request):
@@ -116,7 +122,7 @@ def checkout_page(request):
         items = [] #create an empty list of items.
         order = {'get_cart_total':0,'get_cart_items':0}
 
-    context = {'items':items,'order':order}
+    context = {'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY}
     return render(request, 'payment/checkout.html', context)
 
 def processOrder(request):
@@ -164,3 +170,34 @@ def base_template(request):
         cartItems = order['get_cart_items']
     context = {'cartItems':cartItems}
     return render(request,'base_template.html',context=context)
+
+def success(request):
+    return render(request,'payment/success.html')
+
+def cancel(request):
+    return render(request,'payment/cancel.html')
+
+#Class view
+class CreateCheckoutSessionView(View):
+    def post(self,request,*args,**kwargs):
+        YOUR_DOMAIN = 'http://localhost:8000'
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[
+                {
+                    'price_data': {
+                        'currency': 'usd',
+                        'unit_amount': 2000,
+                        'product_data': {
+                            'name': 'COCONUT',
+                            'images': ['https://i.imgur.com/EHyR2nP.png'],
+                        },
+                    },
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success/',
+            cancel_url=YOUR_DOMAIN + '/cancel/',
+        )
+        return JsonResponse({'id':checkout_session.id})

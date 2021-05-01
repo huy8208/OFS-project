@@ -43,8 +43,10 @@ urlpatterns = [
     path('product_detail/<str:pk>',views.product_detail,name='product_detail'),
     #Base template
     path('base_template/', views.base_template, name = "base_template"),
-
-
+    #Payment
+    path('success/', views.success, name = "success"),
+    path('cancel/', views.cancel, name = "cancel"),
+    path('create-checkout-session/',views.CreateCheckoutSessionView.as_view(),name='create-checkout-session')
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

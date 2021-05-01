@@ -130,3 +130,9 @@ STATIC_ROOT = '/vol/web/static'  #The absolute path to the directory where colle
 MEDIA_URL = '/static/media/'   #For example: http://static.example.com
 # MEDIA_ROOT = '/vol/web/media' 
 MEDIA_ROOT = os.path.join(BASE_DIR,'/vol/web/media')
+
+
+# Stripe payment
+STRIPE_PUBLIC_KEY = 'pk_test_51IlzekBew4cXzmngqfKsyO39RBslv0WGvgDzhLmyyBDsDunGIwstaPlxqEMAfAFp9dTDTy1C9Ecav0hknCGVp3j900XWvQhQAU'
+STRIPE_SECRET_KEY = 'sk_test_51IlzekBew4cXzmngAE2yktwxOPHgFWbPrzM1QVC5gVpReXrXSpOO8iFEUZHmBDY72v7P6Fnfu0x1tNKhovPJpk6400VfAFdZTi'
+STRIPE_WEBHOOK_SECRET = ''

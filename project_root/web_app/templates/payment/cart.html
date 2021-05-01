@@ -162,6 +162,9 @@
                         <tbody>
                             {% for ordereditem in items %}
                             <tr>
+                                <td class="">
+                                    <img src="{{ordereditem.product.imageURL}}" alt="">
+                                </td>
                                 <td class="shoping__cart__item">
                                     <img src="img/cart/cart-1.jpg" alt="">
                                     <h5>{{ordereditem.product.name}}</h5>

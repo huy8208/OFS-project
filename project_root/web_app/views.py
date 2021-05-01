@@ -182,7 +182,7 @@ def cancel(request):
 
 #Class view
 class CreateCheckoutSessionView(View):
-    def post(self,request,*args,**kwargs):
+    def post(self,request,lineItems,*args,**kwargs):
         YOUR_DOMAIN = 'http://localhost:8000'
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],

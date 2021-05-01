@@ -5,6 +5,9 @@
 <!-- Stripe -->
 <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
 <script src="https://js.stripe.com/v3/"></script>
+<script>
+    var lineItems = [];
+</script>
 <!-- Page Preloder -->
 <!-- <div id="preloder">
         <div class="loader"></div>
@@ -175,9 +178,13 @@
                                 <td class="shoping__cart__quantity">
                                     <div class="div">
                                         <div class="row justify-content-center align-self-center">
-                                            <button type="button" data-product={{ordereditem.product.id}} data-action="add" class="btn btn-light btn-sm update-cart mr-2"><i class="fa fa-plus fa-sm" ></i></button>
+                                            <button type="button" data-product={{ordereditem.product.id}}
+                                                data-action="add" class="btn btn-light btn-sm update-cart mr-2"><i
+                                                    class="fa fa-plus fa-sm"></i></button>
                                             <span class="font-weight-bold">{{ordereditem.quantity}}</span>
-                                            <button type="button" data-product={{ordereditem.product.id}} data-action="remove" class="btn btn-light btn-sm update-cart ml-2"><i class="fa fa-minus fa-sm" ></i></button>
+                                            <button type="button" data-product={{ordereditem.product.id}}
+                                                data-action="remove" class="btn btn-light btn-sm update-cart ml-2"><i
+                                                    class="fa fa-minus fa-sm"></i></button>
                                         </div>
                                     </div>
                                 </td>
@@ -188,7 +195,26 @@
                                     <span class="icon_close"></span>
                                 </td>
                             </tr>
-                                {% endfor %}
+                            <!-- Prepare line-items for stripe back-end payment -->
+                            <script>
+                                var productPrice = '{{ordereditem.product.price}}';
+                                productPrice = (parseFloat(productPrice) * 100).toFixed(0);
+                                var productIMG = '{{ordereditem.product.imageURL}}';
+                                productIMG = '{{STRIPE_URL}}'+productIMG;
+                                var item = {
+                                    'price_data': {
+                                        'currency': 'usd',
+                                        'unit_amount': productPrice,
+                                        'product_data': {
+                                            'name': '{{ordereditem.product.name}}',
+                                            'images': [productIMG],
+                                        },
+                                    },
+                                    'quantity': 3
+                                };
+                                lineItems.push(item)
+                            </script>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -221,7 +247,8 @@
                         <li>Total <span>subtotal - coupon code</span></li>
                     </ul>
                     <!-- <a href="{% url 'checkout' %}" class="primary-btn">PROCEED TO CHECKOUT</a> -->
-                    <button type="button" class="primary-btn btn btn-primary btn-lg" id='checkout-button'>Checkout</button>
+                    <button type="button" class="primary-btn btn btn-primary btn-lg"
+                        id='checkout-button'>Checkout</button>
                 </div>
             </div>
         </div>
@@ -230,6 +257,9 @@
 <!-- Shoping Cart Section End -->
 
 <script type="text/javascript">
+    console.log(JSON.stringify(lineItems));
+    console.log(csrftoken)
+    var unit_amount = '{{ordereditem.product.price}}';
     // Create an instance of the Stripe object with your publishable API key
     var stripe = Stripe("{{STRIPE_PUBLIC_KEY}}");
     var checkoutButton = document.getElementById("checkout-button");
@@ -237,8 +267,8 @@
     checkoutButton.addEventListener("click", function () {
         fetch("/create-checkout-session/", {
             method: "POST",
-            headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken}
-            // body: JSON.stringify({'productId':'TESTING','action':'101'})
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+            body: JSON.stringify({"lineItems":lineItems})
         })
             .then(function (response) {
                 return response.json();

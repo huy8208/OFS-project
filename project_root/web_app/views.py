@@ -109,7 +109,7 @@ def cart_page(request):
     # yes = OrderedItem.objects.select_related()
     
 
-    context = {'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY}
+    context = {'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY,'STRIPE_URL':settings.STRIPE_URL}
     return render(request, 'payment/cart.html', context)
 
 def checkout_page(request):
@@ -182,36 +182,17 @@ def cancel(request):
 
 #Class view
 class CreateCheckoutSessionView(View):
-    def post(self,request,lineItems,*args,**kwargs):
-        YOUR_DOMAIN = 'http://localhost:8000'
+    def post(self,request,*args,**kwargs):
+        print(json.loads(request.body))
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
-            line_items=[
-                {
-                    'price_data': {
-                        'currency': 'usd',
-                        'unit_amount': 2000,
-                        'product_data': {
-                            'name': 'COCONUT',
-                            'images': ['https://i.imgur.com/EHyR2nP.png'],
-                        },
-                    },
-                    'quantity': 3,
-                },
-                {
-                    'price_data': {
-                        'currency': 'usd',
-                        'unit_amount': 3000,
-                        'product_data': {
-                            'name': 'yesman',
-                            'images': ['https://i.imgur.com/EHyR2nP.png'],
-                        },
-                    },
-                    'quantity': 3,
-                },
-            ],
+            shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
+            shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+            line_items=json.loads(request.body)['lineItems'],
             mode='payment',
-            success_url=YOUR_DOMAIN + '/success/',
-            cancel_url=YOUR_DOMAIN + '/cancel/',
+            success_url=settings.STRIPE_URL + '/success/',
+            cancel_url=settings.STRIPE_URL + '/cancel/',
         )
         return JsonResponse({'id':checkout_session.id})
+        # return JsonResponse(json.loads(request.body)['lineItems'])
+

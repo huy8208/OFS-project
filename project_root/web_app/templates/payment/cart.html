@@ -196,7 +196,6 @@
                                 </td>
                             </tr>
                             <!-- Prepare line-items for stripe back-end payment -->
-                            {% load unescape %}
                             <script>
                                 var productPrice = '{{ordereditem.product.price}}';
                                 productPrice = (parseFloat(productPrice) * 100).toFixed(0);

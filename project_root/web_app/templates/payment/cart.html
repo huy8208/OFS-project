@@ -196,17 +196,18 @@
                                 </td>
                             </tr>
                             <!-- Prepare line-items for stripe back-end payment -->
+                            {% load unescape %}
                             <script>
                                 var productPrice = '{{ordereditem.product.price}}';
                                 productPrice = (parseFloat(productPrice) * 100).toFixed(0);
-                                var productIMG = '{{ordereditem.product.imageURL}}';
-                                productIMG = '{{STRIPE_URL}}'+productIMG;
+                                var productIMG = "{{ordereditem.product.imageURL}}";
+                                productIMG = '{{STRIPE_URL}}' + productIMG;
                                 var item = {
                                     'price_data': {
                                         'currency': 'usd',
                                         'unit_amount': productPrice,
                                         'product_data': {
-                                            'name': '{{ordereditem.product.name}}',
+                                            'name': "{{ordereditem.product.name|safe}}",
                                             'images': [productIMG],
                                         },
                                     },
@@ -258,7 +259,6 @@
 
 <script type="text/javascript">
     console.log(JSON.stringify(lineItems));
-    console.log(csrftoken)
     var unit_amount = '{{ordereditem.product.price}}';
     // Create an instance of the Stripe object with your publishable API key
     var stripe = Stripe("{{STRIPE_PUBLIC_KEY}}");
@@ -268,7 +268,7 @@
         fetch("/create-checkout-session/", {
             method: "POST",
             headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-            body: JSON.stringify({"lineItems":lineItems})
+            body: JSON.stringify({ "lineItems": lineItems })
         })
             .then(function (response) {
                 return response.json();

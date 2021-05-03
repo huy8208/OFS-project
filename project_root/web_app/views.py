@@ -183,7 +183,7 @@ def cancel(request):
 #Class view
 class CreateCheckoutSessionView(View):
     def post(self,request,*args,**kwargs):
-        print(json.loads(request.body))
+        print(json.loads(request.body)['lineItems'])
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],

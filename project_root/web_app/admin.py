@@ -20,9 +20,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ()
     fieldsets = ()
 
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ('customer','address','city','state','zipcode')
+
 admin.site.register(Customer,CustomerAdmin)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Order)
 admin.site.register(Tag)
 admin.site.register(OrderedItem)
-admin.site.register(ShippingAddress)
+admin.site.register(ShippingAddress,AddressAdmin)

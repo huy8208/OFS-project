@@ -3,4 +3,4 @@ uWSGI>=2.0.18,<2.1
 fontawesome-free==5.15
 Pillow==8.2.0
 stripe>=2.48.0,<3.0
-Flask
+django-countries

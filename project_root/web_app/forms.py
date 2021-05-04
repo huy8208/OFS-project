@@ -8,3 +8,4 @@ class CreateCustomerRegistrationForm(UserCreationForm):
     class Meta:
         model = Customer  #Tell form to use Customer model
         fields = ("email","username","password1","password2")
+        

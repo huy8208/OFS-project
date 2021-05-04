@@ -37,7 +37,7 @@ urlpatterns = [
     #path('search/', views.SearchPage, name='search_result'),
     # Cart and Checkout
     path('cart/', views.cart_page, name = "cart"),
-    path('checkout/', views.checkout_page, name = "checkout"),
+    path('profile/', views.profile_page, name = "profile"),
     path('update_item/', views.updateItem, name = "update_item"),
     #Dynamic product pages
     path('product_detail/<str:pk>',views.product_detail,name='product_detail'),

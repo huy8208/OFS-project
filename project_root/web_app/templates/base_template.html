@@ -126,9 +126,9 @@
                                 {% else %}
                                 <div><a class="btn btn-outline-primary btn-sm">Hello, {{request.user}}</a></div>
                                 <div style="border-left: 1px solid lightslategray; height:auto; margin: 0 2px 0 2px;"></div>
-                                <div><a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a></div>
-                                {% endif %}
+                                <div><a href="{% url 'profile' %}" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a></div>
                                 <a href="{% url 'logout' %}" class="btn btn-primary btn-sm" style="margin-left:10px;">Log Out</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

@@ -112,7 +112,7 @@ def cart_page(request):
     context = {'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY,'STRIPE_URL':settings.STRIPE_URL}
     return render(request, 'payment/cart.html', context)
 
-def checkout_page(request):
+def profile_page(request):
     if request.user.is_authenticated:
         customer = request.user
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
@@ -123,7 +123,7 @@ def checkout_page(request):
         order = {'get_cart_total':0,'get_cart_items':0}
 
     context = {'items':items,'order':order}
-    return render(request, 'payment/checkout.html', context)
+    return render(request, 'accounts/profile.html', context)
 
 def processOrder(request):
     return JsonResponse("Payment complete!", safe = False)

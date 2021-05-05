@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from .models import *
 
 class CustomerAdmin(UserAdmin):
-    list_display = ('email','username','date_created', 'last_login', 'is_customer', 'is_admin','is_staff')
+    list_display = ('id','email','username','date_created', 'last_login', 'is_customer', 'is_admin','is_staff')
     search_fields = ('email','username',)
     readonly_fields=('date_created', 'last_login')
 
@@ -21,7 +21,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = ()
 
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('customer','address','city','state','zipcode')
+    list_display = ('id','customer','address','city','state','zipcode')
 
 admin.site.register(Customer,CustomerAdmin)
 admin.site.register(Product,ProductAdmin)

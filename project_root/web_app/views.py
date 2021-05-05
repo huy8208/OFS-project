@@ -114,22 +114,18 @@ def cart_page(request):
 
 @login_required(login_url='login')
 def profile_page(request):
-    # if request.user.is_authenticated:
-    #     customer = request.user
-    #     #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
-    #     order,created = Order.objects.get_or_create(customer=customer,complete=False)
-    #     items = OrderedItem.objects.all() #Get all ordered items object that an authenticated user has placed from our db.
-    # else: #If user is not authenticated/login
-    #     items = [] #create an empty list of items.
-    #     order = {'get_cart_total':0,'get_cart_items':0}
-    if request.user.is_authenticated:
-        customer = request.user
-        form = CreateShippingAddressForm()
-        if request.method == 'POST':
-            form = CreateShippingAddressForm(request.POST)
-            profile = Customer.objects.filter(id=customer.id).first()
-        context = {"address_form":form}
-        return render(request, 'accounts/profile.html', context)
+    customer = request.user.id
+
+    form = CreateShippingAddressForm()
+    if request.method == 'POST':
+        form = CreateShippingAddressForm(request.POST)
+        if form.is_valid():
+            form_object = form.save(commit=False)
+            form_object.id = customer
+            form_object.customer = request.user
+            form_object.save()
+    context = {"address_form":form}
+    return render(request, 'accounts/profile.html', context)
     
 def processOrder(request):
     return JsonResponse("Payment complete!", safe = False)

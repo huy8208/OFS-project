@@ -197,6 +197,16 @@ class CreateCheckoutSessionView(View):
         )
         return JsonResponse({'id':checkout_session.id})
 
+@csrf_exempt
+def my_webhook_view(request):
+  payload = request.body
+
+  # For now, you only need to print out the webhook payload so you can see
+  # the structure.
+  print(payload)
+
+  return HttpResponse(status=200)
+
 # class CreateCheckoutSessionView(View):
 #     def post(self,request,*args,**kwargs):
 #         address = {'city': 'San Jose', 'country': 'USA', 

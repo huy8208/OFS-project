@@ -46,7 +46,8 @@ urlpatterns = [
     #Payment
     path('success/', views.success, name = "success"),
     path('cancel/', views.cancel, name = "cancel"),
-    path('create-checkout-session/',views.CreateCheckoutSessionView.as_view(),name='create-checkout-session')
+    path('create-checkout-session/',views.CreateCheckoutSessionView.as_view(),name='create-checkout-session'),
+    path('webhook/',views.my_webhook_view,name='webhook')
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,5 @@
 {% extends 'base_template.html'%}
 {% load static %}
-{% load range %}
 {% block body %}
 <!-- Stripe -->
 <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
@@ -246,7 +245,6 @@
                         <li>Subtotal <span>${{order.get_cart_total|floatformat:2}}</span></li>
                         <li>Total <span>subtotal - coupon code</span></li>
                     </ul>
-                    <!-- <a href="{% url 'checkout' %}" class="primary-btn">PROCEED TO CHECKOUT</a> -->
                     <button type="button" class="primary-btn btn btn-primary btn-lg"
                         id='checkout-button'>Checkout</button>
                 </div>

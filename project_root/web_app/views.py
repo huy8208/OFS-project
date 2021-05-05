@@ -185,16 +185,11 @@ def cancel(request):
 #Class view
 class CreateCheckoutSessionView(View):
     def post(self,request,*args,**kwargs):
-        address = {'city': 'San Jose', 'country': 'USA', 
-        'line1': '5938 Exeter ct', 'line2': 'none', 
-        'postal_code': '95138', 'state': 'CA'}
-        stripe_customer = stripe.Customer.create(address=address)
-
         checkout_session = stripe.checkout.Session.create(
-            customer=stripe_customer,
             payment_method_types=['card'],
+            customer_email=request.user.email,
             shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
-            # shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+            shipping_address_collection={'allowed_countries': ['US', 'CA'],},
             line_items=json.loads(request.body)['lineItems'],
             mode='payment',
             success_url=settings.STRIPE_URL + '/success/',
@@ -202,3 +197,21 @@ class CreateCheckoutSessionView(View):
         )
         return JsonResponse({'id':checkout_session.id})
 
+# class CreateCheckoutSessionView(View):
+#     def post(self,request,*args,**kwargs):
+#         address = {'city': 'San Jose', 'country': 'USA', 
+#         'line1': 'testing ct', 'line2': 'none', 
+#         'postal_code': '95138', 'state': 'CA'}
+#         stripe_customer = stripe.Customer.create(address=address,shipping={"address":address,"name":request.user},email=request.user.email)
+
+#         checkout_session = stripe.checkout.Session.create(
+#             customer=stripe_customer,
+#             payment_method_types=['card'],
+#             shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
+#             shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+#             line_items=json.loads(request.body)['lineItems'],
+#             mode='payment',
+#             success_url=settings.STRIPE_URL + '/success/',
+#             cancel_url=settings.STRIPE_URL + '/cancel/',
+#         )
+#         return JsonResponse({'id':checkout_session.id})

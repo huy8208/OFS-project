@@ -6,6 +6,7 @@ from .forms import CreateCustomerRegistrationForm,CreateShippingAddressForm  # D
 from django.contrib import messages  # To add message whether login/registration sucesses or fails.
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 
 from django.http import JsonResponse
@@ -16,6 +17,7 @@ import stripe
 from project_settings import settings
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+endpoint_secret = 'whsec_RXRtRwQFV2iW8XyUfTCThW4wG5DWUb30'
 
 # @login_required(login_url='login') User this when create payment/checkout
 def index(request):
@@ -200,12 +202,33 @@ class CreateCheckoutSessionView(View):
 @csrf_exempt
 def my_webhook_view(request):
   payload = request.body
+  sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+  event = None
 
-  # For now, you only need to print out the webhook payload so you can see
-  # the structure.
-  print(payload)
+  try:
+    event = stripe.Webhook.construct_event(
+      payload, sig_header, endpoint_secret
+    )
+  except ValueError as e:
+    # Invalid payload
+    return HttpResponse(status=400)
+  except stripe.error.SignatureVerificationError as e:
+    # Invalid signature
+    return HttpResponse(status=400)
 
+  # Handle the checkout.session.completed event
+  if event['type'] == 'checkout.session.completed':
+    session = event['data']['object']
+
+    # Fulfill the purchase...
+    fulfill_order(session)
+
+  # Passed signature verification
   return HttpResponse(status=200)
+
+def fulfill_order(session):
+  # TODO: fill me in
+  print("Fulfilling order",session)
 
 # class CreateCheckoutSessionView(View):
 #     def post(self,request,*args,**kwargs):
@@ -225,3 +248,4 @@ def my_webhook_view(request):
 #             cancel_url=settings.STRIPE_URL + '/cancel/',
 #         )
 #         return JsonResponse({'id':checkout_session.id})
+

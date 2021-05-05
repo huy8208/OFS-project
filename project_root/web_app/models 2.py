@@ -109,7 +109,6 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=200,null=True)
     # product = models.ManyToManyField(Product) #May need to be removed
     status = models.CharField(max_length=200,null=True, choices=STATUS)
-    billing_status = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)
@@ -136,7 +135,7 @@ class OrderedItem(models.Model):
 
     product = models.ForeignKey(Product, on_delete= models.SET_NULL, blank = True, null = True)
     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
-    quantity = models.PositiveIntegerField(default=0)
+    quantity = models.IntegerField(default = 0, null = True, blank = True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     @property
@@ -147,7 +146,7 @@ class OrderedItem(models.Model):
 
 class ShippingAddress(models.Model):
     # Store shipping address of customer
-    customer = models.ForeignKey(Customer, on_delete= models.SET_NULL, blank = True, null = True)
+    customer = models.OneToOneField(Customer, on_delete= models.CASCADE, blank = True, null = True)
     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
     address = models.CharField(max_length = 200, null = True)
     city = models.CharField(max_length = 200, null = True)
@@ -156,4 +155,4 @@ class ShippingAddress(models.Model):
     data_added = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):
-        return self.address
+        return str(self.customer)

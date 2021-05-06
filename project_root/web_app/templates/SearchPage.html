@@ -1,0 +1,5 @@
+<head>
+  {% for product in products %}
+    <meta http-equiv="refresh" content="0; URL={% url 'product_detail' product.id %}" />
+  {% endfor %}
+</head>

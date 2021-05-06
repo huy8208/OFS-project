@@ -35,6 +35,7 @@ urlpatterns = [
     path('logout/',views.logoutUser,name = "logout"),
     # Search Pages
     #path('search/', views.SearchPage, name='search_result'),
+    path('search/', views.SearchPage, name='search_result'),
     # Cart and Checkout
     path('cart/', views.cart_page, name = "cart"),
     path('profile/', views.profile_page, name = "profile"),
@@ -47,7 +48,7 @@ urlpatterns = [
     path('success/', views.success, name = "success"),
     path('cancel/', views.cancel, name = "cancel"),
     path('create-checkout-session/',views.CreateCheckoutSessionView.as_view(),name='create-checkout-session'),
-    path('webhook/',views.my_webhook_view,name='webhook')
+    path('webhook/',views.my_webhook_view,name='webhook'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

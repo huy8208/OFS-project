@@ -94,8 +94,12 @@ def logoutUser(request):
 
 def SearchPage(request):
     srh = request.GET['query']
-    products = product.objects.filter(name__icontains=srh)
+    products = Product.objects.filter(name__icontains=srh)
     params = {'products': products, 'search':srh}
+
+    if len(products) != 1:
+        return render(request, 'Index.html')
+
     return render(request, 'SearchPage.html', params)
 
 def cart_page(request):

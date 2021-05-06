@@ -71,6 +71,7 @@ class Product(models.Model):
         ('Fruit','Fruit'),
         ('Meat','Meat'),('Pantry','Pantry'),('Dairy','Dairy'),('Frozen Foods', 'Frozen Foods'),('Beverages','Beverages')
     )
+
     name = models.CharField(max_length=200,null=True)
     price = models.FloatField()
     weight = models.FloatField(default=0)
@@ -80,9 +81,10 @@ class Product(models.Model):
     tags = models.ManyToManyField(Tag)
     image = models.ImageField(null=True,blank=True,upload_to='uploaded_images/')
     amount_in_stock = models.IntegerField(default = 0, null = True, blank = True)
-    slug = models.CharField(max_length=200,null=False,default=name)
+    slug = models.CharField(max_length=200,null=False,default="None")
     def __str__(self):
         return self.name
+
 
     @property
     def imageURL(self):
@@ -148,7 +150,7 @@ class OrderedItem(models.Model):
 
 class ShippingAddress(models.Model):
     # Store shipping address of customer
-    customer = models.ForeignKey(Customer, on_delete= models.SET_NULL, blank = True, null = True)
+    customer = models.OneToOneField(Customer, on_delete= models.CASCADE, blank = True, null = True)    
     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
     address = models.CharField(max_length = 200, null = True)
     city = models.CharField(max_length = 200, null = True)
@@ -157,4 +159,4 @@ class ShippingAddress(models.Model):
     data_added = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):
-        return self.address
+        return str(self.customer)

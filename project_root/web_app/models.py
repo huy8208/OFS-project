@@ -80,6 +80,7 @@ class Product(models.Model):
     tags = models.ManyToManyField(Tag)
     image = models.ImageField(null=True,blank=True,upload_to='uploaded_images/')
     amount_in_stock = models.IntegerField(default = 0, null = True, blank = True)
+    slug = models.CharField(max_length=200,null=False,default=name)
     def __str__(self):
         return self.name
 

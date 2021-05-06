@@ -249,3 +249,28 @@ def fulfill_order(session):
 #         )
 #         return JsonResponse({'id':checkout_session.id})
 
+import os
+import smtplib
+import imghdr
+def emailConfirmation():
+    from email.message import EmailMessage
+    emailAddress = 'cmpeOFS@gmail.com'
+    emailPassword = 'OFS-project'
+
+    msg = EmailMessage()
+    msg['Subject'] = 'OFS Order Confrimation'
+    msg['From'] = emailAddress
+    #msg['To'] = the user
+
+    msg.add_alternative("""\
+    <html>
+        <body>
+
+        <h1 style="color:SlateGray;">Thank you for ordering with us!<br>Your Total is: </h1>
+        </body>
+    </html>
+        """, subtype = 'html')
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(emailAddress, emailPassword)
+        smtp.send_message(msg)

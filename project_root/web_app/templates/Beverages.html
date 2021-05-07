@@ -1,6 +1,77 @@
 {% extends 'base_template.html'%}
 {% load static %}
 {% block body %}
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>All departments</span>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'Meat_Seafood' %}">Meat and Seafood</a></li>
+                        <li><a href="{% url 'Fruits_Vegetables' %}">Fruit and Vegetables</a></li>
+                        <li><a href="{% url 'Pantry' %}">Pantry</a></li>
+                        <li><a href="{% url 'Beverages' %}">Beverages</a></li>
+                        <li><a href="{% url 'Dairy_Eggs' %}">Dairy, Eggs & Cheese</a></li>
+                        <li><a href="{% url 'Frozen_Foods' %}">Frozen Foods</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <datalist id="products">
+                            <option value="Dairy, Eggs and & Cheese">American Cheese</option>
+                            <option value="Apples">
+                            <option value="Banana">
+                            <option value="Broccoli">
+                            <option value="Carrots">
+                            <option value="Dairy, Eggs and & Cheese">Cheddar Cheese</option>
+                            <option value="">Cream Cheese
+                            <option value="Cucumber">
+                            <option value="Dairy, Eggs and & Cheese">Eggs</option>
+                            <option value="Dairy, Eggs and & Cheese">Egg Whites</option>
+                            <option value="Garlic">
+                            <option value="Grapes">
+                            <option value="Guava">
+                            <option value="Lemon">
+                            <option value="Lettuce">
+                            <option value="Dairy, Eggs and & Cheese">Low Fat Milk</option>
+                            <option value="Mango">
+                            <option value="NewyorkPP">
+                            <option value="Onion">
+                            <option value="Oranges">
+                            <option value="Dairy, Eggs and & Cheese">Plain Yogurt</option>
+                            <option value="Potatos">
+                            <option value="RibeyesPP">
+                            <option value="Tomatos">
+                            <option value="Watermelons">
+                            <option value="Dairy, Eggs and & Cheese">Whole Milk</option>
+                        </datalist>
+                        <form action="#">
+                            <input type="text" list="products" placeholder="What do you need?">
+                            <button type="submit" class="site-btn" name="button">SEARCH</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>+65 11.188.888</h5>
+                            <span>support 24/7 time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
         <div class="container">
@@ -14,11 +85,11 @@
                         <!-- Commenting this out because we won't have more than one photo... unless yall want -->
                         <!-- <div class="product__details__pic__slider owl-carousel">
                             <img data-imgbigurl="img/product/details/product-details-2.jpg"
-                                src="img/product/details/thumb-1.jpg" alt="">
+                                src="img/product/details/#.jpg" alt="">
                             <img data-imgbigurl="img/product/details/product-details-3.jpg"
-                                src="img/product/details/thumb-2.jpg" alt="">
+                                src="img/product/details/#.jpg" alt="">
                             <img data-imgbigurl="img/product/details/product-details-5.jpg"
-                                src="img/product/details/thumb-3.jpg" alt="">
+                                src="img/product/details/#.jpg" alt="">
                             <img data-imgbigurl="img/product/details/product-details-4.jpg"
                                 src="img/product/details/thumb-4.jpg" alt="">
                         </div> -->

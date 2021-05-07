@@ -8,6 +8,9 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
+import os
+import smtplib
+import imghdr
 
 from django.http import JsonResponse
 import json
@@ -188,6 +191,7 @@ def success(request):
 def cancel(request):
     return render(request,'payment/cancel.html')
 
+
 #Class view
 class CreateCheckoutSessionView(View):
     def post(self,request,*args,**kwargs):
@@ -204,6 +208,35 @@ class CreateCheckoutSessionView(View):
         return JsonResponse({'id':checkout_session.id})
 
 @csrf_exempt
+def emailConfirmation(session):
+    from email.message import EmailMessage
+    emailAddress = 'cmpeOFS@gmail.com'
+    emailPassword = 'OFS-project'
+
+    msg = EmailMessage()
+    msg['Subject'] = 'OFS Order Confrimation'
+    msg['From'] = emailAddress
+    msg['To'] = session['customer']
+    print(session)
+    msg.add_alternative("""\
+    <html>
+        <body>
+
+        <h1 style="color:SlateGray;">Thank you for ordering with us!<br>Your Total is: </h1>
+        </body>
+    </html>
+        """, subtype = 'html')
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(emailAddress, emailPassword)
+        smtp.send_message(msg)
+
+def fulfill_order(session):
+    # TODO: fill me in
+    # Sending email confirmation
+    emailConfirmation(session)
+    print("Fulfilling order",session)
+
 def my_webhook_view(request):
   payload = request.body
   sig_header = request.META['HTTP_STRIPE_SIGNATURE']
@@ -230,26 +263,30 @@ def my_webhook_view(request):
   # Passed signature verification
   return HttpResponse(status=200)
 
-def fulfill_order(session):
-  # TODO: fill me in
-  print("Fulfilling order",session)
+# def fulfill_order(session):
+#     # TODO: fill me in
+#     # Sending email confirmation
+#     emailConfirmation(session)
+#     print("Fulfilling order",session)
 
-# class CreateCheckoutSessionView(View):
-#     def post(self,request,*args,**kwargs):
-#         address = {'city': 'San Jose', 'country': 'USA', 
-#         'line1': 'testing ct', 'line2': 'none', 
-#         'postal_code': '95138', 'state': 'CA'}
-#         stripe_customer = stripe.Customer.create(address=address,shipping={"address":address,"name":request.user},email=request.user.email)
+class CreateCheckoutSessionView(View):
+    def post(self,request,*args,**kwargs):
+        address = {'city': 'San Jose', 'country': 'USA', 
+        'line1': 'testing ct', 'line2': 'none', 
+        'postal_code': '95138', 'state': 'CA'}
+        stripe_customer = stripe.Customer.create(address=address,shipping={"address":address,"name":request.user},email=request.user.email)
 
-#         checkout_session = stripe.checkout.Session.create(
-#             customer=stripe_customer,
-#             payment_method_types=['card'],
-#             shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
-#             shipping_address_collection={'allowed_countries': ['US', 'CA'],},
-#             line_items=json.loads(request.body)['lineItems'],
-#             mode='payment',
-#             success_url=settings.STRIPE_URL + '/success/',
-#             cancel_url=settings.STRIPE_URL + '/cancel/',
-#         )
-#         return JsonResponse({'id':checkout_session.id})
+        checkout_session = stripe.checkout.Session.create(
+            customer=stripe_customer,
+            payment_method_types=['card'],
+            shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
+            shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+            line_items=json.loads(request.body)['lineItems'],
+            mode='payment',
+            success_url=settings.STRIPE_URL + '/success/',
+            cancel_url=settings.STRIPE_URL + '/cancel/',
+        )
+        return JsonResponse({'id':checkout_session.id})
+
+
 

@@ -12,7 +12,7 @@ import os
 import smtplib
 import imghdr
 
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 import json
 #Stripe
 from django.views import View
@@ -208,38 +208,6 @@ class CreateCheckoutSessionView(View):
         return JsonResponse({'id':checkout_session.id})
 
 @csrf_exempt
-def fulfill_order(session):
-    # TODO: fill me in
-    # Sending email confirmation
-    emailConfirmation(session)
-    print("Fulfilling order",session)
-
-def my_webhook_view(request):
-  payload = request.body
-  sig_header = request.META['HTTP_STRIPE_SIGNATURE']
-  event = None
-
-  try:
-    event = stripe.Webhook.construct_event(
-      payload, sig_header, endpoint_secret
-    )
-  except ValueError as e:
-    # Invalid payload
-    return HttpResponse(status=400)
-  except stripe.error.SignatureVerificationError as e:
-    # Invalid signature
-    return HttpResponse(status=400)
-
-  # Handle the checkout.session.completed event
-  if event['type'] == 'checkout.session.completed':
-    session = event['data']['object']
-
-    # Fulfill the purchase...
-    fulfill_order(session)
-
-  # Passed signature verification
-  return HttpResponse(status=200)
-
 def emailConfirmation(session):
     from email.message import EmailMessage
     emailAddress = 'cmpeOFS@gmail.com'
@@ -248,7 +216,7 @@ def emailConfirmation(session):
     msg = EmailMessage()
     msg['Subject'] = 'OFS Order Confrimation'
     msg['From'] = emailAddress
-    msg['To'] = session['customer']
+    msg['To'] = session['customer_email']
     print(session)
     msg.add_alternative("""\
     <html>
@@ -263,30 +231,59 @@ def emailConfirmation(session):
         smtp.login(emailAddress, emailPassword)
         smtp.send_message(msg)
 
-# def fulfill_order(session):
-#     # TODO: fill me in
-#     # Sending email confirmation
-#     emailConfirmation(session)
-#     print("Fulfilling order",session)
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
 
-class CreateCheckoutSessionView(View):
-    def post(self,request,*args,**kwargs):
-        address = {'city': 'San Jose', 'country': 'USA', 
-        'line1': 'testing ct', 'line2': 'none', 
-        'postal_code': '95138', 'state': 'CA'}
-        stripe_customer = stripe.Customer.create(address=address,shipping={"address":address,"name":request.user},email=request.user.email)
-
-        checkout_session = stripe.checkout.Session.create(
-            customer=stripe_customer,
-            payment_method_types=['card'],
-            shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
-            shipping_address_collection={'allowed_countries': ['US', 'CA'],},
-            line_items=json.loads(request.body)['lineItems'],
-            mode='payment',
-            success_url=settings.STRIPE_URL + '/success/',
-            cancel_url=settings.STRIPE_URL + '/cancel/',
+    try:
+        event = stripe.Webhook.construct_event(
+        payload, sig_header, endpoint_secret
         )
-        return JsonResponse({'id':checkout_session.id})
+    except ValueError as e:
+    # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+    # Invalid signature
+        return HttpResponse(status=400)
+
+    # Handle the checkout.session.completed event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+
+        # Fulfill the purchase...
+        fulfill_order(session)
+
+    # Passed signature verification
+    return HttpResponse(status=200)
+
+def fulfill_order(session):
+    # TODO: fill me in
+    # Sending email confirmation
+    emailConfirmation(session)
+    print("Fulfilling order",session)
+
+# Commented out, probably not using it because adding
+# address does not prefill stripe checkout
+# class CreateCheckoutSessionView(View):
+#     def post(self,request,*args,**kwargs):
+#         address = {'city': 'San Jose', 'country': 'USA', 
+#         'line1': 'testing ct', 'line2': 'none', 
+#         'postal_code': '95138', 'state': 'CA'}
+#         stripe_customer = stripe.Customer.create(address=address,shipping={"address":address,"name":request.user},email=request.user.email)
+
+#         checkout_session = stripe.checkout.Session.create(
+#             customer=stripe_customer,
+#             payment_method_types=['card'],
+#             shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
+#             shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+#             line_items=json.loads(request.body)['lineItems'],
+#             mode='payment',
+#             success_url=settings.STRIPE_URL + '/success/',
+#             cancel_url=settings.STRIPE_URL + '/cancel/',
+#         )
+#         return JsonResponse({'id':checkout_session.id})
 
 
 

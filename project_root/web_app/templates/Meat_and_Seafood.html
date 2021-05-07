@@ -25,35 +25,64 @@
                 <div class="hero__search">
                     <div class="hero__search__form">
                         <datalist id="products">
-                            <option value="Dairy, Eggs and & Cheese">American Cheese</option>
-                            <option value="Apples">
-                            <option value="Banana">
-                            <option value="Broccoli">
-                            <option value="Carrots">
-                            <option value="Dairy, Eggs and & Cheese">Cheddar Cheese</option>
-                            <option value="">Cream Cheese
-                            <option value="Cucumber">
-                            <option value="Dairy, Eggs and & Cheese">Eggs</option>
-                            <option value="Dairy, Eggs and & Cheese">Egg Whites</option>
-                            <option value="Garlic">
-                            <option value="Grapes">
-                            <option value="Guava">
-                            <option value="Lemon">
-                            <option value="Lettuce">
-                            <option value="Dairy, Eggs and & Cheese">Low Fat Milk</option>
+                            <option value="Ribeye Steak"></option>
+                            <option value="New York Strip Steak">
+                            <option value="Chicken Thighs">
+                            <option value="Chicken Breast">
+                            <option value="Pork Chops">
+                            <option value="Bacon"></option>
+                            <option value="Shrimp">
+                            <option value="Clams">
+                            <option value="Banana"></option>
+                            <option value="Watermelon"></option>
                             <option value="Mango">
-                            <option value="NewyorkPP">
-                            <option value="Onion">
-                            <option value="Oranges">
-                            <option value="Dairy, Eggs and & Cheese">Plain Yogurt</option>
-                            <option value="Potatos">
-                            <option value="RibeyesPP">
-                            <option value="Tomatos">
-                            <option value="Watermelons">
-                            <option value="Dairy, Eggs and & Cheese">Whole Milk</option>
+                            <option value="Apple">
+                            <option value="Grapes">
+                            <option value="Orange">
+                            <option value="Lemon">
+                            <option value="Brocolli"></option>
+                            <option value="Lettuce">
+                            <option value="Carrots">
+                            <option value="Potato">
+                            <option value="Cucumber">
+                            <option value="Tomato"></option>
+                            <option value="Garlic">
+                            <option value="Onions">
+                            <option value="Pepsi">
+                            <option value="Orange Juice	">
+                            <option value="Pure Leaf"></option>
+                            <option value="Crystal Geyser Water"></option>
+                            <option value="La Croix"></option>
+                            <option value="Starbucks Ice's Coffee"></option>
+                            <option value="Red Bull"></option>
+                            <option value="Kombucha"></option>
+                            <option value="Cheddar Cheese"></option>
+                            <option value="Whole Milk"></option>
+                            <option value="Low Fat Milk"></option>
+                            <option value="Cream Cheese"></option>
+                            <option value="Yogurt"></option>
+                            <option value="Dozen Eggs"></option>
+                            <option value="Egg Whites"></option>
+                            <option value="American Cheese"></option>
+                            <option value="Cheerios"></option>
+                            <option value="Brown rice"></option>
+                            <option value="Oreos"></option>
+                            <option value="Sourdough bread"></option>
+                            <option value="Pickles"></option>
+                            <option value="Canned black beans"></option>
+                            <option value="Peanut butter"></option>
+                            <option value="Sugar"></option>
+                            <option value="Ice cream"></option>
+                            <option value="Waffles"></option>
+                            <option value="Cool Whip"></option>
+                            <option value="Frozen blueberries"></option>
+                            <option value="Hot Pockets"></option>
+                            <option value="Garlic bread"></option>
+                            <option value="Pizza"></option>
+                            <option value="Ice cream bars"></option>
                         </datalist>
-                        <form action="#">
-                            <input type="text" list="products" placeholder="What do you need?">
+                        <form action="{% url 'search_result' %}" method = "GET" autocomplete = "off">
+                            <input name = "query" type="text" list="products" placeholder="What do you need?" >
                             <button type="submit" class="site-btn" name="button">SEARCH</button>
                         </form>
                     </div>
@@ -72,145 +101,111 @@
     </div>
 </section>
 <!-- Hero Section End -->
+
+
+
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6">
+              <!--  <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large"
                                 src="" alt="">
                         </div>
                     </div>
-                </div>
-                    <div class="row featured__filter">
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
-                            <div class="featured__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/steak1.jpg'%}">
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="#">Ribeye Steak</a></h6>
-                                    <h5>$14.99</h5>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="product__details__text">
-                                        <div class="product__details__quantity">
-                                        </div>
-                                    </div>
-                                </div>
+                </div>-->
+
+                <!--<div class="row featured__filter">-->
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/steak1.jpg'%}">
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
-                            <div class="featured__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/newyorksteak.jpg'%}">
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="#">Newyork Steak</a></h6>
-                                    <h5>$12.49</h5>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="product__details__text">
-                                        <div class="product__details__quantity">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
-                            <div class="featured__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/chickenthighs.jpg'%}">
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="#">Chicken Thighs</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="product__details__text">
-                                        <div class="product__details__quantity">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
-                            <div class="featured__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/chickenbreasts.jpg'%}">
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="#">Chicken Breasts</a></h6>
-                                    <h5>$11.99 - 1.4 lbs</h5>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="product__details__text">
-                                        <div class="product__details__quantity">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                            <div class="featured__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/porkchops.jpg'%}">
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="#">Pork Chops</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="product__details__text">
-                                        <div class="product__details__quantity">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fastfood">
-                            <div class="featured__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/bacon.jpg'%}">
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="#">Bacon</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="product__details__text">
-                                        <div class="product__details__quantity">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                            <div class="featured__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/shrimp.jpg'%}">
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="#">Shrimp</a></h6>
-                                    <h5>$11.99 - 1.0 lb</h5>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="product__details__text">
-                                        <div class="product__details__quantity">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
-                            <div class="featured__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/clams.jpg'%}">
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="#">clams</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
+                            <div class="featured__item__text">
+                                <h6><a href="#">Ribeye Steak</a></h6>
+                                <h5>$16.00</h5>
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix  oranges fresh-meat">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/newyorksteak.jpg'%}">
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="#">New York Steak</a></h6>
+                                <h5>$14.00</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix  oranges fresh-meat">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/chickenthighs.jpg'%}">
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="#">Chicken Thighs</a></h6>
+                                <h5>$4.00</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix  fastfood vegetables">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/chickenbreasts.jpg'%}">
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="#">Chicken Breasts</a></h6>
+                                <h5>$3.00</h5>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/porkchops.jpg'%}">
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="#">Pork Chops</a></h6>
+                                <h5>$4.00</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/bacon.jpg'%}">
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="#">Bacon</a></h6>
+                                <h5>$6.00</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/shrimp.jpg'%}">
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="#">Shrimp</a></h6>
+                                <h5>$17.00</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{% static 'img/Meats/clams.jpg'%}">
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="#">Clams</a></h6>
+                                <h5>$13.00</h5>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <!--</div>-->
                 </div>
-            </div>
-        </div>
+              </div>
+    </div>
     </section>
     <!-- Product Details Section End -->
 

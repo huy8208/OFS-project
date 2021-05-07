@@ -3,7 +3,9 @@ from django.contrib.auth.admin import UserAdmin
 # Configure setting for localhost:8000/admin
 
 from .models import *
-
+admin.site.site_header = "OFS Admin Panel"
+admin.site.site_title = "OFS Admin Panel"
+admin.site.index_tittle = "OFS Admin Panel"
 class CustomerAdmin(UserAdmin):
     list_display = ('id','email','username','date_created', 'last_login', 'is_customer', 'is_admin','is_staff')
     search_fields = ('email','username',)

@@ -216,7 +216,7 @@ def emailConfirmation(session):
     msg = EmailMessage()
     msg['Subject'] = 'OFS Order Confrimation'
     msg['From'] = emailAddress
-    msg['To'] = session['customer']
+    msg['To'] = session['customer_email']
     print(session)
     msg.add_alternative("""\
     <html>
@@ -261,7 +261,7 @@ def stripe_webhook(request):
 def fulfill_order(session):
     # TODO: fill me in
     # Sending email confirmation
-    # emailConfirmation(session)
+    emailConfirmation(session)
     print("Fulfilling order",session)
 
 # Commented out, probably not using it because adding

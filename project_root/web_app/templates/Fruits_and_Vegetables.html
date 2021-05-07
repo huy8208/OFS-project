@@ -1,6 +1,106 @@
 {% extends 'base_template.html'%}
 {% load static %}
 {% block body %}
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>All departments</span>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'Meat_Seafood' %}">Meat and Seafood</a></li>
+                        <li><a href="{% url 'Fruits_Vegetables' %}">Fruit and Vegetables</a></li>
+                        <li><a href="{% url 'Pantry' %}">Pantry</a></li>
+                        <li><a href="{% url 'Beverages' %}">Beverages</a></li>
+                        <li><a href="{% url 'Dairy_Eggs' %}">Dairy, Eggs & Cheese</a></li>
+                        <li><a href="{% url 'Frozen_Foods' %}">Frozen Foods</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <datalist id="products">
+                            <option value="Ribeye Steak"></option>
+                            <option value="New York Strip Steak">
+                            <option value="Chicken Thighs">
+                            <option value="Chicken Breast">
+                            <option value="Pork Chops">
+                            <option value="Bacon"></option>
+                            <option value="Shrimp">
+                            <option value="Clams">
+                            <option value="Banana"></option>
+                            <option value="Watermelon"></option>
+                            <option value="Mango">
+                            <option value="Apple">
+                            <option value="Grapes">
+                            <option value="Orange">
+                            <option value="Lemon">
+                            <option value="Brocolli"></option>
+                            <option value="Lettuce">
+                            <option value="Carrots">
+                            <option value="Potato">
+                            <option value="Cucumber">
+                            <option value="Tomato"></option>
+                            <option value="Garlic">
+                            <option value="Onions">
+                            <option value="Pepsi">
+                            <option value="Orange Juice	">
+                            <option value="Pure Leaf"></option>
+                            <option value="Crystal Geyser Water"></option>
+                            <option value="La Croix"></option>
+                            <option value="Starbucks Ice's Coffee"></option>
+                            <option value="Red Bull"></option>
+                            <option value="Kombucha"></option>
+                            <option value="Cheddar Cheese"></option>
+                            <option value="Whole Milk"></option>
+                            <option value="Low Fat Milk"></option>
+                            <option value="Cream Cheese"></option>
+                            <option value="Yogurt"></option>
+                            <option value="Dozen Eggs"></option>
+                            <option value="Egg Whites"></option>
+                            <option value="American Cheese"></option>
+                            <option value="Cheerios"></option>
+                            <option value="Brown rice"></option>
+                            <option value="Oreos"></option>
+                            <option value="Sourdough bread"></option>
+                            <option value="Pickles"></option>
+                            <option value="Canned black beans"></option>
+                            <option value="Peanut butter"></option>
+                            <option value="Sugar"></option>
+                            <option value="Ice cream"></option>
+                            <option value="Waffles"></option>
+                            <option value="Cool Whip"></option>
+                            <option value="Frozen blueberries"></option>
+                            <option value="Hot Pockets"></option>
+                            <option value="Garlic bread"></option>
+                            <option value="Pizza"></option>
+                            <option value="Ice cream bars"></option>
+                        </datalist>
+                        <form action="{% url 'search_result' %}" method = "GET" autocomplete = "off">
+                            <input name = "query" type="text" list="products" placeholder="What do you need?" >
+                            <button type="submit" class="site-btn" name="button">SEARCH</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>+65 11.188.888</h5>
+                            <span>support 24/7 time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
         <div class="container">

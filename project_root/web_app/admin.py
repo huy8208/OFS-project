@@ -23,7 +23,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = ()
 
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('id','customer','address','city','state','zipcode')
+    list_display = ('customer','address','city','state','zipcode')
 
 admin.site.register(Customer,CustomerAdmin)
 admin.site.register(Product,ProductAdmin)

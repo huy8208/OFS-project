@@ -115,7 +115,6 @@ def cart_page(request):
     else: #If user is not authenticated/login
         items = [] #create an empty list of items.
         order = {'get_cart_total':0,'get_cart_items':0}
-    # yes = OrderedItem.objects.select_related()
     
 
     context = {'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY,'STRIPE_URL':settings.STRIPE_URL}
@@ -176,12 +175,12 @@ def base_template(request):
         customer = request.user
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
         order,created = Order.objects.get_or_create(customer=customer,complete=False)
-        items = OrderedItem.objects.all() #Get all ordered items object that an authenticated user has placed from our db.
+        items = order.items_in_cart.all() #Get all ordered items object that an authenticated user has placed from our db.
         cartItems = order.get_cart_items
     else: #If user is not authenticated/login
         items = [] #create an empty list of items.
         order = {'get_cart_total':0,'get_cart_items':0}
-        cartItems = order['get_cart_items']
+        cartItems = order['get_cart_items'] #To update the quantity icon at the top right.
     context = {'cartItems':cartItems}
     return render(request,'base_template.html',context=context)
 
@@ -207,8 +206,7 @@ class CreateCheckoutSessionView(View):
         )
         return JsonResponse({'id':checkout_session.id})
 
-@csrf_exempt
-def emailConfirmation(session):
+def send_email_confirmation(session):
     from email.message import EmailMessage
     emailAddress = 'cmpeOFS@gmail.com'
     emailPassword = 'OFS-project'
@@ -217,7 +215,7 @@ def emailConfirmation(session):
     msg['Subject'] = 'OFS Order Confrimation'
     msg['From'] = emailAddress
     msg['To'] = session['customer_email']
-    print(session)
+    
     msg.add_alternative("""\
     <html>
         <body>
@@ -253,24 +251,27 @@ def stripe_webhook(request):
         session = event['data']['object']
 
         # Fulfill the purchase...
-        fulfill_order(session)
+        fulfill_order(request,session)
 
     # Passed signature verification
     return HttpResponse(status=200)
 
-def fulfill_order(session):
+def fulfill_order(request,session):
     # TODO: fill me in
     # Saving a copy of the order in our own dabase.
-
+    save_order_to_db(request,session)
     # Sending customer a receipt email
-    emailConfirmation(session)
+    # send_email_confirmation(request,session)
     print("Fulfilling order",session)
 
-def save_order_to_db(session):
-    pass
+def save_order_to_db(request,session):
+    if not request.user.is_authenticated:
+        return HttpResponseNotFound('<h1>User is not authenticated!</h1>')
+    else:
+        #Get shippingAddress obj if it exists, else create new.
+        shippingAddress,created = Shipping.objects.get_or_create(customer=request.user,complete=False)
+        pass
 
-def testRequest(request):
-    print(request.body)
 
 # Commented out, probably not using it because adding
 # address does not prefill stripe checkout

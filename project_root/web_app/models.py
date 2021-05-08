@@ -150,8 +150,8 @@ class OrderedItem(models.Model):
 
 class ShippingAddress(models.Model):
     # Store shipping address of customer
-    customer = models.OneToOneField(Customer, on_delete= models.CASCADE, blank = True, null = True)    
-    order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
+    customer = models.OneToOneField(Customer, on_delete= models.CASCADE, related_name='get_customer_address', blank = True, null = True)    
+    # order = models.OneToOneField(Order, on_delete= models.SET_NULL, blank = True, null = True)
     address = models.CharField(max_length = 200, null = True)
     city = models.CharField(max_length = 200, null = True)
     state = models.CharField(max_length = 200, null = True)

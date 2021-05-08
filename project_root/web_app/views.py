@@ -111,7 +111,7 @@ def cart_page(request):
         customer = request.user
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
         order,created = Order.objects.get_or_create(customer=customer,complete=False)
-        items = OrderedItem.objects.all() #Get all ordered items object that an authenticated user has placed from our db.
+        items = order.items_in_cart.all() #Get all ordered items object that an authenticated user has placed from our db.
     else: #If user is not authenticated/login
         items = [] #create an empty list of items.
         order = {'get_cart_total':0,'get_cart_items':0}
@@ -260,9 +260,17 @@ def stripe_webhook(request):
 
 def fulfill_order(session):
     # TODO: fill me in
-    # Sending email confirmation
+    # Saving a copy of the order in our own dabase.
+
+    # Sending customer a receipt email
     emailConfirmation(session)
     print("Fulfilling order",session)
+
+def save_order_to_db(session):
+    pass
+
+def testRequest(request):
+    print(request.body)
 
 # Commented out, probably not using it because adding
 # address does not prefill stripe checkout

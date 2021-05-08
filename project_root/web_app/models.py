@@ -82,9 +82,9 @@ class Product(models.Model):
     image = models.ImageField(null=True,blank=True,upload_to='uploaded_images/')
     amount_in_stock = models.IntegerField(default = 0, null = True, blank = True)
     slug = models.CharField(max_length=200,null=False,default="None")
+    
     def __str__(self):
         return self.name
-
 
     @property
     def imageURL(self):
@@ -138,7 +138,7 @@ class OrderedItem(models.Model):
         verbose_name = "Ordered Item"
 
     product = models.ForeignKey(Product, on_delete= models.SET_NULL, blank = True, null = True)
-    order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True)
+    order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True, related_name='items_in_cart')
     quantity = models.PositiveIntegerField(default=0)
     date_added = models.DateTimeField(auto_now_add=True)
 

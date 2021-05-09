@@ -101,18 +101,26 @@ class Order(models.Model):
     One customer can have many orders. One product can have many orders."""
     STATUS = (
         ('Pending','Pending'),
-        ('Out for delivery','Out for delivery'),
-        ('Delivered','Delivered'),
+        ('Complete','Complete'),
     )
 
+    CHECKOUT = (
+        ('Complete','Complete'),
+    )
+
+    SHIPPING = (
+            ('Out for delivery','Out for delivery'),
+    )
+    
     customer = models.ForeignKey(Customer,blank=True,null=True, on_delete= models.SET_NULL)
     date_ordered = models.DateTimeField(auto_now_add=True,null=True)
     # date_created = models.DateTimeField(auto_now_add=True,null=True)
     complete = models.BooleanField(default=False,null=True,blank=False)
     transaction_id = models.CharField(max_length=200,null=True)
     # product = models.ManyToManyField(Product) #May need to be removed
-    status = models.CharField(max_length=200,null=True, choices=STATUS)
-    billing_status = models.BooleanField(default=False)
+    status = models.CharField(max_length=200,null=True,choices=STATUS)
+    checkout = models.CharField(max_length=200,null=True,choices=CHECKOUT)
+    shipping = models.CharField(max_length=200,null=True,choices=SHIPPING)
 
     def __str__(self):
         return str(self.id)

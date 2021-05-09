@@ -40,6 +40,7 @@ urlpatterns = [
     path('cart/', views.cart_page, name = "cart"),
     path('profile/', views.profile_page, name = "profile"),
     path('update_item/', views.updateItem, name = "update_item"),
+    path('checkout/', views.checkout_page, name = "checkout"),
     #Dynamic product pages
     path('product_detail/<str:pk>',views.product_detail,name='product_detail'),
     #Base template

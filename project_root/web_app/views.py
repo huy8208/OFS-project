@@ -259,20 +259,17 @@ def stripe_webhook(request):
 def fulfill_order(session):
     # TODO: fill me in
     # Saving a copy of the order in our own dabase.
-    save_order_to_db(session)
+    approve_customer_order(session)
     # Sending customer a receipt email
     # send_email_confirmation(request,session)
     print("Fulfilling order",session)
 
-def save_order_to_db(session):
+def approve_customer_order(session):
     customer = Customer.objects.get(email=session['customer_email'])
     #Get shippingAddress obj if it exists, else create new.        
-    shippingObj,created = ShippingAddress.objects.get_or_create(customer=customer)
-    shippingObj.address = "random"
-    shippingObj.city = "San Jose"
-    shippingObj.state = "CA"
-    shippingObj.zipcode = "95111"
-    shippingObj.save()        
+    order,created = Order.objects.get_or_create(customer=customer)
+    order.status = "Approved"
+    order.save()        
 
 # Commented out, probably not using it because adding
 # address does not prefill stripe checkout

@@ -12,7 +12,7 @@ import os
 import smtplib
 import imghdr
 
-from django.http import JsonResponse,HttpResponse
+from django.http import JsonResponse,HttpResponse,HttpResponseNotFound
 import json
 #Stripe
 from django.views import View
@@ -251,27 +251,28 @@ def stripe_webhook(request):
         session = event['data']['object']
 
         # Fulfill the purchase...
-        fulfill_order(request,session)
+        fulfill_order(session)
 
     # Passed signature verification
     return HttpResponse(status=200)
 
-def fulfill_order(request,session):
+def fulfill_order(session):
     # TODO: fill me in
     # Saving a copy of the order in our own dabase.
-    save_order_to_db(request,session)
+    save_order_to_db(session)
     # Sending customer a receipt email
     # send_email_confirmation(request,session)
     print("Fulfilling order",session)
 
-def save_order_to_db(request,session):
-    if not request.user.is_authenticated:
-        return HttpResponseNotFound('<h1>User is not authenticated!</h1>')
-    else:
-        #Get shippingAddress obj if it exists, else create new.
-        shippingAddress,created = Shipping.objects.get_or_create(customer=request.user,complete=False)
-        pass
-
+def save_order_to_db(session):
+    customer = Customer.objects.get(email=session['customer_email'])
+    #Get shippingAddress obj if it exists, else create new.        
+    shippingObj,created = ShippingAddress.objects.get_or_create(customer=customer)
+    shippingObj.address = "random"
+    shippingObj.city = "San Jose"
+    shippingObj.state = "CA"
+    shippingObj.zipcode = "95111"
+    shippingObj.save()        
 
 # Commented out, probably not using it because adding
 # address does not prefill stripe checkout

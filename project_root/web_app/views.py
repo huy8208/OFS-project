@@ -250,21 +250,21 @@ class CreateCheckoutSessionView(View):
         return JsonResponse({'id':checkout_session.id})
 
 def send_email_confirmation(session):
-    from email.message import EmailMessage
+    from email.mime.text import MIMEText
+    # from email.message import EmailMessage
     emailAddress = 'cmpeOFS@gmail.com'
     emailPassword = 'OFS-project'
 
-    msg = EmailMessage()
+    html = open("email/email.html")
+    msg = MIMEText(html.read(), 'html')
+    # msg = EmailMessage()
     msg['Subject'] = 'OFS Order Confrimation'
     msg['From'] = emailAddress
     msg['To'] = session['customer_email']
     
     msg.add_alternative("""\
     <html>
-        <body>
-
-        <h1 style="color:SlateGray;">Thank you for ordering with us!<br>Your Total is: </h1>
-        </body>
+        <title>my-new-message.html</title>
     </html>
         """, subtype = 'html')
 

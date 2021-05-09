@@ -40,7 +40,9 @@ class Customer(AbstractBaseUser):
     is_customer = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-
+    save_profile = models.BooleanField(default=False)
+    first_name = models.CharField(max_length=50,null=True)
+    last_name = models.CharField(max_length=50,null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

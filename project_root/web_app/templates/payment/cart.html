@@ -245,8 +245,8 @@
                         <li>Subtotal <span>${{order.get_cart_total|floatformat:2}}</span></li>
                         <li>Total <span>subtotal - coupon code</span></li>
                     </ul>
-                    <button type="button" class="primary-btn btn btn-primary btn-lg"
-                        id='checkout-button'>Checkout</button>
+                    <button onclick="location.href='{% url 'checkout' %}'" class="primary-btn btn btn-primary btn-lg">
+                        Checkout</button>
                 </div>
             </div>
         </div>

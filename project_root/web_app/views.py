@@ -336,6 +336,3 @@ def approve_customer_order(session):
 #             cancel_url=settings.STRIPE_URL + '/cancel/',
 #         )
 #         return JsonResponse({'id':checkout_session.id})
-
-
-

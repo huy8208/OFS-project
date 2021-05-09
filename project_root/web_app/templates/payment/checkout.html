@@ -274,7 +274,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <button type="submit" class="primary-btn btn btn-primary btn-lg"
+                            <button type="button" class="primary-btn btn btn-primary btn-lg"
                                 onclick="return submitFormData()">Payment</button>
                         </div>
                     </div>
@@ -286,7 +286,7 @@
 <!-- Checkout Section End -->
 <!-- Stripe -->
 <script type="text/javascript">
-    function create_checkout() {
+    function create_stripe_checkout() {
         console.log(JSON.stringify(lineItems));
         var unit_amount = '{{ordereditem.product.price}}';
         // Create an instance of the Stripe object with your publishable API key
@@ -316,9 +316,8 @@
                 console.error("Error:", error);
             });
     }
-</script>
-<!-- Fill out shipping address. -->
-<script>
+
+    // Fill out shipping address
     function submitFormData() {
         var form = document.forms["checkout_form"]
         var userFormData = {
@@ -346,17 +345,15 @@
             return false;
         }
         else {
-            fetch("/create_order/", {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-                body: JSON.stringify({ "userFormData": userFormData })
-            }).then(function (response) {
-                return response.json()
-            }).catch(function (error) {
-                console.error("Error:", error);
-            });
-            create_checkout();
+            save_user_info(userFormData).then(response => {
+                if (response['status'] == 200) {
+                    console.log("User profile saved!")
+                }
+                }).then(create_stripe_checkout()).catch(error => {
+                    console.error("Error, cannot save user info", error);
+                })
         }
     }
 </script>
+
 {% endblock %}

@@ -175,8 +175,8 @@ def save_user_info(request):
         shippingObject.phone = customerAddressForm['phone']
         shippingObject.save()
         return HttpResponse(status=200)
-    elif request.method != 'POST':
-        print("Do nothing")
+    else:
+        return HttpResponse(status=500)
     
 def processOrder(request):
     return JsonResponse("Payment complete!", safe = False)

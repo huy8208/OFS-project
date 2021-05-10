@@ -136,6 +136,7 @@ def checkout_page(request):
 
 def create_order(request):
     """This method updates shipping address in db and create stripe order"""
+    customer = request.user
     if request.method == 'POST':
         customerAddressForm = json.loads(request.body)['userFormData']
         shippingObject,created = ShippingAddress.objects.get_or_create(customer=customer)
@@ -240,7 +241,7 @@ class CreateCheckoutSessionView(View):
             payment_method_types=['card'],
             customer_email=request.user.email,
             shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
-            # shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+            shipping_address_collection={'allowed_countries': ['US', 'CA'],},
             line_items=json.loads(request.body)['lineItems'],
             mode='payment',
             success_url=settings.STRIPE_URL + '/success/',

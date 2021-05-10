@@ -178,19 +178,17 @@
                         </div>
                         <div class="checkout__input">
                             <p>Zipcode<span>*</span></p>
-                            <input type="text" name="zipcode" value="{{customer.get_customer_address.zipcode}}"
-                                required>
+                            <input type="text" name="zipcode" value="{{customer.get_customer_address.zipcode}}" required>
                         </div>
                         <div class="checkout__input">
                             <p>Country<span>*</span></p>
-                            <input type="text" name="country" value="{{customer.get_customer_address.country}}"
-                                required>
+                            <input type="text" name="country" value="{{customer.get_customer_address.country}}" required>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Phone<span>*</span></p>
-                                    <input type="text">
+                                    <input type="text" name="phone" value="{{customer.get_customer_address.phone}}" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -292,7 +290,8 @@
             'city': null,
             'state': null,
             'zipcode': null,
-            'country': null
+            'country': null,
+            'phone':null
         }
         userFormData.firstname = form.firstname.value
         userFormData.lastname = form.lastname.value
@@ -301,8 +300,10 @@
         userFormData.state = form.state.value
         userFormData.zipcode = form.zipcode.value
         userFormData.country = form.country.value
+        userFormData.phone = form.phone.value
+
         if (userFormData.firstname == "" || userFormData.lastname == "" || userFormData.address == ""
-            || userFormData.city == "" || userFormData.state == "" || userFormData.zipcode == "" || userFormData.country == "") {
+            || userFormData.city == "" || userFormData.state == "" || userFormData.zipcode == "" || userFormData.country == "" || userFormData.phone == "") {
             alert("Please fill all required fields.")
             return false;
         }

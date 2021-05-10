@@ -143,7 +143,8 @@ def save_user_info(request):
     customer = request.user
     if request.method == 'POST':
         customerAddressForm = json.loads(request.body)['userFormData']
-        shippingObject = customer.get_customer_address
+        print(customerAddressForm)
+        shippingObject,created = ShippingAddress.objects.get_or_create(customer=customer)
         shippingObject.first_name = customerAddressForm['firstname']
         shippingObject.last_name = customerAddressForm['lastname']
         shippingObject.address = customerAddressForm['address']
@@ -151,6 +152,7 @@ def save_user_info(request):
         shippingObject.state = customerAddressForm['state']
         shippingObject.zipcode = customerAddressForm['zipcode']
         shippingObject.country = customerAddressForm['country']
+        shippingObject.phone = customerAddressForm['phone']
         shippingObject.save()
         return HttpResponse(status=200)
     elif request.method != 'POST':

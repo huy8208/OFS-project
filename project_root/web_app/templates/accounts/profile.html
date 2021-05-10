@@ -261,7 +261,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <button type="submit" id="save-customer-info" class="site-btn"
+                            <button type="button" id="save-customer-info" class="site-btn"
                                 onclick="return submitFormData()">Save</button>
                         </div>
                     </div>
@@ -306,6 +306,7 @@
             }).then(function (response) {
                 if(response['status'] == 200){
                     alert("User profile saved.")
+                    location.reload();
                 }
             }).catch(function (error) {
                 console.error("Error:", error);

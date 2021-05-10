@@ -304,7 +304,9 @@
                 headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
                 body: JSON.stringify({ "userFormData": userFormData })
             }).then(function (response) {
-                return response.json();
+                if(response['status'] == 200){
+                    alert("User profile saved.")
+                }
             }).catch(function (error) {
                 console.error("Error:", error);
             });

@@ -274,7 +274,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <button type="submit" class="primary-btn btn btn-primary btn-lg"
+                            <button type="button" class="primary-btn btn btn-primary btn-lg"
                                 onclick="return submitFormData()">Payment</button>
                         </div>
                     </div>
@@ -316,9 +316,8 @@
                 console.error("Error:", error);
             });
     }
-</script>
-<!-- Fill out shipping address. -->
-<script>
+
+// Fill out shipping address
     function submitFormData() {
         var form = document.forms["checkout_form"]
         var userFormData = {
@@ -350,13 +349,19 @@
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
                 body: JSON.stringify({ "userFormData": userFormData })
-            }).then(function (response) {
-                return response.json()
+            }).then(response => {
+                if(response['status'] == 200){
+                    console.log("User profile saved.")
+                    
+                }
             }).catch(function (error) {
                 console.error("Error:", error);
             });
-            create_checkout();
         }
     }
 </script>
+<script>
+
+</script>
+
 {% endblock %}

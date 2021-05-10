@@ -261,3 +261,15 @@ function updateUserOrder(productId,action){
     })
 
 }
+
+async function save_user_info(userFormData) {
+    const response = await fetch("/save_user_info/", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+        body: JSON.stringify({ "userFormData": userFormData })
+    })
+    if (response['status'] == 200) {
+        alert("User profile saved!")
+        location.reload();
+    }
+}

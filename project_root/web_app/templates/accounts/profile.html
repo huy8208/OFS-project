@@ -303,9 +303,14 @@
             return false;
         }
         else {
-            save_user_info(userFormData).catch(error => {
-                console.error("Error:", error);
-            })
+            save_user_info(userFormData).then(response => {
+                if (response['status'] == 200) {
+                    alert("User profile saved!")
+                    location.reload();
+                }
+                }).catch(error => {
+                    console.error("Error:", error);
+                })
         }
     }
 </script>

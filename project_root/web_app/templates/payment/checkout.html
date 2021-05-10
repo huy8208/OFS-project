@@ -317,7 +317,7 @@
             });
     }
 
-// Fill out shipping address
+    // Fill out shipping address
     function submitFormData() {
         var form = document.forms["checkout_form"]
         var userFormData = {
@@ -345,18 +345,14 @@
             return false;
         }
         else {
-            fetch("/create_order/", {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-                body: JSON.stringify({ "userFormData": userFormData })
-            }).then(response => {
-                if(response['status'] == 200){
-                    console.log("Profile saved.")
-
+            save_user_info(userFormData).then(response => {
+                if (response['status'] == 200) {
+                    alert("User profile saved!")
+                    location.reload();
                 }
-            }).catch(function (error) {
-                console.error("Error:", error);
-            });
+                }).catch(error => {
+                    console.error("Error:", error);
+                })
         }
     }
 </script>

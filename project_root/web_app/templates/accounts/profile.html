@@ -153,13 +153,11 @@
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>First Name<span>*</span></p>
-                                    <input type="text" name="firstname"
-                                        value="{{customer.get_customer_address.first_name}}">
+                                    <input type="text" name="firstname" value="{{customer.get_customer_address.first_name}}" required>
                                 </div>
                                 <div class="checkout__input">
                                     <p>Last Name<span>*</span></p>
-                                    <input type="text" name="lastname"
-                                        value="{{customer.get_customer_address.last_name}}">
+                                    <input type="text" name="lastname" value="{{customer.get_customer_address.last_name}}" required>
                                 </div>
                             </div>
                         </div>
@@ -273,14 +271,7 @@
     </div>
 </section>
 <!-- Checkout Section End -->
-
 <script>
-
-    // document.getElementById("save-customer-info").addEventListener("click", function (e) {
-    //     submitFormData()
-    // })
-
-
     function submitFormData() {
         var form = document.forms["checkout_form"]
         var userFormData = {

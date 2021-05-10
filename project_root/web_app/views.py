@@ -120,9 +120,10 @@ def cart_page(request):
     context = {'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY,'STRIPE_URL':settings.STRIPE_URL}
     return render(request, 'payment/cart.html', context)
 
+@login_required(login_url='login')
 def checkout_page(request):
+    customer = request.user # Need to restructure if we wanna do anonymous login
     if request.user.is_authenticated:
-        customer = request.user
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
         order,created = Order.objects.get_or_create(customer=customer,complete=False) 
         items = order.items_in_cart.all() #Get all ordered items object that an authenticated user has placed from our db.
@@ -130,8 +131,26 @@ def checkout_page(request):
         items = [] #create an empty list of items.
         order = {'get_cart_total':0,'get_cart_items':0}
 
-    context = {'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY,'STRIPE_URL':settings.STRIPE_URL}
+    context = {'customer_address':customer.get_customer_address,'items':items,'order':order,'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY,'STRIPE_URL':settings.STRIPE_URL}
     return render(request, 'payment/checkout.html', context)
+
+def create_order(request):
+    """This method updates shipping address in db and create stripe order"""
+    if request.method == 'POST':
+        customerAddressForm = json.loads(request.body)['userFormData']
+        shippingObject,created = ShippingAddress.objects.get_or_create(customer=customer)
+        shippingObject.first_name = customerAddressForm['firstname']
+        shippingObject.last_name = customerAddressForm['lastname']
+        shippingObject.address = customerAddressForm['address']
+        shippingObject.city = customerAddressForm['city']
+        shippingObject.state = customerAddressForm['state']
+        shippingObject.zipcode = customerAddressForm['zipcode']
+        shippingObject.country = customerAddressForm['country']
+        shippingObject.phone = customerAddressForm['phone']
+        shippingObject.save()
+        return HttpResponse(status=200)
+    elif request.method != 'POST':
+        print("Pass")
 
 @login_required(login_url='login')
 def profile_page(request):
@@ -221,7 +240,7 @@ class CreateCheckoutSessionView(View):
             payment_method_types=['card'],
             customer_email=request.user.email,
             shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
-            shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+            # shipping_address_collection={'allowed_countries': ['US', 'CA'],},
             line_items=json.loads(request.body)['lineItems'],
             mode='payment',
             success_url=settings.STRIPE_URL + '/success/',
@@ -294,6 +313,7 @@ def approve_customer_order(session):
     order.status = order.STATUS[0]
     order.checkout = order.CHECKOUT[0]
     order.save()        
+
 
 # Commented out, probably not using it because adding
 # address does not prefill stripe checkout

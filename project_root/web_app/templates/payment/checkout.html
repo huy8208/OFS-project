@@ -286,7 +286,7 @@
 <!-- Checkout Section End -->
 <!-- Stripe -->
 <script type="text/javascript">
-    function create_checkout() {
+    function create_stripe_checkout() {
         console.log(JSON.stringify(lineItems));
         var unit_amount = '{{ordereditem.product.price}}';
         // Create an instance of the Stripe object with your publishable API key
@@ -347,17 +347,13 @@
         else {
             save_user_info(userFormData).then(response => {
                 if (response['status'] == 200) {
-                    alert("User profile saved!")
-                    location.reload();
+                    console.log("User profile saved!")
                 }
-                }).catch(error => {
-                    console.error("Error:", error);
+                }).then(create_stripe_checkout()).catch(error => {
+                    console.error("Error, cannot save user info", error);
                 })
         }
     }
-</script>
-<script>
-
 </script>
 
 {% endblock %}

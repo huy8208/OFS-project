@@ -136,13 +136,25 @@ def checkout_page(request):
 @login_required(login_url='login')
 def profile_page(request):
     customer = request.user
-
-    if request.method == 'POST':
-        customerAddressForm = json.loads(request.body)['userFormData']
-        print(customerAddressForm)
-
     context = {"customer":customer}
     return render(request, 'accounts/profile.html', context)
+
+def save_user_info(request):
+    customer = request.user
+    if request.method == 'POST':
+        customerAddressForm = json.loads(request.body)['userFormData']
+        shippingObject = customer.get_customer_address
+        shippingObject.first_name = customerAddressForm['firstname']
+        shippingObject.last_name = customerAddressForm['lastname']
+        shippingObject.address = customerAddressForm['address']
+        shippingObject.city = customerAddressForm['city']
+        shippingObject.state = customerAddressForm['state']
+        shippingObject.zipcode = customerAddressForm['zipcode']
+        shippingObject.country = customerAddressForm['country']
+        shippingObject.save()
+        return HttpResponse(status=200)
+    elif request.method != 'POST':
+        print("Do nothing")
     
 def processOrder(request):
     return JsonResponse("Payment complete!", safe = False)

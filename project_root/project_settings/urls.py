@@ -41,6 +41,7 @@ urlpatterns = [
     path('profile/', views.profile_page, name = "profile"),
     path('update_item/', views.updateItem, name = "update_item"),
     path('checkout/', views.checkout_page, name = "checkout"),
+    path('save_user_info/', views.save_user_info, name = "save_user_info"),
     #Dynamic product pages
     path('product_detail/<str:pk>',views.product_detail,name='product_detail'),
     #Base template

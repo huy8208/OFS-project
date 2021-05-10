@@ -259,7 +259,8 @@
             </form>
             {% else %}
             {% endif %}
-            <form action="#">
+            <form method="POST" action="#">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <div class="row">

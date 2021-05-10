@@ -146,38 +146,42 @@
         </div>
         <div class="checkout__form">
             <h4>Billing Details</h4>
-            <form name="checkout_form" action="#" method="POST">
-                {% csrf_token %}
+            <form name="checkout_form" action="#">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
-                                    <p>Name<span>*</span></p>
-                                    <input type="text" name="name">
+                                    <p>First Name<span>*</span></p>
+                                    <input type="text" name="firstname"
+                                        value="{{customer.get_customer_address.first_name}}">
+                                </div>
+                                <div class="checkout__input">
+                                    <p>Last Name<span>*</span></p>
+                                    <input type="text" name="lastname"
+                                        value="{{customer.get_customer_address.last_name}}">
                                 </div>
                             </div>
                         </div>
                         <div class="checkout__input">
-                            <p>Country<span>*</span></p>
-                            <input type="text" name="country">
-                        </div>
-                        <div class="checkout__input">
                             <p>Address<span>*</span></p>
-                            {{address_form.address}}
-                            <!-- <input type="text" placeholder="Apartment, suite, unite ect (optinal)"> -->
+                            <input type="text" name="address" value="{{customer.get_customer_address.address}}" required>
                         </div>
                         <div class="checkout__input">
                             <p>City<span>*</span></p>
-                            {{address_form.city}}
+                            <input type="text" name="city" value="{{customer.get_customer_address.city}}" required>
                         </div>
                         <div class="checkout__input">
                             <p>State<span>*</span></p>
-                            {{address_form.state}}
+                            <input type="text" name="state" value="{{customer.get_customer_address.state}}" required>
                         </div>
                         <div class="checkout__input">
-                            <p>Postcode / ZIP<span>*</span></p>
-                            {{address_form.zipcode}}
+                            <p>Zipcode<span>*</span></p>
+                            <input type="text" name="zipcode" value="{{customer.get_customer_address.zipcode}}" required>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Country<span>*</span></p>
+                            <input type="text" name="country" value="{{customer.get_customer_address.country}}" required>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
@@ -232,7 +236,9 @@
                             <div class="checkout__order__subtotal">Subtotal
                                 <span>${{order.get_cart_total|floatformat:2}}</span>
                             </div>
-                            <div class="checkout__order__total">Total <span>${{order.get_cart_total|floatformat:2}}</span></div>
+                            <div class="checkout__order__total">Total
+                                <span>${{order.get_cart_total|floatformat:2}}</span>
+                            </div>
                             <div class="checkout__input__checkbox">
                                 <label for="acc-or">
                                     Create an account?
@@ -256,7 +262,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <button type="submit" class="site-btn">Save</button>
+                            <button type="submit" id="save-customer-info" class="site-btn" onclick="return submitFormData()">Save</button>
                         </div>
                     </div>
                 </div>
@@ -266,53 +272,46 @@
 </section>
 <!-- Checkout Section End -->
 
-<!-- <script>
+<script>
 
-    document.getElementById("make-payment").addEventListener("click", function (e) {
-        submitFormData()
-    })
+    // document.getElementById("save-customer-info").addEventListener("click", function (e) {
+    //     submitFormData()
+    // })
 
-    var form = document.forms["checkout_form"]
-    console.log(document.forms)
 
     function submitFormData() {
-        console.log("Payment button clicked")
-
+        var form = document.forms["checkout_form"]
         var userFormData = {
-            'name': null,
-            'email': null,
-            'total': null,
-        }
-
-        var shippingInfo = {
+            'firstname': null,
+            'lastname': null,
             'address': null,
             'city': null,
             'state': null,
-            'zipcode': null,
+            'zipcode': null
         }
-
-
-        // If user is not registered, get inputted shipping info from website
-        // Replace conditional-statement w/ "if user is not logged in"
-        if (true) {
-            console.log("test")
-            console.log(form)
-            userFormData.name = form.name.value
-            userFormData.email = form.email.value
-
-            shippingInfo.address = form.address.value
-            shippingInfo.city = form.city.value
-            shippingInfo.state = form.state.value
-            shippingInfo.zipcode = form.zipcode.value
-
-            console.log(userFormData)
-            console.log(shippingInfo)
-            console.log("form info retrieved")
+        userFormData.firstname = form.firstname.value
+        userFormData.lastname = form.lastname.value
+        userFormData.address = form.address.value
+        userFormData.city = form.city.value
+        userFormData.state = form.state.value
+        userFormData.zipcode = form.zipcode.value
+        
+        if (userFormData.firstname == "" || userFormData.lastname == "" || userFormData.address == ""
+        || userFormData.city == "" || userFormData.state == "" || userFormData.zipcode == ""){
+            alert("Please fill all required fields.")
+            return false;
         }
-
-
+        else {
+            fetch("/profile/", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+            body: JSON.stringify({ "userFormData": userFormData })
+            }).catch(function (error) {
+                console.error("Error:", error);
+            });
+        }
     }
-</script> -->
+</script>
 
 
 

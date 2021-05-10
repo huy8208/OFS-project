@@ -135,17 +135,13 @@ def checkout_page(request):
 
 @login_required(login_url='login')
 def profile_page(request):
-    customer = request.user.id
+    customer = request.user
 
-    form = CreateShippingAddressForm()
     if request.method == 'POST':
-        form = CreateShippingAddressForm(request.POST)
-        if form.is_valid():
-            form_object = form.save(commit=False)
-            form_object.id = customer
-            form_object.customer = request.user
-            form_object.save()
-    context = {"address_form":form}
+        customerAddressForm = json.loads(request.body)['userFormData']
+        print(customerAddressForm)
+
+    context = {"customer":customer}
     return render(request, 'accounts/profile.html', context)
     
 def processOrder(request):

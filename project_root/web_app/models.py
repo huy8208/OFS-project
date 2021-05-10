@@ -41,8 +41,6 @@ class Customer(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     save_profile = models.BooleanField(default=False)
-    first_name = models.CharField(max_length=50,null=True)
-    last_name = models.CharField(max_length=50,null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -160,8 +158,9 @@ class OrderedItem(models.Model):
 
 class ShippingAddress(models.Model):
     # Store shipping address of customer
+    first_name = models.CharField(max_length=50,null=True)
+    last_name = models.CharField(max_length=50,null=True)
     customer = models.OneToOneField(Customer, on_delete= models.CASCADE, related_name='get_customer_address', blank = True, null = True)    
-    # order = models.OneToOneField(Order, on_delete= models.SET_NULL, blank = True, null = True)
     address = models.CharField(max_length = 200, null = True)
     city = models.CharField(max_length = 200, null = True)
     state = models.CharField(max_length = 200, null = True)

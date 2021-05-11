@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
-
 #Create your views here
+from django.shortcuts import render, redirect
 from .models import *
 # Django's built-in user form
 from .forms import CreateCustomerRegistrationForm, CreateShippingAddressForm
@@ -10,17 +9,17 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
+from project_settings import settings
 import os
 import smtplib
 import imghdr
 
+#Http response
 from django.http import JsonResponse, HttpResponse, HttpResponseNotFound
 import json
 #Stripe
 from django.views import View
 import stripe
-from project_settings import settings
-
 stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret = 'whsec_RXRtRwQFV2iW8XyUfTCThW4wG5DWUb30'
 
@@ -225,8 +224,8 @@ def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']
-    print('Action:', action)
-    print('Product:', productId)
+    # print('Action:', action)
+    # print('Product:', productId)
 
     customer = request.user
     product = Product.objects.get(id=productId)
@@ -291,29 +290,18 @@ class CreateCheckoutSessionView(View):
 
 def send_email_confirmation(session):
     # from email.mime.text import MIMEText
-    from email.message import EmailMessage
+    from django.core.mail import send_mail
     from django.template.loader import render_to_string
+    from django.utils.html import strip_tags
 
-    emailAddress = 'cmpeOFS@gmail.com'
-    emailPassword = 'OFS-project'
-    template = render_to_string('email/email.html')
-    # html = open("email/email.html")
-    # msg = MIMEText(html.read(), 'html')
-    msg = EmailMessage(template)
-    msg['Subject'] = 'OFS Order Confrimation'
-    msg['From'] = emailAddress
-    msg['To'] = session['customer_email']
-
-    msg.add_alternative("""\
-    <html>
-        <title>my-new-message.html</title>
-    </html>
-        """, subtype='html')
-
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login(emailAddress, emailPassword)
-        smtp.send_message(msg)
-
+    subject = 'OFS Order Confirmation'
+    html_message = render_to_string('email/email.html')
+    plain_message = strip_tags(html_message)
+    from_email = 'cmpeOFS@gmail.com'
+    to = session['customer_email']
+    
+    send_mail(subject=subject,message=plain_message,from_email=from_email,recipient_list=[to],
+    fail_silently=False,html_message=html_message)
 
 @csrf_exempt
 def stripe_webhook(request):
@@ -337,7 +325,7 @@ def stripe_webhook(request):
         session = event['data']['object']
 
         # Fulfill the purchase...
-        # fulfill_order(session)
+        fulfill_order(session)
         emptyCart(session)
     # Passed signature verification
     return HttpResponse(status=200)

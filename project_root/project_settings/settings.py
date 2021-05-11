@@ -137,3 +137,12 @@ STRIPE_PUBLIC_KEY = 'pk_test_51IlzekBew4cXzmngqfKsyO39RBslv0WGvgDzhLmyyBDsDunGIw
 STRIPE_SECRET_KEY = 'sk_test_51IlzekBew4cXzmngAE2yktwxOPHgFWbPrzM1QVC5gVpReXrXSpOO8iFEUZHmBDY72v7P6Fnfu0x1tNKhovPJpk6400VfAFdZTi'
 STRIPE_WEBHOOK_SECRET = ''
 STRIPE_URL = 'http://localhost:8000'
+
+
+# #SMTP Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'cmpeOFS@gmail.com'
+EMAIL_HOST_PASSWORD = 'OFS-project'

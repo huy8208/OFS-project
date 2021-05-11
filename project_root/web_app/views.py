@@ -138,20 +138,18 @@ def create_order(request):
     """This method updates shipping address in db and create stripe order"""
     customer = request.user
     if request.method == 'POST':
-        customerAddressForm = json.loads(request.body)['userFormData']
-        shippingObject,created = ShippingAddress.objects.get_or_create(customer=customer)
-        shippingObject.first_name = customerAddressForm['firstname']
-        shippingObject.last_name = customerAddressForm['lastname']
-        shippingObject.address = customerAddressForm['address']
-        shippingObject.city = customerAddressForm['city']
-        shippingObject.state = customerAddressForm['state']
-        shippingObject.zipcode = customerAddressForm['zipcode']
-        shippingObject.country = customerAddressForm['country']
-        shippingObject.phone = customerAddressForm['phone']
-        shippingObject.save()
+        jsonObject = json.loads(request.body)
+        json_formatted_str = json.dumps(jsonObject, indent=2)
+        print(json_formatted_str)
+        shippingInfo = json.loads(request.body)
+
+
+
+
         return HttpResponse(status=200)
-    elif request.method != 'POST':
-        print("Pass")
+    else:
+        print("create_order def unidentified error!")
+        return HttpResponse(status=500)
 
 @login_required(login_url='login')
 def profile_page(request):
@@ -163,7 +161,6 @@ def save_user_info(request):
     customer = request.user
     if request.method == 'POST':
         customerAddressForm = json.loads(request.body)['userFormData']
-        print(customerAddressForm)
         shippingObject,created = ShippingAddress.objects.get_or_create(customer=customer)
         shippingObject.first_name = customerAddressForm['firstname']
         shippingObject.last_name = customerAddressForm['lastname']
@@ -174,7 +171,7 @@ def save_user_info(request):
         shippingObject.country = customerAddressForm['country']
         shippingObject.phone = customerAddressForm['phone']
         shippingObject.save()
-        return HttpResponse(status=200)
+        return JsonResponse({'customer_info':customerAddressForm})
     else:
         return HttpResponse(status=500)
     

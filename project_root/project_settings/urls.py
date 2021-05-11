@@ -51,7 +51,7 @@ urlpatterns = [
     path('cancel/', views.cancel, name = "cancel"),
     path('create-checkout-session/',views.CreateCheckoutSessionView.as_view(),name='create-checkout-session'),
     path('webhook/',views.stripe_webhook,name='webhook'),
-    path('create_order/',views.create_order,name='create_order'),
+    path('create_order/',views.create_stripe_order,name='create_order'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

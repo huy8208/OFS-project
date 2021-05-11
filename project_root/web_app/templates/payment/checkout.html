@@ -146,43 +146,43 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
-                                    <p>Fist Name<span>*</span></p>
-                                    <input type="text" name="firstname" value="{{customer_address.first_name}}"
+                                    <p>First Name<span>*</span></p>
+                                    <input type="text" name="firstname" value="{{customer.get_customer_address.first_name}}"
                                         required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Last Name<span>*</span></p>
-                                    <input type="text" name="lastname" value="{{customer_address.last_name}}" required>
+                                    <input type="text" name="lastname" value="{{customer.get_customer_address.last_name}}" required>
                                 </div>
                             </div>
                         </div>
                         <div class="checkout__input">
                             <p>Country<span>*</span></p>
-                            <input type="text" name="country" value="{{customer_address.country}}" required>
+                            <input type="text" name="country" value="{{customer.get_customer_address.country}}" required>
                         </div>
                         <div class="checkout__input">
                             <p>Address<span>*</span></p>
-                            <input type="text" name="address" value="{{customer_address.address}}" required>
+                            <input type="text" name="address" value="{{customer.get_customer_address.address}}" required>
                         </div>
                         <div class="checkout__input">
                             <p>Town/City<span>*</span></p>
-                            <input type="text" name="city" value="{{customer_address.city}}" required>
+                            <input type="text" name="city" value="{{customer.get_customer_address.city}}" required>
                         </div>
                         <div class="checkout__input">
                             <p>State<span>*</span></p>
-                            <input type="text" name="state" value="{{customer_address.state}}" required>
+                            <input type="text" name="state" value="{{customer.get_customer_address.state}}" required>
                         </div>
                         <div class="checkout__input">
                             <p>Postcode / ZIP<span>*</span></p>
-                            <input type="text" name="zipcode" value="{{customer_address.zipcode}}" required>
+                            <input type="text" name="zipcode" value="{{customer.get_customer_address.zipcode}}" required>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Phone<span>*</span></p>
-                                    <input type="text" name="phone" value="{{customer_address.phone}}" required>
+                                    <input type="text" name="phone" value="{{customer.get_customer_address.phone}}" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">

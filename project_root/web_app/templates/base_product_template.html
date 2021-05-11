@@ -13,7 +13,7 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
-    <!-- Css Styles -->    
+    <!-- Css Styles -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%} " type="text/css">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css.map'%} " type="text/css">
     <link rel="stylesheet" href="{% static 'css/elegant-icons.css'%} " type="text/css">
@@ -107,7 +107,7 @@
                         <div class="header__top__left">
                             <ul>
                                 <li><i class="fa fa-envelope"></i>cmpeOFS@gmail.com</li>
-                                <li>Free Shipping for all Order under $15</li>
+                                <li>Free Shipping for Orders Under $20</li>
                             </ul>
                         </div>
                     </div>
@@ -156,9 +156,9 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-bag"></i> <span>{{cartItems}}</span></a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <div class="header__cart__price">Total: <span>${{order.get_cart_total|floatformat:2}}</span></div>
                     </div>
                 </div>
             </div>
@@ -259,7 +259,7 @@
                                 <i class="fa fa-phone"></i>
                             </div>
                             <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
+                                <h5></h5>
                                 <span>support 24/7 time</span>
                             </div>
                         </div>
@@ -284,11 +284,6 @@
                         <div class="footer__about__logo">
                             <a href="./index.html"><img src="img/logo.png" alt=""></a>
                         </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
-                        </ul>
                     </div>
                 </div>
             </div>

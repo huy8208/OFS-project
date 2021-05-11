@@ -2,55 +2,108 @@
 {% load static %}
 {% block product_info %}
 <!DOCTYPE html>
-    <!-- Product Details Section Begin -->
-    <section class="product-details spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="product__details__pic">
-                        <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large"
-                                src="{{product.imageURL}}" alt="">
-                        </div>
-                        <div class="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="img/product/details/product-details-2.jpg"
-                                src="img/product/details/#.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-3.jpg"
-                                src="img/product/details/#.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-5.jpg"
-                                src="img/product/details/#.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-4.jpg"
-                                src="#" alt="">
-                        </div>
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item">
+                        <img class="product__details__pic__item--large" src="{{product.imageURL}}" alt="">
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="product__details__text">
-                        <h3>{{product.name}}</h3>
-                        <div class="product__details__rating">
-                        </div>
-                        <div class="product__details__price">${{product.price|floatformat:2}}</div>
-                        <p>{{product.description}}</p>
-                        <div class="product__details__quantity">
-                            <div class="quantity">
-                                <div class="pro-qty">
-                                    <input type="text" value="1">
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" data-product={{product.id}} data-action="add"
-                        class="btn btn-outline-primary btn-sm btn-rounded update-cart">ADD TO CART</button>
-                        <!-- <a href="#" class="primary-btn">ADD TO CARD</a> -->
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
-                        <ul>
-                            <li><b>Availability</b> <span>In Stock</span></li>
-                            <li><b>Weight</b> <span>{{product.weight|floatformat:2}} lb(s)</span></li>
-                            </li>
-                        </ul>
+                    <div class="product__details__pic__slider owl-carousel">
+                        <img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/#.jpg"
+                            alt="">
+                        <img data-imgbigurl="img/product/details/product-details-3.jpg" src="img/product/details/#.jpg"
+                            alt="">
+                        <img data-imgbigurl="img/product/details/product-details-5.jpg" src="img/product/details/#.jpg"
+                            alt="">
+                        <img data-imgbigurl="img/product/details/product-details-4.jpg" src="#" alt="">
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>{{product.name}}</h3>
+                    <div class="product__details__rating">
+                    </div>
+                    <div class="product__details__price">${{product.price|floatformat:2}}</div>
+                    <p>{{product.description}}</p>
+                    <div class="product__details__quantity">
+                        <div class="quantity">
+                            <div class="pro-qty">
+                                <input type="text" id="yoyo" value="1">
+                            </div>
+                        </div>
+                    </div>
+                    {% for message in messages %}
+                    <script>alert("{{message}}")</script>
+                    {% endfor %}
+                    {% if product.amount_in_stock <= 0 %} 
+                        <button type="button" data-product={{ordereditem.product.id}}
+                        data-action="add" class="btn btn-outline-secondary btn-sm btn-rounded" disabled>OUT
+                        OF STOCK</button>
+                        <ul>
+                            <li><b>Availability</b> <span>Out of Stock</span></li>
+                            <li><b>Weight</b> <span>{{product.weight|floatformat:2}} lb(s)</span></li>
+                        </ul>
+                    {% else %}
+                        <button type="button"
+                            class="btn btn-outline-primary btn-sm btn-rounded" onclick = "return add_specific_quantity()">ADD TO CART</button>
+                        <ul>
+                            <li><b>Availability</b> <span>{{product.amount_in_stock}}</span></li>
+                            <li><b>Weight</b> <span>{{product.weight|floatformat:2}} lb(s)</span></li>
+                        </ul>
+                    {% endif %}
+                        <script>
+                            // Added by Timothy
+                            function add_specific_quantity(){
+                                var userQuantity = document.getElementById('yoyo').value
+                                var productID = "{{product.id}}"
+                                var action = "add"
+                                console.log('user_quantity:', userQuantity, 'action:', action)
+                                console.log('productID:', productID)
+                                if (username == 'AnonymousUser') {
+                                    console.log('User is not authenticated!')
+                                }
+                                else {
+                                    fetchSpecificQuantity(userQuantity,productID,action).then(response => {
+                                        console.log('Specific quantity was added.')
+                                        location.reload()
+                                    }).catch(error => {
+                                        console.error("Error:", error);
+                                    })
+                                }
+                            }
+                            
+
+                            // function updateUserOrder(userQuantity, action) {
+                            //     var url = '/update-user-quantity/'
+
+                            //     fetch(url, {
+                            //         method: 'POST',
+                            //         headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+                            //         body: JSON.stringify({'user_quantity': userQuantity, 'product_id': productID, 'action': action })
+                            //     })
+
+                            //         .then((response) => {
+                            //             return response.json()
+                            //         })
+
+                            //         .then((data) => {
+                            //             console.log('data:', data)
+                            //             location.reload()
+                            //         })
+
+                            // }
+
+
+
+                        </script>
+                </div>
+            </div>
         </div>
-    </section>
-    <!-- Product Details Section End -->
+    </div>
+</section>
+<!-- Product Details Section End -->
 {% endblock %}

@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
-
 #Create your views here
+from django.shortcuts import render, redirect
 from .models import *
 # Django's built-in user form
 from .forms import CreateCustomerRegistrationForm, CreateShippingAddressForm
@@ -10,27 +9,37 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
+from project_settings import settings
 import os
 import smtplib
 import imghdr
 
+#Http response
 from django.http import JsonResponse, HttpResponse, HttpResponseNotFound
 import json
 #Stripe
 from django.views import View
 import stripe
-from project_settings import settings
-
 stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret = 'whsec_RXRtRwQFV2iW8XyUfTCThW4wG5DWUb30'
 
 # @login_required(login_url='login') User this when create payment/checkout
-
-
 def index(request):
     """Placeholder index view"""
+    showlist = Product.objects.all()
+    if request.user.is_authenticated:
+        customer = request.user
+        #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        # Get all ordered items object that an authenticated user has placed from our db.
+        cartItems = order.get_cart_items
+    else:  # If user is not authenticated/login
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        # To update the quantity icon at the top right.
+        cartItems = order['get_cart_items']
     randomProductsList = Product.objects.order_by('?')
-    return render(request, 'index.html', context={'randomProductsList': randomProductsList})
+    return render(request, 'index.html', context={'randomProductsList': randomProductsList,'cartItems': cartItems,'order': order,'showlist':showlist})
 
 
 def Meat_Seafood(request):
@@ -109,14 +118,15 @@ def logoutUser(request):
 
 def SearchPage(request):
     srh = request.GET['query']
+    allProducts = Product.objects.all()
     products = Product.objects.filter(name__icontains=srh)
-    params = {'products': products, 'search': srh}
+    params = {'products': products, 'search': srh,'allProducts':allProducts}
 
-    if len(products) != 1:
-        return render(request, 'Index.html')
+    if len(products) != 1: #If the product does not exist or search wasn't specific enoug
+        return render(request, 'redirect.html')
 
     return render(request, 'SearchPage.html', params)
-
+    
 
 def cart_page(request):
     """Return a list of ordered items"""
@@ -127,11 +137,13 @@ def cart_page(request):
             customer=customer, complete=False)
         # Get all ordered items object that an authenticated user has placed from our db.
         items = order.items_in_cart.all()
+        cartItems = order.get_cart_items
     else:  # If user is not authenticated/login
         items = []  # create an empty list of items.
         order = {'get_cart_total': 0, 'get_cart_items': 0}
-
-    context = {'items': items, 'order': order, 'STRIPE_PUBLIC_KEY':
+        cartItems = order['get_cart_items']
+    
+    context = {'items': items, 'order': order,'cartItems': cartItems, 'STRIPE_PUBLIC_KEY':
                settings.STRIPE_PUBLIC_KEY, 'STRIPE_URL': settings.STRIPE_URL}
     return render(request, 'payment/cart.html', context)
 
@@ -145,11 +157,13 @@ def checkout_page(request):
             customer=customer, complete=False)
         # Get all ordered items object that an authenticated user has placed from our db.
         items = order.items_in_cart.all()
+        cartItems = order.get_cart_items
     else:  # If user is not authenticated/login
         items = []  # create an empty list of items.
         order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
 
-    context = {'customer_address': customer.get_customer_address, 'items': items, 'order': order,
+    context = {'customer': customer, 'items': items, 'order': order,'cartItems': cartItems,
                'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY, 'STRIPE_URL': settings.STRIPE_URL}
     return render(request, 'payment/checkout.html', context)
 
@@ -216,8 +230,19 @@ def processOrder(request):
 
 
 def product_detail(request, pk):
+    if request.user.is_authenticated:
+        customer = request.user
+        #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        # Get all ordered items object that an authenticated user has placed from our db.
+        cartItems = order.get_cart_items
+    else:  # If user is not authenticated/login
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        # To update the quantity icon at the top right.
+        cartItems = order['get_cart_items']
     product = Product.objects.get(id=pk)
-    return render(request, 'Product_detail.html', context={'product': product})
+    return render(request, 'Product_detail.html', context={'product': product,'cartItems': cartItems,'order': order})
 
 
 def updateItem(request):
@@ -225,8 +250,8 @@ def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']
-    print('Action:', action)
-    print('Product:', productId)
+    # print('Action:', action)
+    # print('Product:', productId)
 
     customer = request.user
     product = Product.objects.get(id=productId)
@@ -236,17 +261,58 @@ def updateItem(request):
         order=order, product=product)
 
     """If orderItem is exceeded amount_in_stock => stop here"""
-
+    # if(self.product.amount_in_stock < self.quantity || self.product.amount_in_stock == 0):
+    #     return False
+    # else:
+    #     return True
     if action == 'add':
-        orderItem.quantity += 1
+        if product.amount_in_stock <= orderItem.quantity:
+            messages.error(request, 'Not enough stock.')
+        else:
+            orderItem.quantity += 1
+            # product.amount_in_stock -= 1
     elif action == 'remove':
         orderItem.quantity -= 1
+        # product.amount_in_stock += 1
     orderItem.save()
 
     if orderItem.quantity <= 0:
         orderItem.delete()
 
     return JsonResponse('Item was added', safe=False)
+
+def update_cart_based_on_quantity(request):
+    print("rewoqjnroeiwjqroqwejtorehjtuwerh")
+    customer = request.user
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(data)
+        userQuantity = int(data['user_quantity'])
+        action = data['action']
+        productId = int(data['product_id'])
+        print("userQuantity",userQuantity)
+        print("action",action)
+        print("productId",productId)
+        customer = request.user
+        product = Product.objects.get(id=productId)
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        orderItem, created = OrderedItem.objects.get_or_create(
+            order=order, product=product)
+        if action == 'add':
+            print("Amount in stock:",product.amount_in_stock)
+            print("Quantity:",orderItem.quantity)
+            if product.amount_in_stock <= orderItem.quantity:
+                messages.error(request, 'Not enough stock.')
+            else:
+                orderItem.quantity += userQuantity
+        orderItem.save()
+        return JsonResponse({"yeah":"Specific quantity was added"})
+    else:
+        return HttpResponse(status=500)
+
+def deleteItemFromCart(request):
+    pass
 
 
 def base_template(request):
@@ -256,14 +322,12 @@ def base_template(request):
         order, created = Order.objects.get_or_create(
             customer=customer, complete=False)
         # Get all ordered items object that an authenticated user has placed from our db.
-        items = order.items_in_cart.all()
         cartItems = order.get_cart_items
     else:  # If user is not authenticated/login
-        items = []  # create an empty list of items.
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         # To update the quantity icon at the top right.
         cartItems = order['get_cart_items']
-    context = {'cartItems': cartItems}
+    context = {'cartItems': cartItems,'order': order}
     return render(request, 'base_template.html', context=context)
 
 
@@ -279,39 +343,58 @@ def cancel(request):
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
         checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            customer_email=request.user.email,
-            line_items=json.loads(request.body)['lineItems'],
-            mode='payment',
-            success_url=settings.STRIPE_URL + '/success/',
-            cancel_url=settings.STRIPE_URL + '/cancel/',
-        )
-        return JsonResponse({'id': checkout_session.id})
+                payment_method_types=['card'],
+                customer_email=request.user.email,
+                line_items=json.loads(request.body)['lineItems'],
+                mode='payment',
+                success_url=settings.STRIPE_URL + '/success/',
+                cancel_url=settings.STRIPE_URL + '/cancel/',
+            )
+            return JsonResponse({'id': checkout_session.id})
 
-
+        # #validation
+        # if weight < 20:
+        #     checkout_session = stripe.checkout.Session.create(
+        #         payment_method_types=['card'],
+        #         customer_email=request.user.email,
+        #         line_items=json.loads(request.body)['lineItems'],
+        #         mode='payment',
+        #         success_url=settings.STRIPE_URL + '/success/',
+        #         cancel_url=settings.STRIPE_URL + '/cancel/',
+        #     )
+        #     return JsonResponse({'id': checkout_session.id})
+        # else:
+            # checkout_session = stripe.checkout.Session.create(
+            #     payment_method_types=['card'],
+            #     shipping_rates=['shr_1ImByjBew4cXzmng8ppGn2s5'],
+            #     shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+            #     customer_email=request.user.email,
+            #     line_items=json.loads(request.body)['lineItems'],
+            #     mode='payment',
+            #     success_url=settings.STRIPE_URL + '/success/',
+            #     cancel_url=settings.STRIPE_URL + '/cancel/',
+            # )
+            # return JsonResponse({'id': checkout_session.id})
 def send_email_confirmation(session):
-    from email.mime.text import MIMEText
-    # from email.message import EmailMessage
-    emailAddress = 'cmpeOFS@gmail.com'
-    emailPassword = 'OFS-project'
+    import os
+    import smtplib
+    import imghdr
+    from email.message import EmailMessage
 
-    html = open("email/email.html")
-    msg = MIMEText(html.read(), 'html')
-    # msg = EmailMessage()
-    msg['Subject'] = 'OFS Order Confrimation'
-    msg['From'] = emailAddress
+    EMAIL_ADDRESS = 'cmpeOFS@gmail.com'
+    EMAIL_PASSWORD = 'OFS-project'
+
+    msg = EmailMessage()
+    msg['Subject'] = 'OFS Order Confirmation'
+    msg['From'] = EMAIL_ADDRESS
     msg['To'] = session['customer_email']
-
-    msg.add_alternative("""\
-    <html>
-        <title>my-new-message.html</title>
-    </html>
-        """, subtype='html')
+    
+    msg.set_content('This is a message from OFS')
 
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login(emailAddress, emailPassword)
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         smtp.send_message(msg)
-
+   
 
 @csrf_exempt
 def stripe_webhook(request):
@@ -336,19 +419,33 @@ def stripe_webhook(request):
 
         # Fulfill the purchase...
         fulfill_order(session)
-
     # Passed signature verification
     return HttpResponse(status=200)
 
-
+def emptyCart(session):
+    customer = Customer.objects.get(email=session['customer_email'])
+    order, created = Order.objects.get_or_create(
+    customer=customer, complete=False)
+    order.items_in_cart.all().delete()
+    
 def fulfill_order(session):
     # TODO: fill me in
     # Saving a copy of the order in our own dabase.
-    approve_customer_order(session)
-    # Sending customer a receipt email
-    # send_email_confirmation(request,session)
+    # approve_customer_order(session)
     print("Fulfilling order", session)
+    update_stock(session)
+    send_email_confirmation(session)
+    #Empty customer's cart
+    emptyCart(session)
 
+def update_stock(session):
+    # Update stock
+    customer = Customer.objects.get(email=session['customer_email'])
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    orderItem, created = OrderedItem.objects.get_or_create(order=order)
+    product = orderItem.product
+    product.amount_in_stock =  product.amount_in_stock - orderItem.quantity
+    product.save()
 
 def approve_customer_order(session):
     customer = Customer.objects.get(email=session['customer_email'])

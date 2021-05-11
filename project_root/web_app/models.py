@@ -82,7 +82,7 @@ class Product(models.Model):
     image = models.ImageField(null=True,blank=True,upload_to='uploaded_images/')
     amount_in_stock = models.IntegerField(default = 0, null = True, blank = True)
     slug = models.CharField(max_length=200,null=False,default="None")
-    
+     
     def __str__(self):
         return self.name
 
@@ -96,6 +96,12 @@ class Product(models.Model):
             url = ''
         return url
 
+    def get_total_weight(self):
+        allOrderedItems = self.items_in_cart.all()
+        total = sum([item.get_total for item in allOrderedItems])
+        weight = sum([item.get_weight for item in allOrderedItems])
+        return weight
+     
 class Order(models.Model):
     """The model order has many-to-one relationship with model customer and product.
     One customer can have many orders. One product can have many orders."""
@@ -112,7 +118,7 @@ class Order(models.Model):
             ('Out for delivery','Out for delivery'),
     )
     
-    customer = models.ForeignKey(Customer,blank=True,null=True, on_delete= models.SET_NULL)
+    customer = models.ForeignKey(Customer,blank=True,null=True, on_delete= models.SET_NULL,related_name="get_order")
     date_ordered = models.DateTimeField(auto_now_add=True,null=True)
     # date_created = models.DateTimeField(auto_now_add=True,null=True)
     complete = models.BooleanField(default=False,null=True,blank=False)
@@ -128,14 +134,29 @@ class Order(models.Model):
     @property
     def get_cart_total(self):
         """Calculate and return total price for all product in cart."""
-        allOrderedItems = OrderedItem.objects.all()
+        allOrderedItems = self.items_in_cart.all()
         total = sum([item.get_total for item in allOrderedItems])
         return total
+    
+    @property
+    def shipping_fee(self):
+        cartTotal = self.get_cart_total
+        cartWeight = self.get_order_weight
+        if(cartWeight >= 20):
+            cartTotal = cartTotal + 5
+        return cartTotal
+        
+
+    @property
+    def get_order_weight(self):
+        allOrderedItems = self.items_in_cart.all()
+        order_weight = sum([item.get_total_weight for item in allOrderedItems])
+        return order_weight
 
     @property
     def get_cart_items(self):
-        """Calculate and return total price for all product in cart."""
-        allOrderedItems = OrderedItem.objects.all()
+        """Calculate total cart quantity"""
+        allOrderedItems = self.items_in_cart.all()
         total = sum([item.quantity for item in allOrderedItems])
         return total
 
@@ -145,7 +166,7 @@ class OrderedItem(models.Model):
     class Meta:
         verbose_name = "Ordered Item"
 
-    product = models.ForeignKey(Product, on_delete= models.SET_NULL, blank = True, null = True)
+    product = models.ForeignKey(Product, on_delete= models.SET_NULL, blank = True, null = True,related_name='get_product')
     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True, related_name='items_in_cart')
     quantity = models.PositiveIntegerField(default=0)
     date_added = models.DateTimeField(auto_now_add=True)
@@ -156,6 +177,23 @@ class OrderedItem(models.Model):
         total = self.product.price * self.quantity
         return total
 
+    @property
+    def get_total_weight(self):
+        """Calculate and return total weight for each product in cart."""
+        total_weight_per_orderedItem = self.product.weight * self.quantity
+        return total_weight_per_orderedItem
+
+    @property
+    def check_availability(self):
+        # if(self.product.amount_in_stock < self.quantity || self.product.amount_in_stock == 0):
+        #     return False
+        # else:
+        #     return True
+        pass
+        
+ 
+            
+        
 class ShippingAddress(models.Model):
     # Store shipping address of customer
     first_name = models.CharField(max_length=50,null=True)

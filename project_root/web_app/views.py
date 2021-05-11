@@ -342,39 +342,34 @@ def cancel(request):
 #Class view
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
-        checkout_session = stripe.checkout.Session.create(
-                payment_method_types=['card'],
-                customer_email=request.user.email,
-                line_items=json.loads(request.body)['lineItems'],
-                mode='payment',
-                success_url=settings.STRIPE_URL + '/success/',
-                cancel_url=settings.STRIPE_URL + '/cancel/',
-            )
-            return JsonResponse({'id': checkout_session.id})
-
-        # #validation
-        # if weight < 20:
-        #     checkout_session = stripe.checkout.Session.create(
-        #         payment_method_types=['card'],
-        #         customer_email=request.user.email,
-        #         line_items=json.loads(request.body)['lineItems'],
-        #         mode='payment',
-        #         success_url=settings.STRIPE_URL + '/success/',
-        #         cancel_url=settings.STRIPE_URL + '/cancel/',
-        #     )
-        #     return JsonResponse({'id': checkout_session.id})
-        # else:
-            # checkout_session = stripe.checkout.Session.create(
-            #     payment_method_types=['card'],
-            #     shipping_rates=['shr_1ImByjBew4cXzmng8ppGn2s5'],
-            #     shipping_address_collection={'allowed_countries': ['US', 'CA'],},
-            #     customer_email=request.user.email,
-            #     line_items=json.loads(request.body)['lineItems'],
-            #     mode='payment',
-            #     success_url=settings.STRIPE_URL + '/success/',
-            #     cancel_url=settings.STRIPE_URL + '/cancel/',
-            # )
-            # return JsonResponse({'id': checkout_session.id})
+        if request.user.is_authenticated:
+            customer = request.user
+            #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
+            order, created = Order.objects.get_or_create(customer=customer, complete=False)
+            if order.get_order_weight < 20:
+                checkout_session = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    customer_email=request.user.email,
+                    line_items=json.loads(request.body)['lineItems'],
+                    mode='payment',
+                    success_url=settings.STRIPE_URL + '/success/',
+                    cancel_url=settings.STRIPE_URL + '/cancel/',
+                )
+                return JsonResponse({'id': checkout_session.id})
+            else:
+                checkout_session = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    shipping_rates=['shr_1ImByjBew4cXzmng8ppGn2s5'],
+                    shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+                    customer_email=request.user.email,
+                    line_items=json.loads(request.body)['lineItems'],
+                    mode='payment',
+                    success_url=settings.STRIPE_URL + '/success/',
+                    cancel_url=settings.STRIPE_URL + '/cancel/',
+                )
+                return JsonResponse({'id': checkout_session.id})
+        print("Error, customer is not logged in!")
+        return HttpResponse(status=500)
 def send_email_confirmation(session):
     import os
     import smtplib
@@ -434,7 +429,7 @@ def fulfill_order(session):
     # approve_customer_order(session)
     print("Fulfilling order", session)
     update_stock(session)
-    send_email_confirmation(session)
+    # send_email_confirmation(session)
     #Empty customer's cart
     emptyCart(session)
 

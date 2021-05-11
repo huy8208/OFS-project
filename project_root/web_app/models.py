@@ -112,7 +112,7 @@ class Order(models.Model):
             ('Out for delivery','Out for delivery'),
     )
     
-    customer = models.ForeignKey(Customer,blank=True,null=True, on_delete= models.SET_NULL)
+    customer = models.ForeignKey(Customer,blank=True,null=True, on_delete= models.SET_NULL,related_name="get_order")
     date_ordered = models.DateTimeField(auto_now_add=True,null=True)
     # date_created = models.DateTimeField(auto_now_add=True,null=True)
     complete = models.BooleanField(default=False,null=True,blank=False)

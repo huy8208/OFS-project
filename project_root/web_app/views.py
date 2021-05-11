@@ -149,7 +149,7 @@ def checkout_page(request):
         items = []  # create an empty list of items.
         order = {'get_cart_total': 0, 'get_cart_items': 0}
 
-    context = {'customer_address': customer.get_customer_address, 'items': items, 'order': order,
+    context = {'customer': customer, 'items': items, 'order': order,
                'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY, 'STRIPE_URL': settings.STRIPE_URL}
     return render(request, 'payment/checkout.html', context)
 
@@ -290,14 +290,16 @@ class CreateCheckoutSessionView(View):
 
 
 def send_email_confirmation(session):
-    from email.mime.text import MIMEText
-    # from email.message import EmailMessage
+    # from email.mime.text import MIMEText
+    from email.message import EmailMessage
+    from django.template.loader import render_to_string
+
     emailAddress = 'cmpeOFS@gmail.com'
     emailPassword = 'OFS-project'
-
-    html = open("email/email.html")
-    msg = MIMEText(html.read(), 'html')
-    # msg = EmailMessage()
+    template = render_to_string('email/email.html')
+    # html = open("email/email.html")
+    # msg = MIMEText(html.read(), 'html')
+    msg = EmailMessage(template)
     msg['Subject'] = 'OFS Order Confrimation'
     msg['From'] = emailAddress
     msg['To'] = session['customer_email']
@@ -335,18 +337,23 @@ def stripe_webhook(request):
         session = event['data']['object']
 
         # Fulfill the purchase...
-        fulfill_order(session)
-
+        # fulfill_order(session)
+        emptyCart(session)
     # Passed signature verification
     return HttpResponse(status=200)
 
-
+def emptyCart(session):
+    customer = Customer.objects.get(email=session['customer_email'])
+    order, created = Order.objects.get_or_create(
+    customer=customer, complete=False)
+    order.items_in_cart.all().delete()
+    
 def fulfill_order(session):
     # TODO: fill me in
     # Saving a copy of the order in our own dabase.
-    approve_customer_order(session)
+    # approve_customer_order(session)
     # Sending customer a receipt email
-    # send_email_confirmation(request,session)
+    send_email_confirmation(session)
     print("Fulfilling order", session)
 
 

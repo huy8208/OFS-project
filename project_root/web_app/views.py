@@ -300,8 +300,7 @@ def send_email_confirmation(session):
     from_email = 'cmpeOFS@gmail.com'
     to = session['customer_email']
     
-    send_mail(subject=subject,message=plain_message,from_email=from_email,recipient_list=[to],
-    fail_silently=False,html_message=html_message)
+    send_mail(subject=subject,message=plain_message,from_email=from_email,recipient_list=[to],fail_silently=False,html_message=html_message)
 
 @csrf_exempt
 def stripe_webhook(request):

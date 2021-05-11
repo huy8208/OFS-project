@@ -229,7 +229,7 @@
                                     var productPrice = '{{ordereditem.product.price}}';
                                     productPrice = (parseFloat(productPrice) * 100).toFixed(0);
                                     var productIMG = "{{ordereditem.product.imageURL}}";
-                                    productIMG = '{{STRIPE_URL}}' + productIMG;
+                                    productIMG = '{{STRIPE_URL|safe}}' + productIMG;
                                     var item = {
                                         'price_data': {
                                             'currency': 'usd',
@@ -346,12 +346,21 @@
         }
         else {
             save_user_info(userFormData).then(response => {
-                if (response['status'] == 200) {
-                    console.log("User profile saved!")
-                }
+                return data = response.json();
                 }).then(create_stripe_checkout()).catch(error => {
-                    console.error("Error, cannot save user info", error);
-                })
+                console.error("Error, cannot save user info", error);
+            })
+                // .then(data => {
+                // orderResponse = fetch("/create_order/", {
+                //     method: "POST",
+                //     headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+                //     body: JSON.stringify({ "shippingInfo": data, "lineItems": lineItems })
+                // })
+                // console.log(orderResponse)
+                // return orderResponse;})
+            // .then(orderResponse => {
+            //     console.log(orderResponse.json())
+            // })
         }
     }
 </script>

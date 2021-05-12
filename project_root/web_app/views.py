@@ -267,21 +267,32 @@ def updateItem(request):
     return JsonResponse('Item was added', safe=False)
 
 def update_cart_based_on_quantity(request):
-    pass
-#     # data = json.loads(request.body)
-#     # userQuantity = data['user_quantity']
-#     # action = data['action']    i
+    print("rewoqjnroeiwjqroqwejtorehjtuwerh")
+    customer = request.user
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(data)
+        userQuantity = int(data['user_quantity'])
+        action = data['action']
+        productId = int(data['product_id'])
+        print("userQuantity",userQuantity)
+        print("action",action)
+        print("productId",productId)
+        return HttpResponse(status=200)
+        # customer = request.user
+        # product = Product.objects.get(id=productId)
+        # order, created = Order.objects.get_or_create(
+        #     customer=customer, complete=False)
+        # orderItem, created = OrderedItem.objects.get_or_create(
+        #     order=order, product=product)
 
-#     # customer = request.user
-#     # product = Product.objects.get(id=productId)
-#     # order, created = Order.objects.get_or_create(
-#     #     customer=customer, complete=False)
-#     # orderItem, created = OrderedItem.objects.get_or_create(
-#     #     order=order, product=product)
-
-#     # if action == 'add':
-#     #     pass
-#     pass
+    # if action == 'add':
+    #     if product.amount_in_stock <= orderItem.quantity:
+    #         messages.error(request, 'Not enough stock.')
+    #     else:
+    #         orderItem.quantity += userQuantity
+    # orderItem.save()
+    
 
 def base_template(request):
     if request.user.is_authenticated:

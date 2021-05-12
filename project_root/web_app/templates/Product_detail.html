@@ -63,13 +63,13 @@
                                 updateBtns[i].addEventListener('click', function () {
                                     var action = this.dataset.action
                                     console.log('user_quantity:', userQuantity, 'action:', action)
-                                    console.log(productID)
-                                    // if (username == 'AnonymousUser') {
-                                    //     console.log('User is not authenticated!')
-                                    // }
-                                    // else {
-                                    //     updateUserOrder(userQuantity, action)
-                                    // }
+                                    console.log('productID:',productID)
+                                    if (username == 'AnonymousUser') {
+                                        console.log('User is not authenticated!')
+                                    }
+                                    else {
+                                        updateUserOrder(userQuantity, action)
+                                    }
                                 })
                             }
 
@@ -79,7 +79,7 @@
                                 fetch(url, {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-                                    body: JSON.stringify({ 'user_quantity': userQuantity, 'action': action })
+                                    body: JSON.stringify({ 'user_quantity': userQuantity,'product_id':productID,'action': action })
                                 })
 
                                     .then((response) => {

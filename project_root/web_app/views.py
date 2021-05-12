@@ -135,11 +135,13 @@ def cart_page(request):
             customer=customer, complete=False)
         # Get all ordered items object that an authenticated user has placed from our db.
         items = order.items_in_cart.all()
+        cartItems = order.get_cart_items
     else:  # If user is not authenticated/login
         items = []  # create an empty list of items.
         order = {'get_cart_total': 0, 'get_cart_items': 0}
-
-    context = {'items': items, 'order': order, 'STRIPE_PUBLIC_KEY':
+        cartItems = order['get_cart_items']
+    
+    context = {'items': items, 'order': order,'cartItems': cartItems, 'STRIPE_PUBLIC_KEY':
                settings.STRIPE_PUBLIC_KEY, 'STRIPE_URL': settings.STRIPE_URL}
     return render(request, 'payment/cart.html', context)
 
@@ -153,11 +155,13 @@ def checkout_page(request):
             customer=customer, complete=False)
         # Get all ordered items object that an authenticated user has placed from our db.
         items = order.items_in_cart.all()
+        cartItems = order.get_cart_items
     else:  # If user is not authenticated/login
         items = []  # create an empty list of items.
         order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
 
-    context = {'customer': customer, 'items': items, 'order': order,
+    context = {'customer': customer, 'items': items, 'order': order,'cartItems': cartItems,
                'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY, 'STRIPE_URL': settings.STRIPE_URL}
     return render(request, 'payment/checkout.html', context)
 

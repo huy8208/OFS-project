@@ -270,3 +270,12 @@ async function save_user_info(userFormData) {
     })
     return response;
 }
+
+async function fetchSpecificQuantity(userQuantity,productID,action) {
+    const response = await fetch("/update_user_quantity/", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken},
+        body: JSON.stringify({'user_quantity': userQuantity, 'product_id': productID, 'action': action })
+    })
+    return false;
+}

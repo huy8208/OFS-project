@@ -125,18 +125,18 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
-    @property
     def get_cart_total(self):
         """Calculate and return total price for all product in cart."""
-        order,created = Order.objects.get_or_create(customer=self.customer)
-        allOrderedItems = order.items_in_cart.all()
+        # order,created = Order.objects.get_or_create(customer=self.customer)
+        # allOrderedItems = order.items_in_cart.all()
+        allOrderedItems = self.items_in_cart.all()
         total = sum([item.get_total for item in allOrderedItems])
         return total
 
-    @property
+
     def get_cart_items(self):
-        """Calculate and return total price for all product in cart."""
-        allOrderedItems = OrderedItem.objects.all()
+        """Calculate total cart quantity"""
+        allOrderedItems = self.items_in_cart.all()
         total = sum([item.quantity for item in allOrderedItems])
         return total
 

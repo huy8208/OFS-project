@@ -24,12 +24,21 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret = 'whsec_RXRtRwQFV2iW8XyUfTCThW4wG5DWUb30'
 
 # @login_required(login_url='login') User this when create payment/checkout
-
-
 def index(request):
     """Placeholder index view"""
+    if request.user.is_authenticated:
+        customer = request.user
+        #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        # Get all ordered items object that an authenticated user has placed from our db.
+        cartItems = order.get_cart_items
+    else:  # If user is not authenticated/login
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        # To update the quantity icon at the top right.
+        cartItems = order['get_cart_items']
     randomProductsList = Product.objects.order_by('?')
-    return render(request, 'index.html', context={'randomProductsList': randomProductsList})
+    return render(request, 'index.html', context={'randomProductsList': randomProductsList,'cartItems': cartItems,'order': order})
 
 
 def Meat_Seafood(request):
@@ -255,14 +264,12 @@ def base_template(request):
         order, created = Order.objects.get_or_create(
             customer=customer, complete=False)
         # Get all ordered items object that an authenticated user has placed from our db.
-        items = order.items_in_cart.all()
         cartItems = order.get_cart_items
     else:  # If user is not authenticated/login
-        items = []  # create an empty list of items.
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         # To update the quantity icon at the top right.
         cartItems = order['get_cart_items']
-    context = {'cartItems': cartItems}
+    context = {'cartItems': cartItems,'order': order}
     return render(request, 'base_template.html', context=context)
 
 

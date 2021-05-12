@@ -101,15 +101,8 @@ class Product(models.Model):
         total = sum([item.get_total for item in allOrderedItems])
         weight = sum([item.get_weight for item in allOrderedItems])
         return weight
-    
-    def shipping_fee(self):
-        allOrderedItems = self.items_in_cart.all()
-        total = sum([item.get_total for item in allOrderedItems])
-        weight = sum([item.get_weight for item in allOrderedItems])
-        if(weight>20):
-            total = total + 5
+   
         
-
 class Order(models.Model):
     """The model order has many-to-one relationship with model customer and product.
     One customer can have many orders. One product can have many orders."""
@@ -190,6 +183,18 @@ class OrderedItem(models.Model):
         """Calculate and return total weight for each product in cart."""
         total_weight_per_orderedItem = self.product.weight * self.quantity
         return total_weight_per_orderedItem
+
+    @property
+    def check_availability(self):
+        # if(self.product.amount_in_stock < self.quantity || self.product.amount_in_stock == 0):
+        #     return False
+        # else:
+        #     return True
+        pass
+        
+ 
+            
+        
 class ShippingAddress(models.Model):
     # Store shipping address of customer
     first_name = models.CharField(max_length=50,null=True)

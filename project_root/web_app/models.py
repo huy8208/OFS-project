@@ -96,6 +96,20 @@ class Product(models.Model):
             url = ''
         return url
 
+    def get_total_weight(self):
+        allOrderedItems = self.items_in_cart.all()
+        total = sum([item.get_total for item in allOrderedItems])
+        weight = sum([item.get_weight for item in allOrderedItems])
+        return weight
+    
+    def shipping_fee(self):
+        allOrderedItems = self.items_in_cart.all()
+        total = sum([item.get_total for item in allOrderedItems])
+        weight = sum([item.get_weight for item in allOrderedItems])
+        if(weight>20):
+            total = total + 5
+        
+
 class Order(models.Model):
     """The model order has many-to-one relationship with model customer and product.
     One customer can have many orders. One product can have many orders."""
@@ -125,6 +139,7 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
     def get_cart_total(self):
         """Calculate and return total price for all product in cart."""
         # order,created = Order.objects.get_or_create(customer=self.customer)
@@ -132,8 +147,23 @@ class Order(models.Model):
         allOrderedItems = self.items_in_cart.all()
         total = sum([item.get_total for item in allOrderedItems])
         return total
+    
+    @property
+    def shipping_fee(self):
+        cartTotal = self.get_cart_total
+        cartWeight = self.get_order_weight
+        if(cartWeight >= 20):
+            cartTotal = cartTotal + 5
+        return cartTotal
+        
 
+    @property
+    def get_order_weight(self):
+        allOrderedItems = self.items_in_cart.all()
+        order_weight = sum([item.get_total_weight for item in allOrderedItems])
+        return order_weight
 
+    @property
     def get_cart_items(self):
         """Calculate total cart quantity"""
         allOrderedItems = self.items_in_cart.all()
@@ -157,6 +187,11 @@ class OrderedItem(models.Model):
         total = self.product.price * self.quantity
         return total
 
+    @property
+    def get_total_weight(self):
+        """Calculate and return total weight for each product in cart."""
+        total_weight_per_orderedItem = self.product.weight * self.quantity
+        return total_weight_per_orderedItem
 class ShippingAddress(models.Model):
     # Store shipping address of customer
     first_name = models.CharField(max_length=50,null=True)

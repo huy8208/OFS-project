@@ -152,6 +152,7 @@
                                 <th>Products</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
+                                <th>Weight</th>
                                 <th>Total</th>
                                 <th></th>
                             </tr>
@@ -180,6 +181,9 @@
                                                     class="fa fa-minus fa-sm"></i></button>
                                         </div>
                                     </div>
+                                </td>
+                                <td class="shoping__cart__weight">
+                                    {{ordereditem.get_total_weight|floatformat:2}} lb(s)
                                 </td>
                                 <td class="shoping__cart__total">
                                     ${{ordereditem.get_total|floatformat:2}}
@@ -218,8 +222,8 @@
                 <div class="shoping__checkout">
                     <h5>Cart Total</h5>
                     <ul>
-                        <li>Subtotal <span>${{order.get_cart_total|floatformat:2}}</span></li>
-                        <li>Total <span>subtotal - coupon code</span></li>
+                        <li>Total Weight <span>{{order.get_order_weight|floatformat:2}}lb(s)</span></li>
+                        <li>Total Price <span>${{order.shipping_fee|floatformat:2}}</span></li>
                     </ul>
                     <button onclick="location.href='{% url 'checkout' %}'" class="primary-btn btn btn-primary btn-lg">
                         Proceed to checkout</button>

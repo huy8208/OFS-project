@@ -135,6 +135,7 @@ def cart_page(request):
             customer=customer, complete=False)
         # Get all ordered items object that an authenticated user has placed from our db.
         items = order.items_in_cart.all()
+        
     else:  # If user is not authenticated/login
         items = []  # create an empty list of items.
         order = {'get_cart_total': 0, 'get_cart_items': 0}

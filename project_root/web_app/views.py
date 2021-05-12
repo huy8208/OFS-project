@@ -248,9 +248,15 @@ def updateItem(request):
         order=order, product=product)
 
     """If orderItem is exceeded amount_in_stock => stop here"""
-
+    # if(self.product.amount_in_stock < self.quantity || self.product.amount_in_stock == 0):
+    #     return False
+    # else:
+    #     return True
     if action == 'add':
-        orderItem.quantity += 1
+        if product.amount_in_stock <= orderItem.quantity:
+            messages.error(request, 'Not enough stock.')
+        else:
+            orderItem.quantity += 1
     elif action == 'remove':
         orderItem.quantity -= 1
     orderItem.save()
@@ -260,6 +266,22 @@ def updateItem(request):
 
     return JsonResponse('Item was added', safe=False)
 
+def update_cart_based_on_quantity(request):
+    pass
+#     # data = json.loads(request.body)
+#     # userQuantity = data['user_quantity']
+#     # action = data['action']    i
+
+#     # customer = request.user
+#     # product = Product.objects.get(id=productId)
+#     # order, created = Order.objects.get_or_create(
+#     #     customer=customer, complete=False)
+#     # orderItem, created = OrderedItem.objects.get_or_create(
+#     #     order=order, product=product)
+
+#     # if action == 'add':
+#     #     pass
+#     pass
 
 def base_template(request):
     if request.user.is_authenticated:

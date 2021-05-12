@@ -40,6 +40,7 @@ urlpatterns = [
     path('cart/', views.cart_page, name = "cart"),
     path('profile/', views.profile_page, name = "profile"),
     path('update_item/', views.updateItem, name = "update_item"),
+    path('update-cart-based-on-quantity/', views.update_cart_based_on_quantity, name = "update-cart-based-on-quantity"),
     path('checkout/', views.checkout_page, name = "checkout"),
     path('save_user_info/', views.save_user_info, name = "save_user_info"),
     #Dynamic product pages

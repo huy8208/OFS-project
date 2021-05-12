@@ -32,27 +32,70 @@
                     <div class="product__details__quantity">
                         <div class="quantity">
                             <div class="pro-qty">
-                                <input type="text" value="1">
+                                <input type="text" id="yoyo" value="1">
                             </div>
                         </div>
                     </div>
-                        {% if product.amount_in_stock <= 0 %} 
-                            <button type="button" data-product={{product.id}} data-action="add" class="btn btn-outline-secondary btn-sm btn-rounded update-cart" disabled>OUT OF STOCK</button>
-                            <ul>
-                                <li><b>Availability</b> <span>Out of Stock</span></li>
-                                <li><b>Weight</b> <span>{{product.weight|floatformat:2}} lb(s)</span></li>
-                            </ul>
-                        {% else %}
-                            <button type="button" data-product={{product.id}} data-action="add"
-                            class="btn btn-outline-primary btn-sm btn-rounded update-cart">ADD TO CART</button>
-                            <ul>
-                            <li><b>Availability</b> <span>In Stock</span></li>
+                    {% for message in messages %}
+                    <script>alert("{{message}}")</script>
+                    {% endfor %}
+                    {% if product.amount_in_stock <= 0 %} <button type="button" data-product={{ordereditem.product.id}}
+                        data-action="add" class="btn btn-outline-secondary btn-sm btn-rounded" disabled>OUT
+                        OF STOCK</button>
+                        <ul>
+                            <li><b>Availability</b> <span>Out of Stock</span></li>
                             <li><b>Weight</b> <span>{{product.weight|floatformat:2}} lb(s)</span></li>
-                            </ul>
+                        </ul>
+                        {% else %}
+                        <button type="button" data-action="add"
+                            class="btn btn-outline-primary btn-sm btn-rounded update-cart-based-on-quantity">ADD TO CART</button>
+                        <ul>
+                            <li><b>Availability</b> <span>{{product.amount_in_stock}}</span></li>
+                            <li><b>Weight</b> <span>{{product.weight|floatformat:2}} lb(s)</span></li>
+                        </ul>
                         {% endif %}
-                        <!-- <button type="button" data-product={{product.id}} data-action="add"
-                            class="btn btn-outline-primary btn-sm btn-rounded update-cart">ADD TO CART</button> -->
-                        <!-- <a href="#" class="primary-btn">ADD TO CARD</a> -->
+                        <script>
+                            // Added by Timothy
+                            var updateBtns = document.getElementsByClassName('update-cart-based-on-quantity')
+                            var userQuantity = document.getElementById('yoyo').value
+                            var productID = "{{product.id}}"
+                            for (var i = 0; i < updateBtns.length; i++) {
+                                updateBtns[i].addEventListener('click', function () {
+                                    var action = this.dataset.action
+                                    console.log('user_quantity:', userQuantity, 'action:', action)
+                                    console.log(productID)
+                                    // if (username == 'AnonymousUser') {
+                                    //     console.log('User is not authenticated!')
+                                    // }
+                                    // else {
+                                    //     updateUserOrder(userQuantity, action)
+                                    // }
+                                })
+                            }
+
+                            function updateUserOrder(userQuantity, action) {
+                                var url = '/update-cart-based-on-quantity/'
+
+                                fetch(url, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+                                    body: JSON.stringify({ 'user_quantity': userQuantity, 'action': action })
+                                })
+
+                                    .then((response) => {
+                                        return response.json()
+                                    })
+
+                                    .then((data) => {
+                                        console.log('data:', data)
+                                        location.reload()
+                                    })
+
+                            }
+
+
+
+                        </script>
                 </div>
             </div>
         </div>

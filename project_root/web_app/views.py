@@ -259,8 +259,10 @@ def updateItem(request):
             messages.error(request, 'Not enough stock.')
         else:
             orderItem.quantity += 1
+            # product.amount_in_stock -= 1
     elif action == 'remove':
         orderItem.quantity -= 1
+        # product.amount_in_stock += 1
     orderItem.save()
 
     if orderItem.quantity <= 0:
@@ -391,6 +393,7 @@ def fulfill_order(session):
     # Sending customer a receipt email
     send_email_confirmation(session)
     print("Fulfilling order", session)
+    Product.amount_in_stock -=  OrderedItem.quantity
 
 
 def approve_customer_order(session):

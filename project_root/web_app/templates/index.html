@@ -23,63 +23,11 @@
             </div>
             <div class="col-lg-9">
                 <div class="hero__search">
-                    <div class="hero__search__form">
-                        <datalist id="products">
-                            <option value="Ribeye Steak"></option>
-                            <option value="New York Strip Steak">
-                            <option value="Chicken Thighs">
-                            <option value="Chicken Breast">
-                            <option value="Pork Chops">
-                            <option value="Bacon"></option>
-                            <option value="Shrimp">
-                            <option value="Clams">
-                            <option value="Banana"></option>
-                            <option value="Watermelon"></option>
-                            <option value="Mango">
-                            <option value="Apple">
-                            <option value="Grapes">
-                            <option value="Orange">
-                            <option value="Lemon">
-                            <option value="Brocolli"></option>
-                            <option value="Lettuce">
-                            <option value="Carrots">
-                            <option value="Potato">
-                            <option value="Cucumber">
-                            <option value="Tomato"></option>
-                            <option value="Garlic">
-                            <option value="Onions">
-                            <option value="Pepsi">
-                            <option value="Orange Juice	">
-                            <option value="Pure Leaf"></option>
-                            <option value="Crystal Geyser Water"></option>
-                            <option value="La Croix"></option>
-                            <option value="Starbucks Ice's Coffee"></option>
-                            <option value="Red Bull"></option>
-                            <option value="Kombucha"></option>
-                            <option value="Cheddar Cheese"></option>
-                            <option value="Whole Milk"></option>
-                            <option value="Low Fat Milk"></option>
-                            <option value="Cream Cheese"></option>
-                            <option value="Yogurt"></option>
-                            <option value="Dozen Eggs"></option>
-                            <option value="Egg Whites"></option>
-                            <option value="American Cheese"></option>
-                            <option value="Cheerios"></option>
-                            <option value="Brown rice"></option>
-                            <option value="Oreos"></option>
-                            <option value="Sourdough bread"></option>
-                            <option value="Pickles"></option>
-                            <option value="Canned black beans"></option>
-                            <option value="Peanut butter"></option>
-                            <option value="Sugar"></option>
-                            <option value="Ice cream"></option>
-                            <option value="Waffles"></option>
-                            <option value="Cool Whip"></option>
-                            <option value="Frozen blueberries"></option>
-                            <option value="Hot Pockets"></option>
-                            <option value="Garlic bread"></option>
-                            <option value="Pizza"></option>
-                            <option value="Ice cream bars"></option>
+                    <div class="hero__search__form"> 
+                        <datalist id = products>
+                            {% for results in showlist %}
+                            <option value="{{results.name}}"></option>
+                            {% endfor %}
                         </datalist>
                         <form action="{% url 'search_result' %}" method = "GET" autocomplete = "off">
                             <input name = "query" type="text" list="products" placeholder="What do you need?" >

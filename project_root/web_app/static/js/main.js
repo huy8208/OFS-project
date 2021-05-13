@@ -305,6 +305,6 @@ async function fetchSpecificQuantity(userQuantity,productID,action) {
         headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken},
         body: JSON.stringify({'user_quantity': userQuantity, 'product_id': productID, 'action': action })
     })
-    return false;
+    return response;
 }
 

@@ -182,7 +182,9 @@ class OrderedItem(models.Model):
         """Calculate and return total weight for each product in cart."""
         total_weight_per_orderedItem = self.product.weight * self.quantity
         return total_weight_per_orderedItem
-        
+    
+    def __str__(self):
+        return str(self.product)
 class ShippingAddress(models.Model):
     # Store shipping address of customer
     first_name = models.CharField(max_length=50,null=True)

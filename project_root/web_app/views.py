@@ -313,10 +313,12 @@ def update_cart_based_on_quantity(request):
 
 def deleteItemFromCart(request):
     if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
         orderItemID = int(json.loads(request.body)['orderItemID'])
-        orderObjectToBeDeleted = OrderedItem.objects.get(id=orderItemID)
-        orderObjectToBeDeleted.delete()
+        orderItem, created = OrderedItem.objects.get_or_create(order=order,id=orderItemID)
+        orderItem.delete()
         return HttpResponse(status=200)
     else:
         print("Error! Cannot delete item from cart")

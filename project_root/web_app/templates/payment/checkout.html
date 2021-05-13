@@ -361,9 +361,25 @@
         else {
             save_user_info(userFormData).then(response => {
                 return data = response.json();
-                }).then(create_stripe_checkout()).catch(error => {
+                }).then(data => {
+                    if(data['status'] == 200){
+                        create_stripe_checkout()
+                    }
+                    else if(data['status'] == 500){
+                        alert(data['response'])
+                        return false;
+                    }
+                    else{
+                        alert('Unhandled exception.')
+                        return false;
+                    }
+                }).catch(error => {
                 console.error("Error, cannot save user info", error);
             })
+            
+            //     .then(create_stripe_checkout()).catch(error => {
+            //     console.error("Error, cannot save user info", error);
+            // })
                 // .then(data => {
                 // orderResponse = fetch("/create_order/", {
                 //     method: "POST",

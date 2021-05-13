@@ -101,8 +101,7 @@ class Product(models.Model):
         total = sum([item.get_total for item in allOrderedItems])
         weight = sum([item.get_weight for item in allOrderedItems])
         return weight
-   
-        
+     
 class Order(models.Model):
     """The model order has many-to-one relationship with model customer and product.
     One customer can have many orders. One product can have many orders."""

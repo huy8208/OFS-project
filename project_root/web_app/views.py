@@ -270,8 +270,10 @@ def updateItem(request):
             messages.error(request, 'Not enough stock.')
         else:
             orderItem.quantity += 1
+            # product.amount_in_stock -= 1
     elif action == 'remove':
         orderItem.quantity -= 1
+        # product.amount_in_stock += 1
     orderItem.save()
 
     if orderItem.quantity <= 0:
@@ -352,18 +354,25 @@ class CreateCheckoutSessionView(View):
 
 
 def send_email_confirmation(session):
-    # from email.mime.text import MIMEText
-    from django.core.mail import send_mail
-    from django.template.loader import render_to_string
-    from django.utils.html import strip_tags
+    import os
+    import smtplib
+    import imghdr
+    from email.message import EmailMessage
 
-    subject = 'OFS Order Confirmation'
-    html_message = render_to_string('email/email.html')
-    plain_message = strip_tags(html_message)
-    from_email = 'cmpeOFS@gmail.com'
-    to = session['customer_email']
-    
-    send_mail(subject=subject,message=plain_message,from_email=from_email,recipient_list=[to],fail_silently=False,html_message=html_message)
+    EMAIL_ADDRESS = 'cmpeOFS1@gmail.com'
+    EMAIL_PASSWORD = 'OFS-project'
+
+    msg = EmailMessage()
+    msg['Subject'] = 'Testing Subject'
+    msg['From'] = EMAIL_ADDRESS
+    msg['To'] = 'timothy.vu@sjsu.edu'
+
+    msg.set.content('This is a message from OFS')
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        smtp.send_message(msg)
+   
 
 @csrf_exempt
 def stripe_webhook(request):
@@ -401,10 +410,9 @@ def fulfill_order(session):
     # TODO: fill me in
     # Saving a copy of the order in our own dabase.
     # approve_customer_order(session)
-    # Sending customer a receipt email
-    # send_email_confirmation(session)
     print("Fulfilling order", session)
     update_stock(session)
+    send_email_confirmation(session)
     #Empty customer's cart
     emptyCart(session)
 

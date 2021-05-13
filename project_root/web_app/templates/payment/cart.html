@@ -190,7 +190,7 @@
                                     ${{ordereditem.get_total|floatformat:2}}
                                 </td>
                                 <td class="shoping__cart__item__close">
-                                    <span class="icon_close delete-item"></span>
+                                    <button type="button" data-product={{ordereditem.id}}><span  class="icon_close delete-orderitem"></span></button>
                                 </td>
                             </tr>
                             <!-- Prepare line-items for stripe back-end payment -->

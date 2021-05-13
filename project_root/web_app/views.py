@@ -246,7 +246,7 @@ def product_detail(request, pk):
 
 
 def updateItem(request):
-    """Update user's orderedItem in db"""
+    """Add to cart button in main and + - button in cart."""
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']
@@ -266,7 +266,9 @@ def updateItem(request):
     # else:
     #     return True
     if action == 'add':
-        if product.amount_in_stock <= orderItem.quantity:
+        if product.amount_in_stock < orderItem.quantity:
+            messages.error(request, 'The product is sold out. Please remove it from cart and choose a different product.')
+        elif product.amount_in_stock == orderItem.quantity:
             messages.error(request, 'Not enough stock.')
         else:
             orderItem.quantity += 1
@@ -282,6 +284,7 @@ def updateItem(request):
     return JsonResponse('Item was added', safe=False)
 
 def update_cart_based_on_quantity(request):
+    """Add to cart button on product_detail page."""
     if request.user.is_authenticated:
         customer = request.user
         if request.method == 'POST':
@@ -303,6 +306,12 @@ def update_cart_based_on_quantity(request):
                 print("userQuantity:",userQuantity)
                 if product.amount_in_stock < userQuantity:
                     messages.error(request, 'Not enough stock.')
+                    return HttpResponse(status=500)
+                elif product.amount_in_stock == orderItem.quantity:
+                    messages.error(request, 'Not enough stock.')
+                    return HttpResponse(status=500)
+                elif product.amount_in_stock < orderItem.quantity:
+                    messages.error(request, 'The product is sold out. Please remove it from cart and choose a different product.')
                     return HttpResponse(status=500)
                 else:
                     orderItem.quantity += userQuantity

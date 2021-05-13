@@ -247,8 +247,8 @@ def make_final_check(request):
     return result
 
 
-def processOrder(request):
-    return JsonResponse("Payment complete!", safe=False)
+# def processOrder(request):
+#     return JsonResponse("Payment complete!", safe=False)
 
 
 def product_detail(request, pk):
@@ -453,33 +453,41 @@ def stripe_webhook(request):
 
 def emptyCart(session):
     customer = Customer.objects.get(email=session['customer_email'])
-    order, created = Order.objects.get_or_create(
-    customer=customer, complete=False)
+    order = Order.objects.get(customer=customer,complete=False)
     order.items_in_cart.all().delete()
     
 def fulfill_order(session):
     # TODO: fill me in
     print("Fulfilling order", session)
-    approve_customer_order(session)
     update_stock(session)
+    approve_customer_order(session)
     send_email_confirmation(session)
     emptyCart(session)
 
 def update_stock(session):
     # Update stock
     customer = Customer.objects.get(email=session['customer_email'])
-    order, created = Order.objects.get_or_create(customer=customer)
-    orderItem, created = OrderedItem.objects.get_or_create(order=order)
-    product = orderItem.product
-    product.amount_in_stock =  product.amount_in_stock - orderItem.quantity
-    product.save()
+    order = Order.objects.get(customer=customer,complete=False)
+    allOrderedItems = order.items_in_cart.all()
+    for orderItem in allOrderedItems:
+        if orderItem.product.amount_in_stock >= orderItem.quantity:
+            orderItem.product.amount_in_stock = orderItem.product.amount_in_stock - orderItem.quantity
+            orderItem.product.save()
+        else:
+            print('#Do nothing SOMETHING WRONG')
+            pass 
+    # orderItem, created = OrderedItem.objects.get_or_create(order=order)
+    # product = orderItem.product
+    # product.amount_in_stock =  product.amount_in_stock - orderItem.quantity
+    # product.save()
 
 def approve_customer_order(session):
     customer = Customer.objects.get(email=session['customer_email'])
     #Get shippingAddress obj if it exists, else create new.
-    order, created = Order.objects.get_or_create(customer=customer)
-    order.status = order.STATUS[1]
-    order.payment = order.PAYMENT[1]
+    order = Order.objects.get(customer=customer,complete=False)
+    order.status = 'Pending'
+    order.payment = 'Uninitialized'
+    order.shipping = 'Out for delivery'
     order.complete = True
     order.save()
 

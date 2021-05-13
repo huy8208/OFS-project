@@ -28,11 +28,12 @@ class AddressAdmin(admin.ModelAdmin):
 class OrderedItemAdmin(admin.ModelAdmin):
     list_display = ('id','product','order','quantity')
 
-
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id','customer','complete','status','payment','shipping')
 
 admin.site.register(Customer,CustomerAdmin)
 admin.site.register(Product,ProductAdmin)
-admin.site.register(Order)
+admin.site.register(Order,OrderAdmin)
 admin.site.register(Tag)
 admin.site.register(OrderedItem,OrderedItemAdmin)
 admin.site.register(ShippingAddress,AddressAdmin)

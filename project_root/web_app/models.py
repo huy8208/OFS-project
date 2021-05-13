@@ -182,17 +182,6 @@ class OrderedItem(models.Model):
         """Calculate and return total weight for each product in cart."""
         total_weight_per_orderedItem = self.product.weight * self.quantity
         return total_weight_per_orderedItem
-
-    @property
-    def check_availability(self):
-        # if(self.product.amount_in_stock < self.quantity || self.product.amount_in_stock == 0):
-        #     return False
-        # else:
-        #     return True
-        pass
-        
- 
-            
         
 class ShippingAddress(models.Model):
     # Store shipping address of customer

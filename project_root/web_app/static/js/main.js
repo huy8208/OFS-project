@@ -241,6 +241,21 @@ for(var i=0; i < updateBtns.length;i++){
     })
 }
 
+function deleteItemFromCart(orderItemID){
+    console.log(orderItemID)
+    fetch('/delete-item-from-cart/',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},
+        body: JSON.stringify({'orderItemID':orderItemID})
+    }).then(response => {
+        if (response['status'] == 200) {
+            alert("Item has been removed from cart!")
+            location.reload();
+        }
+        }).catch(error => {
+            console.error("Error:", error);
+        })
+}
 
 function updateUserOrder(productId,action){
     console.log('User is logged in, sending data ...')

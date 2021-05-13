@@ -189,8 +189,11 @@
                                 <td class="shoping__cart__total">
                                     ${{ordereditem.get_total|floatformat:2}}
                                 </td>
-                                <td class="shoping__cart__item__close">
-                                    <button type="button" data-product={{ordereditem.id}}><span  class="icon_close delete-orderitem"></span></button>
+                                <script>
+                                var productIdToDelete = "{{ordereditem.id}}";
+                                </script>                                
+                                <td>
+                                    <button type="button" style="padding: 0 0 0 0;" onclick="deleteItemFromCart(productIdToDelete)"><i class="fas fa-window-close fa-2x"></i></button>
                                 </td>
                             </tr>
                             <!-- Prepare line-items for stripe back-end payment -->

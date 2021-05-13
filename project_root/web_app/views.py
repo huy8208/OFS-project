@@ -312,7 +312,15 @@ def update_cart_based_on_quantity(request):
         return HttpResponse(status=500)
 
 def deleteItemFromCart(request):
-    pass
+    if request.user.is_authenticated:
+        #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
+        orderItemID = int(json.loads(request.body)['orderItemID'])
+        orderObjectToBeDeleted = OrderedItem.objects.get(id=orderItemID)
+        orderObjectToBeDeleted.delete()
+        return HttpResponse(status=200)
+    else:
+        print("Error! Cannot delete item from cart")
+        return HttpResponse(status=200)
 
 
 def base_template(request):
@@ -350,7 +358,7 @@ class CreateCheckoutSessionView(View):
                 success_url=settings.STRIPE_URL + '/success/',
                 cancel_url=settings.STRIPE_URL + '/cancel/',
             )
-            return JsonResponse({'id': checkout_session.id})
+        return JsonResponse({'id': checkout_session.id})
 
         # #validation
         # if weight < 20:

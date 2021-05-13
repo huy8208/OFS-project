@@ -24,10 +24,9 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret = 'whsec_RXRtRwQFV2iW8XyUfTCThW4wG5DWUb30'
 
 # @login_required(login_url='login') User this when create payment/checkout
-
-
 def index(request):
     """Placeholder index view"""
+    showlist = Product.objects.all()
     if request.user.is_authenticated:
         customer = request.user
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
@@ -40,7 +39,7 @@ def index(request):
         # To update the quantity icon at the top right.
         cartItems = order['get_cart_items']
     randomProductsList = Product.objects.order_by('?')
-    return render(request, 'index.html', context={'randomProductsList': randomProductsList, 'cartItems': cartItems, 'order': order})
+    return render(request, 'index.html', context={'randomProductsList': randomProductsList,'cartItems': cartItems,'order': order,'showlist':showlist})
 
 
 def Meat_Seafood(request):
@@ -119,14 +118,15 @@ def logoutUser(request):
 
 def SearchPage(request):
     srh = request.GET['query']
+    allProducts = Product.objects.all()
     products = Product.objects.filter(name__icontains=srh)
-    params = {'products': products, 'search': srh}
+    params = {'products': products, 'search': srh,'allProducts':allProducts}
 
-    if len(products) != 1:
-        return render(request, 'Index.html')
+    if len(products) != 1: #If the product does not exist or search wasn't specific enoug
+        return render(request, 'redirect.html')
 
     return render(request, 'SearchPage.html', params)
-
+    
 
 def cart_page(request):
     """Return a list of ordered items"""
@@ -142,8 +142,8 @@ def cart_page(request):
         items = []  # create an empty list of items.
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         cartItems = order['get_cart_items']
-
-    context = {'items': items, 'order': order, 'cartItems': cartItems, 'STRIPE_PUBLIC_KEY':
+    
+    context = {'items': items, 'order': order,'cartItems': cartItems, 'STRIPE_PUBLIC_KEY':
                settings.STRIPE_PUBLIC_KEY, 'STRIPE_URL': settings.STRIPE_URL}
     return render(request, 'payment/cart.html', context)
 
@@ -163,7 +163,7 @@ def checkout_page(request):
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         cartItems = order['get_cart_items']
 
-    context = {'customer': customer, 'items': items, 'order': order, 'cartItems': cartItems,
+    context = {'customer': customer, 'items': items, 'order': order,'cartItems': cartItems,
                'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY, 'STRIPE_URL': settings.STRIPE_URL}
     return render(request, 'payment/checkout.html', context)
 
@@ -268,32 +268,33 @@ def updateItem(request):
 
     return JsonResponse('Item was added', safe=False)
 
-
-def update_specific_quantity(request):
+def update_cart_based_on_quantity(request):
+    print("rewoqjnroeiwjqroqwejtorehjtuwerh")
     customer = request.user
     if request.method == 'POST':
         data = json.loads(request.body)
+        print(data)
         userQuantity = int(data['user_quantity'])
         action = data['action']
         productId = int(data['product_id'])
         print("userQuantity",userQuantity)
         print("action",action)
         print("productId",productId)
-        customer = request.user
-        product = Product.objects.get(id=productId)
-        order, created = Order.objects.get_or_create(
-            customer=customer, complete=False)
-        orderItem, created = OrderedItem.objects.get_or_create(
-            order=order, product=product)
-        if action == 'add':
-            if product.amount_in_stock <= orderItem.quantity:
-                messages.error(request, 'Not enough stock.')
-            else:
-                orderItem.quantity += userQuantity
-        orderItem.save()
-        return JsonResponse({"yeah":"Specific quantity was added"})
-    else:
-        return HttpResponse(status=500)
+        return HttpResponse(status=200)
+        # customer = request.user
+        # product = Product.objects.get(id=productId)
+        # order, created = Order.objects.get_or_create(
+        #     customer=customer, complete=False)
+        # orderItem, created = OrderedItem.objects.get_or_create(
+        #     order=order, product=product)
+
+    # if action == 'add':
+    #     if product.amount_in_stock <= orderItem.quantity:
+    #         messages.error(request, 'Not enough stock.')
+    #     else:
+    #         orderItem.quantity += userQuantity
+    # orderItem.save()
+    
 
 def base_template(request):
     if request.user.is_authenticated:
@@ -307,7 +308,7 @@ def base_template(request):
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         # To update the quantity icon at the top right.
         cartItems = order['get_cart_items']
-    context = {'cartItems': cartItems, 'order': order}
+    context = {'cartItems': cartItems,'order': order}
     return render(request, 'base_template.html', context=context)
 
 
@@ -344,10 +345,8 @@ def send_email_confirmation(session):
     plain_message = strip_tags(html_message)
     from_email = 'cmpeOFS@gmail.com'
     to = session['customer_email']
-
-    send_mail(subject=subject, message=plain_message, from_email=from_email,
-              recipient_list=[to], fail_silently=False, html_message=html_message)
-
+    
+    send_mail(subject=subject,message=plain_message,from_email=from_email,recipient_list=[to],fail_silently=False,html_message=html_message)
 
 @csrf_exempt
 def stripe_webhook(request):
@@ -376,14 +375,12 @@ def stripe_webhook(request):
     # Passed signature verification
     return HttpResponse(status=200)
 
-
 def emptyCart(session):
     customer = Customer.objects.get(email=session['customer_email'])
     order, created = Order.objects.get_or_create(
-        customer=customer, complete=False)
+    customer=customer, complete=False)
     order.items_in_cart.all().delete()
-
-
+    
 def fulfill_order(session):
     # TODO: fill me in
     # Saving a copy of the order in our own dabase.

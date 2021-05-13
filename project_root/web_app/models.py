@@ -82,7 +82,7 @@ class Product(models.Model):
     image = models.ImageField(null=True,blank=True,upload_to='uploaded_images/')
     amount_in_stock = models.IntegerField(default = 0, null = True, blank = True)
     slug = models.CharField(max_length=200,null=False,default="None")
-    
+     
     def __str__(self):
         return self.name
 

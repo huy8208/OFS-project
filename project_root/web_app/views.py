@@ -343,16 +343,38 @@ def cancel(request):
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
         checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            customer_email=request.user.email,
-            line_items=json.loads(request.body)['lineItems'],
-            mode='payment',
-            success_url=settings.STRIPE_URL + '/success/',
-            cancel_url=settings.STRIPE_URL + '/cancel/',
-        )
-        return JsonResponse({'id': checkout_session.id})
+                payment_method_types=['card'],
+                customer_email=request.user.email,
+                line_items=json.loads(request.body)['lineItems'],
+                mode='payment',
+                success_url=settings.STRIPE_URL + '/success/',
+                cancel_url=settings.STRIPE_URL + '/cancel/',
+            )
+            return JsonResponse({'id': checkout_session.id})
 
-
+        # #validation
+        # if weight < 20:
+        #     checkout_session = stripe.checkout.Session.create(
+        #         payment_method_types=['card'],
+        #         customer_email=request.user.email,
+        #         line_items=json.loads(request.body)['lineItems'],
+        #         mode='payment',
+        #         success_url=settings.STRIPE_URL + '/success/',
+        #         cancel_url=settings.STRIPE_URL + '/cancel/',
+        #     )
+        #     return JsonResponse({'id': checkout_session.id})
+        # else:
+            # checkout_session = stripe.checkout.Session.create(
+            #     payment_method_types=['card'],
+            #     shipping_rates=['shr_1ImByjBew4cXzmng8ppGn2s5'],
+            #     shipping_address_collection={'allowed_countries': ['US', 'CA'],},
+            #     customer_email=request.user.email,
+            #     line_items=json.loads(request.body)['lineItems'],
+            #     mode='payment',
+            #     success_url=settings.STRIPE_URL + '/success/',
+            #     cancel_url=settings.STRIPE_URL + '/cancel/',
+            # )
+            # return JsonResponse({'id': checkout_session.id})
 def send_email_confirmation(session):
     import os
     import smtplib

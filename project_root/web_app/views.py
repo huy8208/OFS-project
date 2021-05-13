@@ -230,8 +230,19 @@ def processOrder(request):
 
 
 def product_detail(request, pk):
+    if request.user.is_authenticated:
+        customer = request.user
+        #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        # Get all ordered items object that an authenticated user has placed from our db.
+        cartItems = order.get_cart_items
+    else:  # If user is not authenticated/login
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        # To update the quantity icon at the top right.
+        cartItems = order['get_cart_items']
     product = Product.objects.get(id=pk)
-    return render(request, 'Product_detail.html', context={'product': product})
+    return render(request, 'Product_detail.html', context={'product': product,'cartItems': cartItems,'order': order})
 
 
 def updateItem(request):

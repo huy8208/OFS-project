@@ -106,15 +106,18 @@ class Order(models.Model):
     """The model order has many-to-one relationship with model customer and product.
     One customer can have many orders. One product can have many orders."""
     STATUS = (
+        ('None','None'),
         ('Pending','Pending'),
-        ('Complete','Complete'),
+        ('Approved','Approved'),
     )
 
-    CHECKOUT = (
-        ('Complete','Complete'),
+    PAYMENT = (
+        ('Uninitialized','Uninitialized'),
+        ('Received','Received'),
     )
 
     SHIPPING = (
+            ('Uninitialized','Uninitialized'),
             ('Out for delivery','Out for delivery'),
     )
     
@@ -124,8 +127,8 @@ class Order(models.Model):
     complete = models.BooleanField(default=False,null=True,blank=False)
     transaction_id = models.CharField(max_length=200,null=True)
     # product = models.ManyToManyField(Product) #May need to be removed
-    status = models.CharField(max_length=200,null=True,choices=STATUS)
-    checkout = models.CharField(max_length=200,null=True,choices=CHECKOUT)
+    status = models.CharField(max_length=200,null=True,choices=STATUS,default=STATUS[0])
+    payment = models.CharField(max_length=200,null=True,choices=PAYMENT)
     shipping = models.CharField(max_length=200,null=True,choices=SHIPPING)
 
     def __str__(self):

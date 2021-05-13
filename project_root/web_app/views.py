@@ -459,18 +459,16 @@ def emptyCart(session):
     
 def fulfill_order(session):
     # TODO: fill me in
-    # Saving a copy of the order in our own dabase.
-    # approve_customer_order(session)
     print("Fulfilling order", session)
+    approve_customer_order(session)
     update_stock(session)
-    # send_email_confirmation(session)
-    #Empty customer's cart
+    send_email_confirmation(session)
     emptyCart(session)
 
 def update_stock(session):
     # Update stock
     customer = Customer.objects.get(email=session['customer_email'])
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    order, created = Order.objects.get_or_create(customer=customer)
     orderItem, created = OrderedItem.objects.get_or_create(order=order)
     product = orderItem.product
     product.amount_in_stock =  product.amount_in_stock - orderItem.quantity
@@ -480,8 +478,9 @@ def approve_customer_order(session):
     customer = Customer.objects.get(email=session['customer_email'])
     #Get shippingAddress obj if it exists, else create new.
     order, created = Order.objects.get_or_create(customer=customer)
-    order.status = order.STATUS[0]
-    order.checkout = order.CHECKOUT[0]
+    order.status = order.STATUS[1]
+    order.payment = order.PAYMENT[1]
+    order.complete = True
     order.save()
 
 

@@ -280,7 +280,6 @@ def update_cart_based_on_quantity(request):
         print("userQuantity",userQuantity)
         print("action",action)
         print("productId",productId)
-<<<<<<< HEAD
         customer = request.user
         product = Product.objects.get(id=productId)
         order, created = Order.objects.get_or_create(
@@ -298,23 +297,6 @@ def update_cart_based_on_quantity(request):
         return JsonResponse({"yeah":"Specific quantity was added"})
     else:
         return HttpResponse(status=500)
-=======
-        return HttpResponse(status=200)
-        # customer = request.user
-        # product = Product.objects.get(id=productId)
-        # order, created = Order.objects.get_or_create(
-        #     customer=customer, complete=False)
-        # orderItem, created = OrderedItem.objects.get_or_create(
-        #     order=order, product=product)
-
-    # if action == 'add':
-    #     if product.amount_in_stock <= orderItem.quantity:
-    #         messages.error(request, 'Not enough stock.')
-    #     else:
-    #         orderItem.quantity += userQuantity
-    # orderItem.save()
-    
->>>>>>> 21571e6950ab4355c311b282af1bf7d586b0d8c9
 
 def deleteItemFromCart(request):
     pass

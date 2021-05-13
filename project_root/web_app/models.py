@@ -106,27 +106,30 @@ class Order(models.Model):
     """The model order has many-to-one relationship with model customer and product.
     One customer can have many orders. One product can have many orders."""
     STATUS = (
+        ('None','None'),
         ('Pending','Pending'),
-        ('Complete','Complete'),
+        ('Approved','Approved'),
     )
 
-    CHECKOUT = (
-        ('Complete','Complete'),
+    PAYMENT = (
+        ('Uninitialized','Uninitialized'),
+        ('Received','Received'),
     )
 
     SHIPPING = (
+            ('Uninitialized','Uninitialized'),
             ('Out for delivery','Out for delivery'),
     )
     
     customer = models.ForeignKey(Customer,blank=True,null=True, on_delete= models.SET_NULL,related_name="get_order")
     date_ordered = models.DateTimeField(auto_now_add=True,null=True)
     # date_created = models.DateTimeField(auto_now_add=True,null=True)
-    complete = models.BooleanField(default=False,null=True,blank=False)
-    transaction_id = models.CharField(max_length=200,null=True)
+    complete = models.BooleanField(default=False)
+    # transaction_id = models.CharField(max_length=200,null=True)
     # product = models.ManyToManyField(Product) #May need to be removed
-    status = models.CharField(max_length=200,null=True,choices=STATUS)
-    checkout = models.CharField(max_length=200,null=True,choices=CHECKOUT)
-    shipping = models.CharField(max_length=200,null=True,choices=SHIPPING)
+    status = models.CharField(max_length=200,null=True,choices=STATUS,default='None')
+    payment = models.CharField(max_length=200,null=True,choices=PAYMENT,default='Uninitialized')
+    shipping = models.CharField(max_length=200,null=True,choices=SHIPPING,default='Uninitialized')
 
     def __str__(self):
         return str(self.customer.email)

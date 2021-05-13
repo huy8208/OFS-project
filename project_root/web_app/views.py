@@ -378,7 +378,6 @@ def stripe_webhook(request):
 
         # Fulfill the purchase...
         fulfill_order(session)
-        emptyCart(session)
     # Passed signature verification
     return HttpResponse(status=200)
 
@@ -395,9 +394,20 @@ def fulfill_order(session):
     # Saving a copy of the order in our own dabase.
     # approve_customer_order(session)
     # Sending customer a receipt email
-    send_email_confirmation(session)
+    # send_email_confirmation(session)
     print("Fulfilling order", session)
+    update_stock(session)
+    #Empty customer's cart
+    emptyCart(session)
 
+def update_stock(session):
+    # Update stock
+    customer = Customer.objects.get(email=session['customer_email'])
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    orderItem, created = OrderedItem.objects.get_or_create(order=order)
+    product = orderItem.product
+    product.amount_in_stock =  product.amount_in_stock - orderItem.quantity
+    product.save()
 
 def approve_customer_order(session):
     customer = Customer.objects.get(email=session['customer_email'])

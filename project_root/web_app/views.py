@@ -282,35 +282,34 @@ def updateItem(request):
     return JsonResponse('Item was added', safe=False)
 
 def update_cart_based_on_quantity(request):
-    print("rewoqjnroeiwjqroqwejtorehjtuwerh")
-    customer = request.user
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        print(data)
-        userQuantity = int(data['user_quantity'])
-        action = data['action']
-        productId = int(data['product_id'])
-        print("userQuantity",userQuantity)
-        print("action",action)
-        print("productId",productId)
+    if request.user.is_authenticated:
         customer = request.user
-        product = Product.objects.get(id=productId)
-        order, created = Order.objects.get_or_create(
-            customer=customer, complete=False)
-        orderItem, created = OrderedItem.objects.get_or_create(
-            order=order, product=product)
-        if action == 'add':
-            print("Amount in stock:",product.amount_in_stock)
-            print("Quantity:",orderItem.quantity)
-            if product.amount_in_stock <= orderItem.quantity:
-                messages.error(request, 'Not enough stock.')
-            else:
-                orderItem.quantity += userQuantity
-        orderItem.save()
-        return JsonResponse({"yeah":"Specific quantity was added"})
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            userQuantity = int(data['user_quantity'])
+            action = data['action']
+            productId = int(data['product_id'])
+            # print("userQuantity",userQuantity)
+            # print("action",action)
+            # print("productId",productId)
+            customer = request.user
+            product = Product.objects.get(id=productId)
+            order, created = Order.objects.get_or_create(
+                customer=customer, complete=False)
+            orderItem, created = OrderedItem.objects.get_or_create(
+                order=order, product=product)
+            if action == 'add':
+                print("Amount in stock:",product.amount_in_stock)
+                print("userQuantity:",userQuantity)
+                if product.amount_in_stock < userQuantity:
+                    messages.error(request, 'Not enough stock.')
+                    return HttpResponse(status=500)
+                else:
+                    orderItem.quantity += userQuantity
+                    orderItem.save()        
+                    return HttpResponse(status=200)
     else:
-        return HttpResponse(status=500)
-
+        print("Not login")
 def deleteItemFromCart(request):
     if request.user.is_authenticated:
         customer = request.user
@@ -324,7 +323,7 @@ def deleteItemFromCart(request):
         return HttpResponse(status=200)
     else:
         print("Error! Cannot delete item from cart")
-        return HttpResponse(status=200)
+        return HttpResponse(status=500)
 
 
 def base_template(request):
@@ -463,23 +462,3 @@ def approve_customer_order(session):
     order.save()
 
 
-# Commented out, probably not using it because adding
-# address does not prefill stripe checkout
-# class CreateCheckoutSessionView(View):
-#     def post(self,request,*args,**kwargs):
-#         address = {'city': 'San Jose', 'country': 'USA',
-#         'line1': 'testing ct', 'line2': 'none',
-#         'postal_code': '95138', 'state': 'CA'}
-#         stripe_customer = stripe.Customer.create(address=address,shipping={"address":address,"name":request.user},email=request.user.email)
-
-#         checkout_session = stripe.checkout.Session.create(
-#             customer=stripe_customer,
-#             payment_method_types=['card'],
-#             shipping_rates= ["shr_1ImByjBew4cXzmng8ppGn2s5"],
-#             shipping_address_collection={'allowed_countries': ['US', 'CA'],},
-#             line_items=json.loads(request.body)['lineItems'],
-#             mode='payment',
-#             success_url=settings.STRIPE_URL + '/success/',
-#             cancel_url=settings.STRIPE_URL + '/cancel/',
-#         )
-#         return JsonResponse({'id':checkout_session.id})

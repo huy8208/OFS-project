@@ -233,7 +233,7 @@ for(var i=0; i < updateBtns.length;i++){
         console.log('USER:',username)
 
         if (username == 'AnonymousUser'){
-            console.log('User is not authenticated!')
+            alert('Please login or sign up to purchase our products.')
         }
         else {
             updateUserOrder(productId,action)
@@ -246,7 +246,7 @@ for (var i=0; i< deleteButton.length;i++){
     deleteButton[i].addEventListener('click',function(){
         var orderItemID = this.dataset.product
         if (username == 'AnonymousUser'){
-            console.log('User is not authenticated!')
+            alert('Please login or sign up to purchase our products.')
         }
         else {
             deleteItemFromCart(orderItemID)
@@ -307,3 +307,4 @@ async function fetchSpecificQuantity(userQuantity,productID,action) {
     })
     return false;
 }
+

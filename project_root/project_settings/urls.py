@@ -41,7 +41,7 @@ urlpatterns = [
     path('profile/', views.profile_page, name = "profile"),
     path('update_item/', views.updateItem, name = "update_item"),
     path('delete-item-from-cart/', views.deleteItemFromCart, name = "delete_item_from_cart"),
-    #path('update_user_quantity/', views.update_specific_quantity, name = "update_user_quantity"),
+    path('update_user_quantity/', views.update_cart_based_on_quantity, name = "update_user_quantity"),
     path('checkout/', views.checkout_page, name = "checkout"),
     path('save_user_info/', views.save_user_info, name = "save_user_info"),
     #Dynamic product pages

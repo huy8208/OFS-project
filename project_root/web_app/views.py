@@ -282,25 +282,6 @@ def update_cart_based_on_quantity(request):
         print("userQuantity",userQuantity)
         print("action",action)
         print("productId",productId)
-<<<<<<< HEAD
-        customer = request.user
-        product = Product.objects.get(id=productId)
-        order, created = Order.objects.get_or_create(
-            customer=customer, complete=False)
-        orderItem, created = OrderedItem.objects.get_or_create(
-            order=order, product=product)
-        if action == 'add':
-            print("Amount in stock:",product.amount_in_stock)
-            print("Quantity:",orderItem.quantity)
-            if product.amount_in_stock <= orderItem.quantity:
-                messages.error(request, 'Not enough stock.')
-            else:
-                orderItem.quantity += userQuantity
-        orderItem.save()
-        return JsonResponse({"yeah":"Specific quantity was added"})
-    else:
-        return HttpResponse(status=500)
-=======
         return HttpResponse(status=200)
         # customer = request.user
         # product = Product.objects.get(id=productId)
@@ -316,7 +297,6 @@ def update_cart_based_on_quantity(request):
     #         orderItem.quantity += userQuantity
     # orderItem.save()
     
->>>>>>> 21571e6950ab4355c311b282af1bf7d586b0d8c9
 
 def deleteItemFromCart(request):
     pass
@@ -361,18 +341,27 @@ class CreateCheckoutSessionView(View):
 
 
 def send_email_confirmation(session):
-    # from email.mime.text import MIMEText
-    from django.core.mail import send_mail
-    from django.template.loader import render_to_string
-    from django.utils.html import strip_tags
+    import os
+    import smtplib
+    import imghdr
+    from email.message import EmailMessage
 
-    subject = 'OFS Order Confirmation'
-    html_message = render_to_string('email/email.html')
-    plain_message = strip_tags(html_message)
-    from_email = 'cmpeOFS@gmail.com'
-    to = session['customer_email']
-    
-    send_mail(subject=subject,message=plain_message,from_email=from_email,recipient_list=[to],fail_silently=False,html_message=html_message)
+    EMAIL_ADDRESS = 'cmpeOFS1@gmail.com'
+    EMAIL_PASSWORD = 'OFS-project'
+
+    # contacts = ['EMAIL_ADDRESS', 'j00hnsm11th1807@gmail.com']
+
+    msg = EmailMessage()
+    msg['Subject'] = 'Testing Subject'
+    msg['From'] = EMAIL_ADDRESS
+    msg['To'] = 'timothy.vu@sjsu.edu'
+
+    msg.set.content('This is a message from OFS')
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        smtp.send_message(msg)
+   
 
 @csrf_exempt
 def stripe_webhook(request):
@@ -410,16 +399,11 @@ def fulfill_order(session):
     # TODO: fill me in
     # Saving a copy of the order in our own dabase.
     # approve_customer_order(session)
-    # Sending customer a receipt email
-    # send_email_confirmation(session)
     print("Fulfilling order", session)
-<<<<<<< HEAD
-    Product.amount_in_stock -=  OrderedItem.quantity
-=======
     update_stock(session)
+    send_email_confirmation(session)
     #Empty customer's cart
     emptyCart(session)
->>>>>>> f1ff06ee0090aae6cfe276b92749a1633b9dfe40
 
 def update_stock(session):
     # Update stock

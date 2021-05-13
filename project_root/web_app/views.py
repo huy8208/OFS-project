@@ -359,15 +359,15 @@ def send_email_confirmation(session):
     import imghdr
     from email.message import EmailMessage
 
-    EMAIL_ADDRESS = 'cmpeOFS1@gmail.com'
+    EMAIL_ADDRESS = 'cmpeOFS@gmail.com'
     EMAIL_PASSWORD = 'OFS-project'
 
     msg = EmailMessage()
-    msg['Subject'] = 'Testing Subject'
+    msg['Subject'] = 'OFS Order Confirmation'
     msg['From'] = EMAIL_ADDRESS
-    msg['To'] = 'timothy.vu@sjsu.edu'
-
-    msg.set.content('This is a message from OFS')
+    msg['To'] = session['customer_email']
+    
+    msg.set_content('This is a message from OFS')
 
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)

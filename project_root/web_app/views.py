@@ -286,6 +286,8 @@ def update_specific_quantity(request):
         orderItem, created = OrderedItem.objects.get_or_create(
             order=order, product=product)
         if action == 'add':
+            print("Amount in stock:",product.amount_in_stock)
+            print("Quantity:",orderItem.quantity)
             if product.amount_in_stock <= orderItem.quantity:
                 messages.error(request, 'Not enough stock.')
             else:
@@ -294,6 +296,10 @@ def update_specific_quantity(request):
         return JsonResponse({"yeah":"Specific quantity was added"})
     else:
         return HttpResponse(status=500)
+
+def deleteItemFromCart(request):
+    pass
+
 
 def base_template(request):
     if request.user.is_authenticated:

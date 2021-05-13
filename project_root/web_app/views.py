@@ -220,9 +220,31 @@ def save_user_info(request):
         shippingObject.country = customerAddressForm['country']
         shippingObject.phone = customerAddressForm['phone']
         shippingObject.save()
-        return JsonResponse({'customer_info': customerAddressForm})
+        passFinalCheck = make_final_check(request)
+        if not all(passFinalCheck):
+            return JsonResponse({'response':'One of the items in cart has been sold out. Please remove this item out of cart.','status': 500})
+        else:
+            return JsonResponse({'customer_info': customerAddressForm,'status': 200})
     else:
-        return HttpResponse(status=500)
+        return JsonResponse({'response':'Error! User is not logged in!','status': 500})
+
+def make_final_check(request):
+    """Return a list of true false boolean"""
+    """false if by the time customer makes payment, one of the items in cart is out of stock. Else True"""
+    result = []
+    if request.user.is_authenticated:
+        customer = request.user
+        if request.method == 'POST':
+            customer = request.user
+            order, created = Order.objects.get_or_create(
+                customer=customer, complete=False)
+            allOrderedItems = order.items_in_cart.all()
+            for orderItem in allOrderedItems:
+                if orderItem.product.amount_in_stock < orderItem.quantity:
+                    result.append(False)
+                else:
+                    result.append(True)
+    return result
 
 
 def processOrder(request):
@@ -288,9 +310,7 @@ def update_cart_based_on_quantity(request):
             userQuantity = int(data['user_quantity'])
             action = data['action']
             productId = int(data['product_id'])
-            # print("userQuantity",userQuantity)
-            # print("action",action)
-            # print("productId",productId)
+
             customer = request.user
             product = Product.objects.get(id=productId)
             order, created = Order.objects.get_or_create(
@@ -298,8 +318,6 @@ def update_cart_based_on_quantity(request):
             orderItem, created = OrderedItem.objects.get_or_create(
                 order=order, product=product)
             if action == 'add':
-                print("Amount in stock:",product.amount_in_stock)
-                print("userQuantity:",userQuantity)
                 if product.amount_in_stock < orderItem.quantity:
                     messages.error(request, 'This product is sold out. Please remove it from cart and choose a different product.')
                     return HttpResponse(status=500)
@@ -441,18 +459,16 @@ def emptyCart(session):
     
 def fulfill_order(session):
     # TODO: fill me in
-    # Saving a copy of the order in our own dabase.
-    # approve_customer_order(session)
     print("Fulfilling order", session)
+    approve_customer_order(session)
     update_stock(session)
-    # send_email_confirmation(session)
-    #Empty customer's cart
+    send_email_confirmation(session)
     emptyCart(session)
 
 def update_stock(session):
     # Update stock
     customer = Customer.objects.get(email=session['customer_email'])
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    order, created = Order.objects.get_or_create(customer=customer)
     orderItem, created = OrderedItem.objects.get_or_create(order=order)
     product = orderItem.product
     product.amount_in_stock =  product.amount_in_stock - orderItem.quantity
@@ -462,8 +478,9 @@ def approve_customer_order(session):
     customer = Customer.objects.get(email=session['customer_email'])
     #Get shippingAddress obj if it exists, else create new.
     order, created = Order.objects.get_or_create(customer=customer)
-    order.status = order.STATUS[0]
-    order.checkout = order.CHECKOUT[0]
+    order.status = order.STATUS[1]
+    order.payment = order.PAYMENT[1]
+    order.complete = True
     order.save()
 
 

@@ -166,7 +166,7 @@ class OrderedItem(models.Model):
     class Meta:
         verbose_name = "Ordered Item"
 
-    product = models.ForeignKey(Product, on_delete= models.SET_NULL, blank = True, null = True,related_name='get_product')
+    product = models.OneToOneField(Product, on_delete= models.SET_NULL, blank = True, null = True,related_name='get_product')
     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True, related_name='items_in_cart')
     quantity = models.PositiveIntegerField(default=0)
     date_added = models.DateTimeField(auto_now_add=True)

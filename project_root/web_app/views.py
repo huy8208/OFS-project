@@ -316,8 +316,10 @@ def deleteItemFromCart(request):
         customer = request.user
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         #get_or_create get the customer fromt the db, if the customer is anynomous, we create a temporary anynomous customer.
-        orderItemID = int(json.loads(request.body)['orderItemID'])
+        orderItemID = int(json.loads(request.body)['orderItemID'])        
         orderItem, created = OrderedItem.objects.get_or_create(order=order,id=orderItemID)
+        print("orderItemID:",orderItemID)
+        print("orderItemObject:",orderItem)
         orderItem.delete()
         return HttpResponse(status=200)
     else:

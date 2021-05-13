@@ -241,8 +241,20 @@ for(var i=0; i < updateBtns.length;i++){
     })
 }
 
+var deleteButton = document.getElementsByClassName('deleteItemFromCartButton')
+for (var i=0; i< deleteButton.length;i++){
+    deleteButton[i].addEventListener('click',function(){
+        var orderItemID = this.dataset.product
+        if (username == 'AnonymousUser'){
+            console.log('User is not authenticated!')
+        }
+        else {
+            deleteItemFromCart(orderItemID)
+        }
+
+    })    
+}
 function deleteItemFromCart(orderItemID){
-    console.log(orderItemID)
     fetch('/delete-item-from-cart/',{
         method:'POST',
         headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},

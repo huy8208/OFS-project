@@ -15,7 +15,7 @@
 			margin: 0;
 			padding: 0;
 			height: 100%;
-			background: lightcyan !important;
+			background: white !important;
 		}
 		.user_card {
 			width: 350px;
@@ -77,8 +77,17 @@
 
 </head>
 <body>
-	<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
+
+	<marquee direction = "right" scrollamount="20" scrolldelay = "0">
+		
+		<img src="{% static 'img/Shopping-Cart.webp'%}" alt=""style="width:10%;height:15%;">
+		<img src="{% static 'img/Shopping-Cart.webp'%}" alt=""style="width:10%;height:15%;">
+		<img src="{% static 'img/Shopping-Cart.webp'%}" alt=""style="width:10%;height:15%;">
+	</marquee> 
+
+	<p style="text-align:center;"><img src="{% static 'img/OFS-logo.jpg'%}" alt=""style="width:12%;height:5%;"></p>
+	<div class="container h-70">
+		<div class="d-flex justify-content-center h-50">
 			<div class="user_card">
 				<div class="d-flex justify-content-center">
 					<h3 id="form-title">LOGIN</h3>

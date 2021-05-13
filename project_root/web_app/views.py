@@ -349,8 +349,6 @@ def send_email_confirmation(session):
     EMAIL_ADDRESS = 'cmpeOFS1@gmail.com'
     EMAIL_PASSWORD = 'OFS-project'
 
-    # contacts = ['EMAIL_ADDRESS', 'j00hnsm11th1807@gmail.com']
-
     msg = EmailMessage()
     msg['Subject'] = 'Testing Subject'
     msg['From'] = EMAIL_ADDRESS

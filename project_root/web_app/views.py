@@ -453,7 +453,7 @@ def stripe_webhook(request):
 
 def emptyCart(session):
     customer = Customer.objects.get(email=session['customer_email'])
-    order = Order.objects.get(customer=customer,complete=False)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
     order.items_in_cart.all().delete()
     
 def fulfill_order(session):
@@ -461,13 +461,13 @@ def fulfill_order(session):
     print("Fulfilling order", session)
     update_stock(session)
     approve_customer_order(session)
-    send_email_confirmation(session)
+    # send_email_confirmation(session)
     emptyCart(session)
 
 def update_stock(session):
     # Update stock
     customer = Customer.objects.get(email=session['customer_email'])
-    order = Order.objects.get(customer=customer,complete=False)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
     allOrderedItems = order.items_in_cart.all()
     for orderItem in allOrderedItems:
         if orderItem.product.amount_in_stock >= orderItem.quantity:
@@ -484,9 +484,9 @@ def update_stock(session):
 def approve_customer_order(session):
     customer = Customer.objects.get(email=session['customer_email'])
     #Get shippingAddress obj if it exists, else create new.
-    order = Order.objects.get(customer=customer,complete=False)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
     order.status = 'Pending'
-    order.payment = 'Uninitialized'
+    order.payment = 'Received'
     order.shipping = 'Out for delivery'
     order.complete = True
     order.save()

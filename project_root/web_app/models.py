@@ -129,7 +129,7 @@ class Order(models.Model):
     shipping = models.CharField(max_length=200,null=True,choices=SHIPPING)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.customer.email)
 
     @property
     def get_cart_total(self):
@@ -166,7 +166,7 @@ class OrderedItem(models.Model):
     class Meta:
         verbose_name = "Ordered Item"
 
-    product = models.OneToOneField(Product, on_delete= models.SET_NULL, blank = True, null = True,related_name='get_product')
+    product = models.ForeignKey(Product, on_delete= models.SET_NULL, blank = True, null = True,related_name='get_product')
     order = models.ForeignKey(Order, on_delete= models.SET_NULL, blank = True, null = True, related_name='items_in_cart')
     quantity = models.PositiveIntegerField(default=0)
     date_added = models.DateTimeField(auto_now_add=True)

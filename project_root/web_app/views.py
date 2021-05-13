@@ -143,8 +143,9 @@ def cart_page(request):
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         cartItems = order['get_cart_items']
     
+    showlist = Product.objects.all()
     context = {'items': items, 'order': order,'cartItems': cartItems, 'STRIPE_PUBLIC_KEY':
-               settings.STRIPE_PUBLIC_KEY, 'STRIPE_URL': settings.STRIPE_URL}
+               settings.STRIPE_PUBLIC_KEY, 'STRIPE_URL': settings.STRIPE_URL, 'showlist':showlist}
     return render(request, 'payment/cart.html', context)
 
 
@@ -264,7 +265,8 @@ def product_detail(request, pk):
         # To update the quantity icon at the top right.
         cartItems = order['get_cart_items']
     product = Product.objects.get(id=pk)
-    return render(request, 'Product_detail.html', context={'product': product,'cartItems': cartItems,'order': order})
+    showlist = Product.objects.all()
+    return render(request, 'Product_detail.html', context={'product': product,'cartItems': cartItems,'order': order, 'showlist':showlist})
 
 
 def updateItem(request):

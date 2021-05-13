@@ -70,36 +70,13 @@
             <div class="col-lg-9">
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <datalist id="products">
-                            <option value="Dairy, Eggs and & Cheese">American Cheese</option>
-                            <option value="Apples">
-                            <option value="Banana">
-                            <option value="Broccoli">
-                            <option value="Carrots">
-                            <option value="Dairy, Eggs and & Cheese">Cheddar Cheese</option>
-                            <option value="">Cream Cheese
-                            <option value="Cucumber">
-                            <option value="Dairy, Eggs and & Cheese">Eggs</option>
-                            <option value="Dairy, Eggs and & Cheese">Egg Whites</option>
-                            <option value="Garlic">
-                            <option value="Grapes">
-                            <option value="Guava">
-                            <option value="Lemon">
-                            <option value="Lettuce">
-                            <option value="Dairy, Eggs and & Cheese">Low Fat Milk</option>
-                            <option value="Mango">
-                            <option value="NewyorkPP">
-                            <option value="Onion">
-                            <option value="Oranges">
-                            <option value="Dairy, Eggs and & Cheese">Plain Yogurt</option>
-                            <option value="Potatos">
-                            <option value="RibeyesPP">
-                            <option value="Tomatos">
-                            <option value="Watermelons">
-                            <option value="Dairy, Eggs and & Cheese">Whole Milk</option>
+                        <datalist id = products>
+                            {% for results in showlist %}
+                            <option value="{{results.name}}"></option>
+                            {% endfor %}
                         </datalist>
-                        <form action="#">
-                            <input type="text" list="products" placeholder="What do you need?">
+                        <form action="{% url 'search_result' %}" method = "GET" autocomplete = "off">
+                            <input name = "query" type="text" list="products" placeholder="What do you need?">
                             <button type="submit" class="site-btn" name="button">SEARCH</button>
                         </form>
                     </div>

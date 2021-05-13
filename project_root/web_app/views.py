@@ -261,13 +261,9 @@ def updateItem(request):
         order=order, product=product)
 
     """If orderItem is exceeded amount_in_stock => stop here"""
-    # if(self.product.amount_in_stock < self.quantity || self.product.amount_in_stock == 0):
-    #     return False
-    # else:
-    #     return True
     if action == 'add':
         if product.amount_in_stock < orderItem.quantity:
-            messages.error(request, 'The product is sold out. Please remove it from cart and choose a different product.')
+            messages.error(request, 'This product is sold out. Please remove it from cart and choose a different product.')
         elif product.amount_in_stock == orderItem.quantity:
             messages.error(request, 'Not enough stock.')
         else:
@@ -304,14 +300,14 @@ def update_cart_based_on_quantity(request):
             if action == 'add':
                 print("Amount in stock:",product.amount_in_stock)
                 print("userQuantity:",userQuantity)
-                if product.amount_in_stock < userQuantity:
+                if product.amount_in_stock < userQuantity or (userQuantity + orderItem.quantity > product.amount_in_stock):
                     messages.error(request, 'Not enough stock.')
                     return HttpResponse(status=500)
                 elif product.amount_in_stock == orderItem.quantity:
                     messages.error(request, 'Not enough stock.')
                     return HttpResponse(status=500)
                 elif product.amount_in_stock < orderItem.quantity:
-                    messages.error(request, 'The product is sold out. Please remove it from cart and choose a different product.')
+                    messages.error(request, 'This product is sold out. Please remove it from cart and choose a different product.')
                     return HttpResponse(status=500)
                 else:
                     orderItem.quantity += userQuantity

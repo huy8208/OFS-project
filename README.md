@@ -32,6 +32,10 @@ Basic Django app starter template.
         #### docker-compose run app python manage.py migrate
     4. Create an object of created class and use object.save() to save to db.sqlite3
     5. Download sqlite browser https://sqlitebrowser.org/dl/ .Use it to open db.sqlite3 and view data.
+
+## Tutorial
+- The following is a quick tutorial on how to navigate the website
+- https://drive.google.com/file/d/1N783xp0aa-h28pgpNVukPCeHGhB3UGXT/view?usp=sharing
     
 ## References
 - https://github.com/LondonAppDeveloper/demo-django-docker-nginx-prod

@@ -8,7 +8,7 @@ Basic Django app starter template.
  1. Go to docker.com and download docker to your local machine.
  2. Open terminal and CD to your local git directory.
  3. Run 'docker-compose up' to run docker image.
- 4. Open browser and go to http://localhost:80 to test.
+ 4. Open browser and go to http://localhost:8000 to test.
 
 ## Notes
 - We don't need to rebuild container everytime we make changes. You only need to refresh the webpage.

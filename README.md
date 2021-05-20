@@ -1,7 +1,5 @@
 # OFS Starter template.
 
-Basic Django app starter template. 
-
 - Feel free to test the app at http://34.83.212.118
 ## How to build and run OFS using docker
 

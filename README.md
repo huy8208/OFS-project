@@ -1,4 +1,4 @@
-# OFS Starter template.
+# OFS - Organic Food Store.
 
 - Feel free to test the app at http://34.83.212.118
 ## How to build and run OFS using docker

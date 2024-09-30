@@ -6,12 +6,6 @@
  3. Run 'docker-compose up' to run docker image.
  4. Open browser and go to http://localhost:8000 to test.
 
-## Notes
-- We don't need to rebuild container everytime we make changes. You only need to refresh the webpage.
-- Every time we make changes to database. We have to perform makemigrations and migrate for our project to work properly. Execute these 2 commands:
-    docker-compose run app python manage.py makemigrations
-    docker-compose run app python manage.py migrate
-
 ## Instructions
 - How to create and link website to our web_app:
     1. Add your html file to web_app/templates/ 
